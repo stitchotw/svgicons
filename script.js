@@ -37,6 +37,30 @@ function addLine(dx, dy) {
     addSVGShape(svg);
 }
 
+/**
+ * Adds a circle to the icon.
+ * 
+ * @param {number} d diameter of circle in cells 
+ */
+function addCircle(d) {
+    const size = d * PIXELS_PER_CELL+ROUND_CORNER_MARGIN*2;
+    const center = size / 2;
+    const radius = size / 2 - ROUND_CORNER_MARGIN;
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute("width", `${size }`);
+    svg.setAttribute("height", `${size}`);
+
+    const shape = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    shape.setAttribute('style', DEFAULT_SVG_STYLE);
+    shape.setAttribute('cx', center);
+    shape.setAttribute('cy', center);
+    shape.setAttribute('r', `${radius}`);
+    svg.appendChild(shape);
+
+    addSVGShape(svg);
+}
+
 function addSVGShape(svg) {
     const div = document.createElement("div");
     div.classList.add("shape-container");
