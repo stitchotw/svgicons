@@ -7,8 +7,8 @@ const PIXELS_PER_CELL = 50;
 const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 20px; stroke-linecap: round; fill: none;"
 const ROUND_CORNER_MARGIN = 10;
 
-const DEFAULT_X_COORD = 100;
-const DEFAULT_Y_COORD = 50;
+const DEFAULT_X_COORD = -ROUND_CORNER_MARGIN;
+const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 
 /**
  * Adds a line to the icon. 
@@ -25,6 +25,7 @@ function addLine(dx, dy) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute("width", `${x}`);
     svg.setAttribute("height", `${y}`);
+    svg.classList.add("shape");
 
     const shape = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     shape.setAttribute('style', DEFAULT_SVG_STYLE);
