@@ -44,36 +44,35 @@ function addSVGShape(svg) {
     div.style.left = `${DEFAULT_Y_COORD}px`;
 
     div.setAttribute("draggable", "true");
-    div.addEventListener("dragstart", dragIt);
+    div.addEventListener("dragstart", startDraggingShape);
     div.appendChild(svg);
 
     const image = document.getElementById('workarea');
     image.appendChild(div);
 }
 
-function allowDrop(ev) {
-    console.log("allowDrop");
-    ev.preventDefault();
+function allowDrop(event) {
+    //console.log("allowDrop");
+    event.preventDefault();
 }
 
 var draggedShape;
 var dx, dy;
 
-function dragIt(ev) {
-    //ev.dataTransfer.setData("text", ev.target.id);
-    draggedShape = ev.target;
-    dx = ev.offsetX;
-    dy = ev.offsetY;
-    console.log(ev);
+function startDraggingShape(event) {
+    draggedShape = event.target;
+    dx = event.offsetX;
+    dy = event.offsetY;
+    // console.log(ev);
 }
 
-function drop(ev) {
+function dropDraggedShape(event) {
     //console.log("drop");
     //console.log(ev);
-    ev.preventDefault();
+    event.preventDefault();
 
-    const x = Math.floor((ev.clientX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
-    const y = Math.floor((ev.clientY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
+    const x = Math.floor((event.clientX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
+    const y = Math.floor((event.clientY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
     draggedShape.style.top = y + "px";
     draggedShape.style.left = x + "px";
 }
