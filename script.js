@@ -25,7 +25,6 @@ function addLine(dx, dy) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute("width", `${x}`);
     svg.setAttribute("height", `${y}`);
-    svg.classList.add("shape");
 
     const shape = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     shape.setAttribute('style', DEFAULT_SVG_STYLE);
@@ -35,13 +34,46 @@ function addLine(dx, dy) {
     shape.setAttribute('y2', `${y - ROUND_CORNER_MARGIN}`);
     svg.appendChild(shape);
 
-    svg.style.top = `${DEFAULT_X_COORD}px`;
-    svg.style.left = `${DEFAULT_Y_COORD}px`;
-
     addSVGShape(svg);
 }
 
 function addSVGShape(svg) {
+    const div = document.createElement("div");
+    div.classList.add("shape-container");
+    div.style.top = `${DEFAULT_X_COORD}px`;
+    div.style.left = `${DEFAULT_Y_COORD}px`;
+
+    div.setAttribute("draggable", "true");
+    div.addEventListener("dragstart", dragIt);
+    div.appendChild(svg);
+
     const image = document.getElementById('workarea');
-    image.appendChild(svg);
+    image.appendChild(div);
+}
+
+function allowDrop(ev) {
+    console.log("allowDrop");
+    ev.preventDefault();
+}
+
+var draggedShape;
+var dx, dy;
+
+function dragIt(ev) {
+    //ev.dataTransfer.setData("text", ev.target.id);
+    draggedShape = ev.target;
+    dx = ev.offsetX;
+    dy = ev.offsetY;
+    console.log(ev);
+}
+
+function drop(ev) {
+    //console.log("drop");
+    //console.log(ev);
+    ev.preventDefault();
+
+    const x = Math.floor((ev.clientX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
+    const y = Math.floor((ev.clientY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
+    draggedShape.style.top = y + "px";
+    draggedShape.style.left = x + "px";
 }
