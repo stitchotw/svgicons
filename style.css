@@ -14,4 +14,5 @@ h1 {
 .add-shape-button {
     width: 1.5cm;
     height: 1.5cm;
+    padding: 5px;
 }
