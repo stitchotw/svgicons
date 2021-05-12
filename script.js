@@ -63,16 +63,17 @@ function startDraggingShape(event) {
     draggedShape = event.target;
     dx = event.offsetX;
     dy = event.offsetY;
-    // console.log(ev);
+    // console.log(dx+" "+dy);
 }
 
 function dropDraggedShape(event) {
     //console.log("drop");
-    //console.log(ev);
+    // console.log(event);
     event.preventDefault();
 
-    const x = Math.floor((event.clientX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
-    const y = Math.floor((event.clientY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL;
+    const x = Math.floor((event.offsetX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN;
+    const y = Math.floor((event.offsetY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN;
     draggedShape.style.top = y + "px";
     draggedShape.style.left = x + "px";
+    //console.log()
 }
