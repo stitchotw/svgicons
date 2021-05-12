@@ -27,7 +27,7 @@ function addLine(dx, dy) {
     svg.setAttribute("height", `${y}`);
 
     const shape = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    shape.setAttribute('style', "stroke: black; stroke-width: 20px; stroke-linecap: round; fill: none;");
+    shape.setAttribute('style', DEFAULT_SVG_STYLE);
     shape.setAttribute('x1', ROUND_CORNER_MARGIN);
     shape.setAttribute('y1', ROUND_CORNER_MARGIN);
     shape.setAttribute('x2', `${x - ROUND_CORNER_MARGIN}`);
