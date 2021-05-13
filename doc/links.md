@@ -18,3 +18,8 @@
 
 [Mozilla](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)
 
+# Unicode Character Sets
+
+https://unicode-table.com/en/sets/
+
+
