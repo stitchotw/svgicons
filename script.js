@@ -1,6 +1,6 @@
 /**
  * Most functions work with the 8x8 grid shown on the background image rather than pixels.
- * This constant defines how many pixels there are per gric cell.
+ * This constant defines how many pixels there are per grid cell.
  */
 const PIXELS_PER_CELL = 50;
 
