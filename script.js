@@ -21,42 +21,21 @@ function addLine(dx, dy) {
     const x = dx * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
     const y = dy * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
 
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute("width", `${x}`);
-    svg.setAttribute("height", `${y}`);
+    const width = dx * PIXELS_PER_CELL;
+    const height = dy * PIXELS_PER_CELL;
 
-    const shape = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    shape.setAttribute('style', DEFAULT_SVG_STYLE);
-    shape.setAttribute('x1', ROUND_CORNER_MARGIN);
-    shape.setAttribute('y1', ROUND_CORNER_MARGIN);
-    shape.setAttribute('x2', `${x - ROUND_CORNER_MARGIN}`);
-    shape.setAttribute('y2', `${y - ROUND_CORNER_MARGIN}`);
-    svg.appendChild(shape);
-
+    const svg = new Line("lineid", 0, 0, width, height, null);
     addSVGShape(svg);
 }
 
 /**
  * Adds a circle to the icon.
  * 
- * @param {number} d diameter of circle in cells 
+ * @param {number} diameter diameter of circle in cells 
  */
-function addCircle(d) {
-    const size = d * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
-    const center = size / 2;
-    const radius = size / 2 - ROUND_CORNER_MARGIN;
-
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute("width", `${size}`);
-    svg.setAttribute("height", `${size}`);
-
-    const shape = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    shape.setAttribute('style', DEFAULT_SVG_STYLE);
-    shape.setAttribute('cx', center);
-    shape.setAttribute('cy', center);
-    shape.setAttribute('r', `${radius}`);
-    svg.appendChild(shape);
-
+function addCircle(diameter) {
+    diameter = diameter * PIXELS_PER_CELL;
+    const svg = new Circle("circleid", 0, 0, diameter, null);
     addSVGShape(svg);
 }
 
@@ -69,7 +48,7 @@ function addSVGShape(svg) {
     div.setAttribute("draggable", "true");
     div.addEventListener("mousedown", selectShape);
     div.addEventListener("dragstart", startDraggingShape);
-    div.appendChild(svg);
+    div.appendChild(svg.toSVGImage());
 
     const image = document.getElementById('workarea');
     image.appendChild(div);
@@ -131,3 +110,89 @@ function closeDialog(id) {
     dialog.style.display = "none";
 }
 
+/* 
+    Shape types
+*/
+
+class Shape {
+    constructor(cssClassId, id, top, left, width, height, stroke) {
+        this.cssClassId = cssClassId;
+        this.id = id;
+        this.top = top;
+        this.left = left;
+        this.width = width;
+        this.height = height;
+        this.stroke = stroke;
+        this.toSVGImage = () => {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute("width", `${this.width + ROUND_CORNER_MARGIN * 2}`);
+            svg.setAttribute("height", `${this.height + ROUND_CORNER_MARGIN * 2}`);
+            svg.appendChild(this.toSVGFragment());
+            return svg;
+        }
+        this.toSVGFragment = () => {
+            throw "Nothing to generate SVG fragment from";
+        }
+    }
+
+}
+
+class Line extends Shape {
+    /**
+     * 
+     * @param {string} id 
+     * @param {number} top 
+     * @param {number} left 
+     * @param {number} width 
+     * @param {number} height 
+     * @param {number} stroke 
+     */
+    constructor(id, top, left, width, height, stroke) {
+        super("shape-line", id, width, height, stroke);
+ 
+        this.toSVGFragment = () => {
+            const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            fragment.setAttribute('style', DEFAULT_SVG_STYLE);
+            fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('y1', this.top + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('y2', this.top + this.height + ROUND_CORNER_MARGIN);
+            return fragment;
+        }
+    }
+}
+
+class Circle extends Shape {
+    /**
+      * 
+      * @param {string} id 
+      * @param {number} top 
+      * @param {number} left 
+      * @param {number} diameter 
+      * @param {number} stroke 
+      */
+    constructor(id, top, left, diameter, stroke) {
+        super("shape-circle", id, top, left, diameter, diameter, stroke);
+
+        this.toSVGFragment = () => {
+            const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            fragment.setAttribute('style', DEFAULT_SVG_STYLE);
+            fragment.setAttribute('cx', this.centerX + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('cy', this.centerY + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('r', this.radius);
+            return fragment;
+        }
+    }
+ 
+    get centerX() {
+        return this.top + this.radius;
+    }
+
+    get centerY() {
+        return this.top + this.radius;
+    }
+
+    get radius() {
+        return this.width / 2;
+    }
+}
