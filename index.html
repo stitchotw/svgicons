@@ -73,6 +73,7 @@
         <div class="functions">
             <button class="function-button">Save</button>
             <button class="function-button">Clear</button>
+            <button class="function-button" onclick="openDialog('settings-dialog')">Settings</button>
         </div>
         <div class="shape-library">
             <h2>Lines</h2>
@@ -91,7 +92,8 @@
             <button class="add-shape-button" disabled><img src="img/polyline.svg" alt=""></button>
             <button class="add-shape-button" disabled><img src="img/polygon.svg" alt=""></button>
             <button class="add-shape-button" disabled><img src="img/path.svg" alt=""></button>
-            <p>The viewbox of each shape is 100x100. This will automatically scale if you change the size of the shape.
+            <p>The viewbox of the shape corresponds to the viewbox of the icon. This will automatically scale if you
+                change the size of the shape.
             </p>
             <h2>Text</h2>
             <button class="add-shape-button" disabled><img src="img/text.svg" alt=""></button>
@@ -104,6 +106,16 @@
             <p>None yet, just a placeholder.</p>
         </div>
     </div>
+    <div id="settings-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">Settings</h1>
+            Placeholder text.
+            <div class="functions">
+                <button class="function-button" onclick="closeDialog('settings-dialog')">Close</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

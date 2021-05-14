@@ -102,3 +102,18 @@ function dropDraggedShape(event) {
     draggedShape.style.left = x + "px";
     //console.log()
 }
+
+/*
+    Dialogs
+*/
+
+function openDialog(id){
+    const dialog = document.getElementById(id);
+    dialog.style.display = "grid";
+}
+
+function closeDialog(id){
+    const dialog = document.getElementById(id);
+    dialog.style.display = "none";
+}
+
