@@ -125,8 +125,8 @@ class Shape {
         this.stroke = stroke;
         this.toSVGImage = () => {
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute("width", `${this.width + ROUND_CORNER_MARGIN * 2}`);
-            svg.setAttribute("height", `${this.height + ROUND_CORNER_MARGIN * 2}`);
+            svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
+            svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
             svg.appendChild(this.toSVGFragment());
             return svg;
         }
@@ -148,7 +148,7 @@ class Line extends Shape {
      * @param {number} stroke 
      */
     constructor(id, top, left, width, height, stroke) {
-        super("shape-line", id, width, height, stroke);
+        super("shape-line", id, top, left, width, height, stroke);
  
         this.toSVGFragment = () => {
             const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'line');
