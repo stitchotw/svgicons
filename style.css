@@ -48,6 +48,10 @@ h1 {
     position: absolute;
 }
 
+.selected-shape > svg {
+    filter: drop-shadow(0 0 3mm green);
+}
+
 .add-shape-button {
     width: 1.5cm;
     height: 1.5cm;

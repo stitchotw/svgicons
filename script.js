@@ -18,8 +18,6 @@ const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
  * @param {number} dy how many cells the line should cover vertically.
  */
 function addLine(dx, dy) {
-    console.log(`Adding line: dx=${dx} dy=${dy}`);
-
     const x = dx * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
     const y = dy * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
 
@@ -44,7 +42,7 @@ function addLine(dx, dy) {
  * @param {number} d diameter of circle in cells 
  */
 function addCircle(d) {
-    const size = d * PIXELS_PER_CELL+ROUND_CORNER_MARGIN*2;
+    const size = d * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
     const center = size / 2;
     const radius = size / 2 - ROUND_CORNER_MARGIN;
 
@@ -69,6 +67,7 @@ function addSVGShape(svg) {
     div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
 
     div.setAttribute("draggable", "true");
+    div.addEventListener("mousedown", selectShape);
     div.addEventListener("dragstart", startDraggingShape);
     div.appendChild(svg);
 
@@ -77,42 +76,57 @@ function addSVGShape(svg) {
 }
 
 function allowDrop(event) {
-    //console.log("allowDrop");
     event.preventDefault();
 }
 
-var draggedShape;
-var dx, dy;
+var selectedShape = null;
+var isDragging = false;
+var dragOffsetX, dragOffsetY;
+
+function selectShape(event) {
+    if (selectedShape) {
+        selectedShape.classList.remove('selected-shape');
+    }
+
+    selectedShape = event.target;
+    while (!selectedShape.classList.contains('shape-container')) {
+        selectedShape = selectedShape.parentElement;
+    }
+
+    selectedShape.classList.add('selected-shape');
+}
 
 function startDraggingShape(event) {
-    draggedShape = event.target;
-    dx = event.offsetX;
-    dy = event.offsetY;
-    // console.log(dx+" "+dy);
+    console.log("startdrag " + event.target)
+    isDragging = true;
+    dragOffsetX = event.offsetX;
+    dragOffsetY = event.offsetY;
 }
 
 function dropDraggedShape(event) {
-    //console.log("drop");
-    // console.log(event);
-    event.preventDefault();
+    if (isDragging) {
+        console.log("enddrag")
+        event.preventDefault();
 
-    const x = Math.floor((event.offsetX - dx + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
-    const y = Math.floor((event.offsetY - dy + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
-    draggedShape.style.top = y + "px";
-    draggedShape.style.left = x + "px";
-    //console.log()
+        const x = Math.floor((event.offsetX - dragOffsetX + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
+        const y = Math.floor((event.offsetY - dragOffsetY + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
+        selectedShape.style.top = y + "px";
+        selectedShape.style.left = x + "px";
+
+        isDragging = false;
+    }
 }
 
 /*
     Dialogs
 */
 
-function openDialog(id){
+function openDialog(id) {
     const dialog = document.getElementById(id);
     dialog.style.display = "grid";
 }
 
-function closeDialog(id){
+function closeDialog(id) {
     const dialog = document.getElementById(id);
     dialog.style.display = "none";
 }
