@@ -1,5 +1,6 @@
 :root {
     --margin: 20px;
+    --small-margin: 5px;
 }
 
 *, *::before, *::after {
@@ -23,11 +24,7 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto 1fr;
-}
-
-.header {
-    /* margin-left: var(--margin); Removed because it clashed with centering the header*/
+    grid-template-rows: auto auto minmax(100px, 1fr) auto;
 }
 
 h1 {
@@ -35,10 +32,9 @@ h1 {
     text-align: center;
 }
 
-.workarea, .shape-library{
+.workarea, .shape-library {
     margin-left: var(--margin);
     margin-right: var(--margin);
-    overflow-y: auto;
 }
 
 .workarea {
@@ -55,9 +51,52 @@ h1 {
 .add-shape-button {
     width: 1.5cm;
     height: 1.5cm;
-    padding: 5px;
+    padding: var(--small-margin);
+}
+
+.attributes, .functions {
+    margin: var(--margin);
+}
+
+.attributes {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: var(--margin);
+    margin-bottom: 0px;
+}
+
+.attribute-group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-rows: min-content;
+    column-gap: var(--small-margin);
+    row-gap: var(--small-margin);
+    overflow-y: auto;
+}
+
+h2.attribute-header {
+    margin-top: 0px;
+    margin-top: 0px;
+    grid-column: 1 / -1;
+}
+
+.attribute {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .shape-library {
     grid-area: 1 / 2 / -1; /* Place into column 2, span all rows */
+    overflow-y: auto;
+}
+
+.functions {
+    text-align: center;
+}
+
+.function-button {
+    width: 3cm;
+    height: 1cm;
 }
