@@ -27,12 +27,12 @@ body {
 }
 
 .header {
-    grid-column: 1/ span 2;
-    margin-left: var(--margin);
+    /* margin-left: var(--margin); Removed because it clashed with centering the header*/
 }
 
 h1 {
     font-weight: bold;
+    text-align: center;
 }
 
 .workarea, .shape-library{
@@ -58,3 +58,6 @@ h1 {
     padding: 5px;
 }
 
+.shape-library {
+    grid-area: 1 / 2 / -1; /* Place into column 2, span all rows */
+}
