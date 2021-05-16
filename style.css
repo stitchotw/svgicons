@@ -84,7 +84,7 @@ h2.attribute-header {
     grid-column: 1 / -1;
 }
 
-.attribute {
+.shape-attribute, .icon-attribute {
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -13,7 +13,7 @@ const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 
 var shapeIdCounter = 0;
 var shapes = new Map();
-var selectedShape = null;
+var selectedUIShape = null;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
 
@@ -51,7 +51,7 @@ function getIconImage() {
 }
 
 function addShape(shape) {
-    if(shapes.has(shape.id)){
+    if (shapes.has(shape.id)) {
         throw "Duplicate id when adding shape";
     }
 
@@ -63,45 +63,51 @@ function addShape(shape) {
 }
 
 function deleteCurrentlySelectedShape() {
-    if (selectedShape) {
-        shapes.delete(selectedShape.id);
-        getIconImage().removeChild(selectedShape);
+    if (selectedUIShape) {
+        shapes.delete(selectedUIShape.id);
+        getIconImage().removeChild(selectedUIShape);
         unselectCurrentlySelectedShape();
     }
 }
 
 function selectShape(shape) {
-    if (shape != selectedShape) {
+    if (shape != selectedUIShape) {
         unselectCurrentlySelectedShape();
         shape.classList.add('selected-shape');
-        selectedShape = shape;
+        selectedUIShape = shape;
         showAttributesOfCurrentlySelectedShape();
     }
 }
 
 function unselectCurrentlySelectedShape() {
-    if (selectedShape) {
-        selectedShape.classList.remove('selected-shape');
-        selectedShape = null;
+    if (selectedUIShape) {
+        selectedUIShape.classList.remove('selected-shape');
+        selectedUIShape = null;
         hideAllShapeAttributes();
-
-
     }
 }
 
+function getSelectedShapeNodel() {
+    if (!selectedUIShape) {
+        throw "No UI shape selected";
+    }
+
+    return shapes.get(selectedUIShape.id);
+}
+
 function showAttributesOfCurrentlySelectedShape() {
+    const shape = getSelectedShapeNodel();
+    removeClass(document.getElementsByClassName(shape.attributeClass), "hidden");
+
     addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
-    removeClass(document.getElementsByClassName("attribute-name"), "hidden");
-    removeClass(document.getElementsByClassName("attribute"), "hidden");
-    removeClass(document.getElementsByClassName("common-attribute"), "hidden");
     removeClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
 function hideAllShapeAttributes() {
+    addClass(document.getElementsByClassName("shape-attribute-name"), "hidden");
+    addClass(document.getElementsByClassName("shape-attribute"), "hidden");
+
     removeClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
-    addClass(document.getElementsByClassName("attribute-name"), "hidden");
-    addClass(document.getElementsByClassName("attribute"), "hidden");
-    addClass(document.getElementsByClassName("common-attribute"), "hidden");
     addClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
@@ -141,8 +147,8 @@ function dropDraggedShape(event) {
 
         const x = Math.floor((event.offsetX - dragOffsetX + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
         const y = Math.floor((event.offsetY - dragOffsetY + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
-        selectedShape.style.top = y + "px";
-        selectedShape.style.left = x + "px";
+        selectedUIShape.style.top = y + "px";
+        selectedUIShape.style.left = x + "px";
 
         isDragging = false;
     }
@@ -246,7 +252,7 @@ class Circle extends Shape {
       * @param {number} diameter 
       * @param {number} stroke 
       */
-    constructor(id, top, left, diameter, stroke) {
+    constructor(top, left, diameter, stroke) {
         super("circle-attribute", top, left, diameter, diameter, stroke);
 
         this.toSVGFragment = () => {
