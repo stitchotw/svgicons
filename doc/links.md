@@ -22,6 +22,11 @@
 
 https://unicode-table.com/en/sets/
 
+# W3 Validators
+
+* [html](https://validator.w3.org/)
+* [CSS](https://jigsaw.w3.org/css-validator/)
+
 # SVG Shape Generator
 
 https://www.softr.io/tools/svg-shape-generator
