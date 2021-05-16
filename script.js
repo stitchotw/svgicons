@@ -191,6 +191,9 @@ class Shape {
         this.toSVGFragment = () => {
             throw "Nothing to generate SVG fragment from";
         }
+        function attributeClass(){
+            throw "No attribute class specified";
+        }
     }
 
 }
