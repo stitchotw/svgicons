@@ -22,4 +22,8 @@
 
 https://unicode-table.com/en/sets/
 
+# SVG Shape Generator
 
+https://www.softr.io/tools/svg-shape-generator
+
+A free design tool to create colorful, random, unique, and organic-looking SVG shapes. [According to its own marketing pitch.]
