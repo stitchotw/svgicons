@@ -11,6 +11,7 @@ const PADDING_MARGIN = 20;
 const DEFAULT_X_COORD = -ROUND_CORNER_MARGIN;
 const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 
+var shapeIdCounter = 0;
 var selectedShape = null;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
@@ -29,8 +30,8 @@ function addLine(dx, dy) {
     const width = dx * PIXELS_PER_CELL;
     const height = dy * PIXELS_PER_CELL;
 
-    const svg = new Line("lineid", 0, 0, width, height, null);
-    addSVGShape(svg);
+    const line = new Line(0, 0, width, height, null);
+    addShapeToImage(line);
 }
 
 /**
@@ -40,31 +41,21 @@ function addLine(dx, dy) {
  */
 function addCircle(diameter) {
     diameter = diameter * PIXELS_PER_CELL;
-    const svg = new Circle("circleid", 0, 0, diameter, null);
-    addSVGShape(svg);
+    const circle = new Circle(0, 0, diameter, null);
+    addShapeToImage(circle);
 }
 
-function getIconImage(){
+function getIconImage() {
     return document.getElementById('workarea');
 }
 
-function addSVGShape(svg) {
-    const div = document.createElement("div");
-    div.classList.add("shape-container");
-    div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
-    div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
-
-    div.setAttribute("draggable", "true");
-    div.addEventListener("mousedown", selectShapeOnMouseDown);
-    div.addEventListener("dragstart", startDraggingShape);
-    div.appendChild(svg.toSVGImage());
-
-    getIconImage().appendChild(div);
-
-    selectShape(div);
+function addShapeToImage(shape) {
+    const element = shape.toDraggableHTMLElement();
+    getIconImage().appendChild(element);
+    selectShape(element);
 }
 
-function deleteCurrentlySelectedShape(){
+function deleteCurrentlySelectedShape() {
     if (selectedShape) {
         console.log("asd")
         getIconImage().removeChild(selectedShape);
@@ -95,6 +86,7 @@ function showAttributesOfCurrentlySelectedShape() {
     addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
     removeClass(document.getElementsByClassName("attribute-name"), "hidden");
     removeClass(document.getElementsByClassName("attribute"), "hidden");
+    removeClass(document.getElementsByClassName("common-attribute"), "hidden");
     removeClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
@@ -102,17 +94,18 @@ function hideAllShapeAttributes() {
     removeClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
     addClass(document.getElementsByClassName("attribute-name"), "hidden");
     addClass(document.getElementsByClassName("attribute"), "hidden");
+    addClass(document.getElementsByClassName("common-attribute"), "hidden");
     addClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
-function addClass(elements, className){
-    for(const element of elements){
+function addClass(elements, className) {
+    for (const element of elements) {
         element.classList.add(className);
     }
 }
 
-function removeClass(elements, className){
-    for(const element of elements){
+function removeClass(elements, className) {
+    for (const element of elements) {
         element.classList.remove(className);
     }
 }
@@ -173,14 +166,30 @@ function closeDialog(id) {
 */
 
 class Shape {
-    constructor(cssClassId, id, top, left, width, height, stroke) {
-        this.cssClassId = cssClassId;
-        this.id = id;
+    constructor(attributeClass, top, left, width, height, stroke) {
+        this.attributeClass = attributeClass;
+        this.id = "shape" + (++shapeIdCounter);
         this.top = top;
         this.left = left;
         this.width = width;
         this.height = height;
         this.stroke = stroke;
+
+        this.toDraggableHTMLElement = () => {
+            const div = document.createElement("div");
+            div.classList.add("shape-container");
+            div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
+            div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
+
+            div.setAttribute("id", this.id);
+            div.setAttribute("draggable", "true");
+            div.addEventListener("mousedown", selectShapeOnMouseDown);
+            div.addEventListener("dragstart", startDraggingShape);
+            div.appendChild(this.toSVGImage());
+
+            return div;
+        }
+
         this.toSVGImage = () => {
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
             svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
@@ -188,11 +197,9 @@ class Shape {
             svg.appendChild(this.toSVGFragment());
             return svg;
         }
+
         this.toSVGFragment = () => {
             throw "Nothing to generate SVG fragment from";
-        }
-        function attributeClass(){
-            throw "No attribute class specified";
         }
     }
 
@@ -208,8 +215,8 @@ class Line extends Shape {
      * @param {number} height 
      * @param {number} stroke 
      */
-    constructor(id, top, left, width, height, stroke) {
-        super("shape-line", id, top, left, width, height, stroke);
+    constructor(top, left, width, height, stroke) {
+        super("line-attribute", top, left, width, height, stroke);
 
         this.toSVGFragment = () => {
             const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -233,7 +240,7 @@ class Circle extends Shape {
       * @param {number} stroke 
       */
     constructor(id, top, left, diameter, stroke) {
-        super("shape-circle", id, top, left, diameter, diameter, stroke);
+        super("circle-attribute", top, left, diameter, diameter, stroke);
 
         this.toSVGFragment = () => {
             const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
