@@ -12,6 +12,7 @@ const DEFAULT_X_COORD = -ROUND_CORNER_MARGIN;
 const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 
 var shapeIdCounter = 0;
+var shapes = new Map();
 var selectedShape = null;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
@@ -31,7 +32,7 @@ function addLine(dx, dy) {
     const height = dy * PIXELS_PER_CELL;
 
     const line = new Line(0, 0, width, height, null);
-    addShapeToImage(line);
+    addShape(line);
 }
 
 /**
@@ -42,14 +43,20 @@ function addLine(dx, dy) {
 function addCircle(diameter) {
     diameter = diameter * PIXELS_PER_CELL;
     const circle = new Circle(0, 0, diameter, null);
-    addShapeToImage(circle);
+    addShape(circle);
 }
 
 function getIconImage() {
     return document.getElementById('workarea');
 }
 
-function addShapeToImage(shape) {
+function addShape(shape) {
+    if(shapes.has(shape.id)){
+        throw "Duplicate id when adding shape";
+    }
+
+    shapes.set(shape.id, shape);
+
     const element = shape.toDraggableHTMLElement();
     getIconImage().appendChild(element);
     selectShape(element);
@@ -57,7 +64,7 @@ function addShapeToImage(shape) {
 
 function deleteCurrentlySelectedShape() {
     if (selectedShape) {
-        console.log("asd")
+        shapes.delete(selectedShape.id);
         getIconImage().removeChild(selectedShape);
         unselectCurrentlySelectedShape();
     }
