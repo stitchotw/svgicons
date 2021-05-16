@@ -79,8 +79,8 @@
             </div>
         </div>
         <div class="functions">
-            <button class="function-button">Save</button>
-            <button class="function-button">New icon</button>
+            <button class="function-button" onclick="openDialog('save-icon-dialog')">Save</button>
+            <button class="function-button" onclick="openDialog('new-icon-dialog')">New icon</button>
             <button class="function-button" onclick="openDialog('settings-dialog')">Settings</button>
         </div>
         <div class="shape-library">
@@ -114,6 +114,24 @@
             <p>None yet, just a placeholder.</p>
         </div>
     </div>
+    <div id="save-icon-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">Save icon</h1>
+            Placeholder text.
+            <div class="functions">
+                <button class="function-button" onclick="closeDialog('save-icon-dialog')">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="new-icon-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">New icon</h1>
+            Placeholder text.
+            <div class="functions">
+                <button class="function-button" onclick="closeDialog('new-icon-dialog')">Close</button>
+            </div>
+        </div>
+    </div>
     <div id="settings-dialog" class="dialog">
         <div class="dialog-content">
             <h1 class="dialog-header">Settings</h1>
@@ -123,7 +141,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
