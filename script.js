@@ -46,12 +46,14 @@ function addSVGShape(svg) {
     div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
 
     div.setAttribute("draggable", "true");
-    div.addEventListener("mousedown", selectShape);
+    div.addEventListener("mousedown", selectShapeOnMouseDown);
     div.addEventListener("dragstart", startDraggingShape);
     div.appendChild(svg.toSVGImage());
 
     const image = document.getElementById('workarea');
     image.appendChild(div);
+
+    selectShape(div);
 }
 
 function allowDrop(event) {
@@ -62,17 +64,37 @@ var selectedShape = null;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
 
-function selectShape(event) {
+function selectShape(shape) {
+    if (shape != selectedShape) {
+        unselectCurrentlySelectedShape();
+        shape.classList.add('selected-shape');
+        selectedShape = shape;
+        showAttributesOfCurrentlySelectedShape();
+    }
+}
+
+function unselectCurrentlySelectedShape() {
     if (selectedShape) {
         selectedShape.classList.remove('selected-shape');
+        selectedShape = null;
+        hideAllShapeAttributes();
     }
+}
 
-    selectedShape = event.target;
-    while (!selectedShape.classList.contains('shape-container')) {
-        selectedShape = selectedShape.parentElement;
+function showAttributesOfCurrentlySelectedShape() {
+
+}
+
+function hideAllShapeAttributes() {
+
+}
+
+function selectShapeOnMouseDown(event) {
+    let shape = event.target;
+    while (!shape.classList.contains('shape-container')) {
+        shape = shape.parentElement;
     }
-
-    selectedShape.classList.add('selected-shape');
+    selectShape(shape);
 }
 
 function startDraggingShape(event) {
@@ -149,7 +171,7 @@ class Line extends Shape {
      */
     constructor(id, top, left, width, height, stroke) {
         super("shape-line", id, top, left, width, height, stroke);
- 
+
         this.toSVGFragment = () => {
             const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             fragment.setAttribute('style', DEFAULT_SVG_STYLE);
@@ -183,7 +205,7 @@ class Circle extends Shape {
             return fragment;
         }
     }
- 
+
     get centerX() {
         return this.top + this.radius;
     }
