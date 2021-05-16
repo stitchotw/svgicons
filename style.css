@@ -91,6 +91,17 @@ h2.attribute-header {
     justify-content: space-between;
 }
 
+.no-shape-selected-text {
+    grid-column: 1 / -1;
+    width: 200px;
+    text-align: left;
+    margin-top: 0px;
+}
+
+.hidden {
+    display: none;
+}
+
 .shape-library {
     grid-area: 1 / 2 / -1; /* Place into column 2, span all rows */
     overflow-y: auto;
