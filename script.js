@@ -40,9 +40,9 @@ function addLine(dx, dy) {
  * 
  * @param {number} diameter diameter of circle in cells 
  */
-function addCircle(diameter) {
+function addCircle(diameter, fill) {
     diameter = diameter * PIXELS_PER_CELL;
-    const circle = new Circle(0, 0, diameter, null);
+    const circle = new Circle(0, 0, diameter, null, fill);
     addShape(circle);
 }
 
@@ -179,43 +179,65 @@ function closeDialog(id) {
 */
 
 class Shape {
-    constructor(attributeClass, top, left, width, height, stroke) {
-        this.attributeClass = attributeClass;
+    constructor(type, top, left, width, height, stroke) {
+        this.type = type;
         this.id = "shape" + (++shapeIdCounter);
         this.top = top;
         this.left = left;
         this.width = width;
         this.height = height;
         this.stroke = stroke;
-
-        this.toDraggableHTMLElement = () => {
-            const div = document.createElement("div");
-            div.classList.add("shape-container");
-            div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
-            div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
-
-            div.setAttribute("id", this.id);
-            div.setAttribute("draggable", "true");
-            div.addEventListener("mousedown", selectShapeOnMouseDown);
-            div.addEventListener("dragstart", startDraggingShape);
-            div.appendChild(this.toSVGImage());
-
-            return div;
-        }
-
-        this.toSVGImage = () => {
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
-            svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
-            svg.appendChild(this.toSVGFragment());
-            return svg;
-        }
-
-        this.toSVGFragment = () => {
-            throw "Nothing to generate SVG fragment from";
-        }
     }
 
+    get attributeClass() {
+        return this.type+"-attribute";
+    }
+
+    toDraggableHTMLElement() {
+        const div = document.createElement("div");
+        div.classList.add("shape-container");
+        div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
+        div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
+
+        div.setAttribute("id", this.id);
+        div.setAttribute("draggable", "true");
+        div.addEventListener("mousedown", selectShapeOnMouseDown);
+        div.addEventListener("dragstart", startDraggingShape);
+        div.appendChild(this.toSVGImage());
+
+        return div;
+    }
+
+    toSVGImage() {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('style', DEFAULT_SVG_STYLE);
+        svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
+        svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
+        svg.appendChild(this.toSVGFragment());
+        return svg;
+    }
+
+    toSVGFragment() {
+        return document.createElementNS('http://www.w3.org/2000/svg', this.type);
+    }
+
+}
+
+class FilledShape extends Shape {
+    constructor(type, top, left, width, height, stroke, fill) {
+        super(type, top, left, width, height, stroke);
+        this.fill = fill;
+    }
+
+    toSVGFragment() {
+        const fragment = super.toSVGFragment();
+        if (this.fill) {
+            // TODO: will remove any other style on the fragment
+            fragment.setAttribute('style', "fill: black;");
+        }
+        return fragment;
+
+    }
 }
 
 class Line extends Shape {
@@ -229,21 +251,20 @@ class Line extends Shape {
      * @param {number} stroke 
      */
     constructor(top, left, width, height, stroke) {
-        super("line-attribute", top, left, width, height, stroke);
+        super("line", top, left, width, height, stroke);
+    }
 
-        this.toSVGFragment = () => {
-            const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            fragment.setAttribute('style', DEFAULT_SVG_STYLE);
-            fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('y1', this.top + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('y2', this.top + this.height + ROUND_CORNER_MARGIN);
-            return fragment;
-        }
+    toSVGFragment() {
+        const fragment = super.toSVGFragment();
+        fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('y1', this.top + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('y2', this.top + this.height + ROUND_CORNER_MARGIN);
+        return fragment;
     }
 }
 
-class Circle extends Shape {
+class Circle extends FilledShape {
     /**
       * 
       * @param {string} id 
@@ -252,17 +273,8 @@ class Circle extends Shape {
       * @param {number} diameter 
       * @param {number} stroke 
       */
-    constructor(top, left, diameter, stroke) {
-        super("circle-attribute", top, left, diameter, diameter, stroke);
-
-        this.toSVGFragment = () => {
-            const fragment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            fragment.setAttribute('style', DEFAULT_SVG_STYLE);
-            fragment.setAttribute('cx', this.centerX + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('cy', this.centerY + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('r', this.radius);
-            return fragment;
-        }
+    constructor(top, left, diameter, stroke, fill) {
+        super("circle", top, left, diameter, diameter, stroke, fill);
     }
 
     get centerX() {
@@ -275,5 +287,13 @@ class Circle extends Shape {
 
     get radius() {
         return this.width / 2;
+    }
+
+    toSVGFragment() {
+        const fragment = super.toSVGFragment();
+        fragment.setAttribute('cx', this.centerX + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('cy', this.centerY + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('r', this.radius);
+        return fragment;
     }
 }

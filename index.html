@@ -94,8 +94,9 @@
             <p>It doesn't really matter which type of line you add, it can always be changed later. The various
                 types are just for convenience.</p>
             <h2>Basic Shapes</h2>
-            <button title="Dot (small filled circle)" class="add-shape-button" disabled><img src="img/dot.svg" alt=""></button>
-            <button title="Circle" class="add-shape-button" onclick="addCircle(2)"><img src="img/circle.svg" alt=""></button>
+            <button title="Dot (small filled circle)" class="add-shape-button" onclick="addCircle(1, true)"><img src="img/dot.svg" alt=""></button>
+            <button title="Circle (filled)" class="add-shape-button" onclick="addCircle(2, true)"><img src="img/circle-filled.svg" alt=""></button>
+            <button title="Circle (not filled)" class="add-shape-button" onclick="addCircle(2, false)"><img src="img/circle-no-fill.svg" alt=""></button>
             <button title="Rectangle" class="add-shape-button" disabled><img src="img/rectangle.svg" alt=""></button>
             <p>These can change size, location, and whether they are filled or not, but not type.</p>
             <h2>Complex shapes</h2>
