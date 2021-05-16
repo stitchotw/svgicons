@@ -11,6 +11,11 @@ const PADDING_MARGIN = 20;
 const DEFAULT_X_COORD = -ROUND_CORNER_MARGIN;
 const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 
+var selectedShape = null;
+var isDragging = false;
+var dragOffsetX, dragOffsetY;
+
+
 /**
  * Adds a line to the icon. 
  * 
@@ -39,6 +44,10 @@ function addCircle(diameter) {
     addSVGShape(svg);
 }
 
+function getIconImage(){
+    return document.getElementById('workarea');
+}
+
 function addSVGShape(svg) {
     const div = document.createElement("div");
     div.classList.add("shape-container");
@@ -50,19 +59,18 @@ function addSVGShape(svg) {
     div.addEventListener("dragstart", startDraggingShape);
     div.appendChild(svg.toSVGImage());
 
-    const image = document.getElementById('workarea');
-    image.appendChild(div);
+    getIconImage().appendChild(div);
 
     selectShape(div);
 }
 
-function allowDrop(event) {
-    event.preventDefault();
+function deleteCurrentlySelectedShape(){
+    if (selectedShape) {
+        console.log("asd")
+        getIconImage().removeChild(selectedShape);
+        unselectCurrentlySelectedShape();
+    }
 }
-
-var selectedShape = null;
-var isDragging = false;
-var dragOffsetX, dragOffsetY;
 
 function selectShape(shape) {
     if (shape != selectedShape) {
@@ -89,6 +97,10 @@ function hideAllShapeAttributes() {
 
 }
 
+/*
+    Drag'n drop of shapes
+*/
+
 function selectShapeOnMouseDown(event) {
     let shape = event.target;
     while (!shape.classList.contains('shape-container')) {
@@ -98,7 +110,6 @@ function selectShapeOnMouseDown(event) {
 }
 
 function startDraggingShape(event) {
-    console.log("startdrag " + event.target)
     isDragging = true;
     dragOffsetX = event.offsetX;
     dragOffsetY = event.offsetY;
@@ -106,7 +117,6 @@ function startDraggingShape(event) {
 
 function dropDraggedShape(event) {
     if (isDragging) {
-        console.log("enddrag")
         event.preventDefault();
 
         const x = Math.floor((event.offsetX - dragOffsetX + PIXELS_PER_CELL / 2) / PIXELS_PER_CELL) * PIXELS_PER_CELL - ROUND_CORNER_MARGIN + PADDING_MARGIN;
@@ -117,6 +127,12 @@ function dropDraggedShape(event) {
         isDragging = false;
     }
 }
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+
 
 /*
     Dialogs

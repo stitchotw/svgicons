@@ -98,6 +98,10 @@ h2.attribute-header {
     margin-top: 0px;
 }
 
+.shape-functions {
+    grid-column: 1 / -1;
+}
+
 .hidden {
     display: none;
 }
