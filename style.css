@@ -64,14 +64,14 @@ h1 {
 
 .attributes {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     column-gap: var(--margin);
     margin-bottom: 0px;
 }
 
 .attribute-group {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 0.75fr 1fr;
     grid-auto-rows: min-content;
     column-gap: var(--small-margin);
     row-gap: var(--small-margin);
