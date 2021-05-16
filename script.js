@@ -86,15 +86,35 @@ function unselectCurrentlySelectedShape() {
         selectedShape.classList.remove('selected-shape');
         selectedShape = null;
         hideAllShapeAttributes();
+
+
     }
 }
 
 function showAttributesOfCurrentlySelectedShape() {
-
+    addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
+    removeClass(document.getElementsByClassName("attribute-name"), "hidden");
+    removeClass(document.getElementsByClassName("attribute"), "hidden");
+    removeClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
 function hideAllShapeAttributes() {
+    removeClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
+    addClass(document.getElementsByClassName("attribute-name"), "hidden");
+    addClass(document.getElementsByClassName("attribute"), "hidden");
+    addClass(document.getElementsByClassName("shape-functions"), "hidden");
+}
 
+function addClass(elements, className){
+    for(const element of elements){
+        element.classList.add(className);
+    }
+}
+
+function removeClass(elements, className){
+    for(const element of elements){
+        element.classList.remove(className);
+    }
 }
 
 /*
