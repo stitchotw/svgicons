@@ -10,12 +10,12 @@
     <script src='script.js'></script>
 </head>
 
-<body>
+<body onload="setup()">
     <div class="app">
         <div class="header">
             <h1>SVG Icons v0.1</h1>
         </div>
-        <div id="workarea" class="workarea" ondrop="dropDraggedShape(event)" ondragover="allowDrop(event)">
+        <div id="workarea" class="workarea">
             <img src="img/background.svg" alt="Background grid">
         </div>
         <div class="attributes">
@@ -64,7 +64,7 @@
                 <div class="shape-attribute hidden">None</div>
                 <div class="shape-attribute-name hidden">Text:</div>
                 <div class="shape-attribute hidden">None</div>
-                <div  class="shape-functions hidden"><button onclick="deleteCurrentlySelectedShape()">Delete</button></div>
+                <div class="shape-functions hidden"><button id="delete-selected-shape-button">Delete</button></div>
             </div>
             <div class="attribute-group">
                 <h2 class="attribute-header">Whole Icon</h2>
@@ -81,10 +81,10 @@
             </div>
         </div>
         <div class="functions">
-            <button class="function-button" onclick="openDialog('save-icon-dialog')">Save</button>
-            <button class="function-button" onclick="openDialog('new-icon-dialog')">New icon</button>
-            <button class="function-button" onclick="openDialog('settings-dialog')">Settings</button>
-            <button class="function-button" onclick="openDialog('help-dialog')">Help</button>
+            <button id="save-icon-button" class="function-button">Save</button>
+            <button id="new-icon-button" class="function-button">New icon</button>
+            <button id="settings-button" class="function-button">Settings</button>
+            <button id="help-button" class="function-button">Help</button>
         </div>
         <div class="shape-library">
             <h2>Lines</h2>
@@ -122,8 +122,9 @@
         <div class="dialog-content">
             <h1 class="dialog-header">Save icon</h1>
             Placeholder text.
+            <div id="icon-to-save"></div>
             <div class="functions">
-                <button class="function-button" onclick="closeDialog('save-icon-dialog')">Close</button>
+                <button id="close-save-icon-dialog-button" class="function-button">Close</button>
             </div>
         </div>
     </div>
@@ -132,7 +133,7 @@
             <h1 class="dialog-header">New icon</h1>
             Placeholder text.
             <div class="functions">
-                <button class="function-button" onclick="closeDialog('new-icon-dialog')">Close</button>
+                <button id="close-new-icon-dialog-button" class="function-button">Close</button>
             </div>
         </div>
     </div>
@@ -141,7 +142,7 @@
             <h1 class="dialog-header">Settings</h1>
             Placeholder text.
             <div class="functions">
-                <button class="function-button" onclick="closeDialog('settings-dialog')">Close</button>
+                <button id="close-settings-dialog-button" class="function-button">Close</button>
             </div>
         </div>
     </div>
@@ -150,7 +151,7 @@
             <h1 class="dialog-header">Help</h1>
             <iframe src="help.html" frameborder="0"></iframe>
             <div class="functions">
-                <button class="function-button" onclick="closeDialog('help-dialog')">Close</button>
+                <button id="close-help-dialog-button" class="function-button">Close</button>
             </div>
         </div>
     </div>

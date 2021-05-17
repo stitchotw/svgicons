@@ -18,6 +18,43 @@ var canStartDragging = false;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
 
+function setup() {
+    // Work area
+    document.getElementById("workarea").addEventListener("drop", dropDraggedShape);
+    document.getElementById("workarea").addEventListener("dragover", allowDrop);
+
+    // Current shape
+    document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
+
+    // Open dialogs
+    document.getElementById("save-icon-button").addEventListener("click", (event) => openDialog("save-icon-dialog", updateIconToSave));
+    document.getElementById("new-icon-button").addEventListener("click", (event) => openDialog("new-icon-dialog"));
+    document.getElementById("settings-button").addEventListener("click", (event) => openDialog("settings-dialog"));
+    document.getElementById("help-button").addEventListener("click", (event) => openDialog("help-dialog"));
+
+    // Close dialogs
+    document.getElementById("close-save-icon-dialog-button").addEventListener("click", (event) => closeDialog("save-icon-dialog"));
+    document.getElementById("close-new-icon-dialog-button").addEventListener("click", (event) => closeDialog("new-icon-dialog"));
+    document.getElementById("close-settings-dialog-button").addEventListener("click", (event) => closeDialog("settings-dialog"));
+    document.getElementById("close-help-dialog-button").addEventListener("click", (event) => closeDialog("help-dialog"));
+}
+
+function getNewSVGElement(width, height) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('style', DEFAULT_SVG_STYLE);
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    return svg;
+}
+
+function getIconAsSVGImage() {
+    const svg = getNewSVGElement(400, 400);
+    for (const [id, shape] of shapes) {
+        console.log(shape);
+        svg.appendChild(shape.toSVGFragment());
+    }
+    return svg;
+}
 
 /**
  * Adds a line to the icon. 
@@ -47,7 +84,7 @@ function addCircle(diameter, fill) {
     addShape(circle);
 }
 
-function getIconImage() {
+function getWorkArea() {
     return document.getElementById('workarea');
 }
 
@@ -59,14 +96,14 @@ function addShape(shape) {
     shapes.set(shape.id, shape);
 
     const element = shape.toDraggableHTMLElement();
-    getIconImage().appendChild(element);
+    getWorkArea().appendChild(element);
     selectShape(element);
 }
 
 function deleteCurrentlySelectedShape() {
     if (selectedUIShape) {
         shapes.delete(selectedUIShape.id);
-        getIconImage().removeChild(selectedUIShape);
+        getWorkArea().removeChild(selectedUIShape);
         unselectCurrentlySelectedShape();
     }
 }
@@ -187,7 +224,10 @@ function allowDrop(event) {
     Dialogs
 */
 
-function openDialog(id) {
+function openDialog(id, onOpenDialog) {
+    if (onOpenDialog)
+        onOpenDialog();
+
     const dialog = document.getElementById(id);
     dialog.style.display = "grid";
 }
@@ -195,6 +235,11 @@ function openDialog(id) {
 function closeDialog(id) {
     const dialog = document.getElementById(id);
     dialog.style.display = "none";
+}
+
+function updateIconToSave() {
+    const container = document.getElementById("icon-to-save");
+    container.replaceChildren(getIconAsSVGImage());
 }
 
 /* 
@@ -242,12 +287,7 @@ class Shape {
     }
 
     toSVGFragment() {
-        const div = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        //        div.setAttribute("draggable", "true");
-        //        div.addEventListener("mousedown", selectShapeOnMouseDown);
-        //        div.addEventListener("dragstart", startDraggingShape);
-
-        return div;
+        return document.createElementNS('http://www.w3.org/2000/svg', this.type);
     }
 
 }
@@ -301,7 +341,6 @@ class Line extends Shape {
 
 class Circle extends FilledShape {
     /**
-      * 
       * @param {string} id 
       * @param {number} top 
       * @param {number} left 
