@@ -1,15 +1,12 @@
-/**
- * Most functions work with the 8x8 grid shown on the background image rather than pixels.
- * This constant defines how many pixels there are per grid cell.
- */
-const PIXELS_PER_CELL = 50;
-
 const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 20px; stroke-linecap: round; fill: none;"
+
+/*
 const ROUND_CORNER_MARGIN = 10;
 const PADDING_MARGIN = 20;
 
 const DEFAULT_X_COORD = -ROUND_CORNER_MARGIN;
 const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
+*/
 
 var shapeIdCounter = 0;
 var shapes = new Map();
@@ -19,6 +16,11 @@ var isDragging = false;
 var dragOffsetX, dragOffsetY;
 
 function setup() {
+    addEventListeners();
+    makeSVGDraggable();
+}
+
+function addEventListeners() {
     // Work area
     document.getElementById("workarea").addEventListener("drop", dropDraggedShape);
     document.getElementById("workarea").addEventListener("dragover", allowDrop);
@@ -38,6 +40,62 @@ function setup() {
     document.getElementById("close-settings-dialog-button").addEventListener("click", (event) => closeDialog("settings-dialog"));
     document.getElementById("close-help-dialog-button").addEventListener("click", (event) => closeDialog("help-dialog"));
 }
+
+/*
+    Drag'n drop of shapes
+    Based on https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
+*/
+
+function makeSVGDraggable() {
+    var svg = getWorkArea();
+    svg.addEventListener('mousedown', startDrag);
+    svg.addEventListener('mousemove', drag);
+    svg.addEventListener('mouseup', endDrag);
+    svg.addEventListener('mouseleave', endDrag);
+
+    var selectedElement = null;
+    var offset;
+
+    function startDrag(evt) {
+        if (evt.target.classList.contains('draggable')) {
+            selectedElement = evt.target;
+            offset = getMousePosition(evt);
+            offset.x -= parseFloat(selectedElement.getAttributeNS(null, "x"));
+            offset.y -= parseFloat(selectedElement.getAttributeNS(null, "y"));
+        }
+    }
+
+    function getMousePosition(evt) {
+        var CTM = svg.getScreenCTM();
+        return {
+            x: (evt.clientX - CTM.e) / CTM.a,
+            y: (evt.clientY - CTM.f) / CTM.d
+        };
+    }
+
+    function getNewPosition(evt){
+        var pos = getMousePosition(evt);
+        pos.x = Math.round(pos.x - offset.x);
+        pos.y = Math.round(pos.y - offset.y);
+        return pos;
+    }
+
+    function drag(evt) {
+        if (selectedElement) {
+            evt.preventDefault();
+            var pos = getNewPosition(evt);
+
+            selectedElement.setAttributeNS(null, "x", pos.x );
+            selectedElement.setAttributeNS(null, "y", pos.y );
+        }
+    }
+
+    function endDrag(evt) {
+        selectedElement = null;
+    }
+}
+
+
 
 function getNewSVGElement(width, height) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -63,13 +121,7 @@ function getIconAsSVGImage() {
  * @param {number} dy how many cells the line should cover vertically.
  */
 function addLine(dx, dy, leftToRight) {
-    const x = dx * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
-    const y = dy * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
-
-    const width = dx * PIXELS_PER_CELL;
-    const height = dy * PIXELS_PER_CELL;
-
-    const line = new Line(0, 0, width, height, leftToRight, null);
+    const line = new Line(0, 0, dx * 10, dy * 10, leftToRight, null);
     addShape(line);
 }
 
@@ -84,6 +136,11 @@ function addCircle(diameter, fill) {
     addShape(circle);
 }
 
+function addRectangle(x, y, width, height) {
+    const rectangle = new Rectangle(x, y, width, height);
+    addShape(rectangle);
+}
+
 function getWorkArea() {
     return document.getElementById('workarea');
 }
@@ -95,7 +152,7 @@ function addShape(shape) {
 
     shapes.set(shape.id, shape);
 
-    const element = shape.toDraggableHTMLElement();
+    const element = shape.toSVGFragment();
     getWorkArea().appendChild(element);
     selectShape(element);
 }
@@ -161,9 +218,7 @@ function removeClass(elements, className) {
     }
 }
 
-/*
-    Drag'n drop of shapes
-*/
+
 
 function selectShapeOnMouseDown(event) {
     // console.log("Mouse down: " + event.target);
@@ -260,34 +315,37 @@ class Shape {
     get attributeClass() {
         return this.type + "-attribute";
     }
-
-    toDraggableHTMLElement() {
-        const div = document.createElement("div");
-        div.classList.add("shape-container");
-        div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
-        div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
-
-        div.setAttribute("id", this.id);
-        div.setAttribute("draggable", "true");
-        div.addEventListener("dragstart", startDraggingShape);
-        div.addEventListener("mousedown", selectShapeOnMouseDown);
-        div.addEventListener("mouseup", mouseup);
-        div.appendChild(this.toSVGImage());
-
-        return div;
-    }
-
-    toSVGImage() {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('style', DEFAULT_SVG_STYLE);
-        svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
-        svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
-        svg.appendChild(this.toSVGFragment());
-        return svg;
-    }
-
+    /*
+        toDraggableHTMLElement() {
+            const div = document.createElement("div");
+            div.classList.add("shape-container");
+            div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
+            div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
+    
+            div.setAttribute("id", this.id);
+            div.setAttribute("draggable", "true");
+            div.addEventListener("dragstart", startDraggingShape);
+            div.addEventListener("mousedown", selectShapeOnMouseDown);
+            div.addEventListener("mouseup", mouseup);
+            div.appendChild(this.toSVGImage());
+    
+            return div;
+        }
+    
+        toSVGImage() {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('style', DEFAULT_SVG_STYLE);
+            svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
+            svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
+            svg.appendChild(this.toSVGFragment());
+            return svg;
+        }
+    */
     toSVGFragment() {
-        return document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        const fragment = document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        fragment.setAttribute("id", this.id);
+        fragment.classList.add("draggable");
+        return fragment;
     }
 
 }
@@ -327,14 +385,14 @@ class Line extends Shape {
     toSVGFragment() {
         const fragment = super.toSVGFragment();
         if (this.leftToRight) {
-            fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('x1', this.left);
+            fragment.setAttribute('x2', this.left + this.width);
         } else {
-            fragment.setAttribute('x2', this.left + ROUND_CORNER_MARGIN);
-            fragment.setAttribute('x1', this.left + this.width + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('x2', this.left);
+            fragment.setAttribute('x1', this.left + this.width);
         }
-        fragment.setAttribute('y1', this.top + ROUND_CORNER_MARGIN);
-        fragment.setAttribute('y2', this.top + this.height + ROUND_CORNER_MARGIN);
+        fragment.setAttribute('y1', this.top);
+        fragment.setAttribute('y2', this.top + this.height);
         return fragment;
     }
 }
@@ -368,6 +426,25 @@ class Circle extends FilledShape {
         fragment.setAttribute('cx', this.centerX + ROUND_CORNER_MARGIN);
         fragment.setAttribute('cy', this.centerY + ROUND_CORNER_MARGIN);
         fragment.setAttribute('r', this.radius);
+        return fragment;
+    }
+}
+
+class Rectangle extends FilledShape {
+    constructor(x, y, width, height) {
+        super("rect");
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    toSVGFragment() {
+        const fragment = super.toSVGFragment();
+        fragment.setAttribute("x", this.x);
+        fragment.setAttribute("y", this.y);
+        fragment.setAttribute("width", this.width);
+        fragment.setAttribute("height", this.height);
         return fragment;
     }
 }
