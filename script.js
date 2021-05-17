@@ -24,14 +24,14 @@ var dragOffsetX, dragOffsetY;
  * @param {number} dx how many cells the line should cover horizontally.
  * @param {number} dy how many cells the line should cover vertically.
  */
-function addLine(dx, dy) {
+function addLine(dx, dy, leftToRight) {
     const x = dx * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
     const y = dy * PIXELS_PER_CELL + ROUND_CORNER_MARGIN * 2;
 
     const width = dx * PIXELS_PER_CELL;
     const height = dy * PIXELS_PER_CELL;
 
-    const line = new Line(0, 0, width, height, null);
+    const line = new Line(0, 0, width, height, leftToRight, null);
     addShape(line);
 }
 
@@ -243,22 +243,28 @@ class FilledShape extends Shape {
 class Line extends Shape {
     /**
      * 
-     * @param {string} id 
      * @param {number} top 
      * @param {number} left 
      * @param {number} width 
      * @param {number} height 
+     * @param {boolean} leftToRight
      * @param {number} stroke 
      */
-    constructor(top, left, width, height, stroke) {
+    constructor(top, left, width, height, leftToRight, stroke) {
         super("line", top, left, width, height, stroke);
+        this.leftToRight = leftToRight;
     }
 
     toSVGFragment() {
         const fragment = super.toSVGFragment();
-        fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
+        if(this.leftToRight){
+            fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
+        }else{
+            fragment.setAttribute('x2', this.left + ROUND_CORNER_MARGIN);
+            fragment.setAttribute('x1', this.left + this.width + ROUND_CORNER_MARGIN);
+        }
         fragment.setAttribute('y1', this.top + ROUND_CORNER_MARGIN);
-        fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
         fragment.setAttribute('y2', this.top + this.height + ROUND_CORNER_MARGIN);
         return fragment;
     }
