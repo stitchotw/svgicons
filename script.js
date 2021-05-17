@@ -17,7 +17,8 @@ var dragOffsetX, dragOffsetY;
 
 function setup() {
     addEventListeners();
-    makeSVGDraggable();
+    addBackgroundToWorkarea();
+    makeWorkareaDraggable();
 }
 
 function addEventListeners() {
@@ -41,12 +42,16 @@ function addEventListeners() {
     document.getElementById("close-help-dialog-button").addEventListener("click", (event) => closeDialog("help-dialog"));
 }
 
+function addBackgroundToWorkarea() {
+
+}
+
 /*
     Drag'n drop of shapes
     Based on https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
 */
 
-function makeSVGDraggable() {
+function makeWorkareaDraggable() {
     var svg = getWorkArea();
     svg.addEventListener('mousedown', startDrag);
     svg.addEventListener('mousemove', drag);
@@ -73,7 +78,7 @@ function makeSVGDraggable() {
         };
     }
 
-    function getNewPosition(evt){
+    function getNewPosition(evt) {
         var pos = getMousePosition(evt);
         pos.x = Math.round(pos.x - offset.x);
         pos.y = Math.round(pos.y - offset.y);
@@ -85,8 +90,8 @@ function makeSVGDraggable() {
             evt.preventDefault();
             var pos = getNewPosition(evt);
 
-            selectedElement.setAttributeNS(null, "x", pos.x );
-            selectedElement.setAttributeNS(null, "y", pos.y );
+            selectedElement.setAttributeNS(null, "x", pos.x);
+            selectedElement.setAttributeNS(null, "y", pos.y);
         }
     }
 
@@ -116,23 +121,17 @@ function getIconAsSVGImage() {
 
 /**
  * Adds a line to the icon. 
- * 
- * @param {number} dx how many cells the line should cover horizontally.
- * @param {number} dy how many cells the line should cover vertically.
  */
-function addLine(dx, dy, leftToRight) {
-    const line = new Line(0, 0, dx * 10, dy * 10, leftToRight, null);
+function addLine(x1, y1, x2, y2) {
+    const line = new Line(x1, y1, x2, y2);
     addShape(line);
 }
 
 /**
  * Adds a circle to the icon.
- * 
- * @param {number} diameter diameter of circle in cells 
  */
-function addCircle(diameter, fill) {
-    diameter = diameter * PIXELS_PER_CELL;
-    const circle = new Circle(0, 0, diameter, null, fill);
+function addCircle(cx,cy,r, filled) {
+    const circle = new Circle(cx, cy, r, filled);
     addShape(circle);
 }
 
@@ -302,45 +301,15 @@ function updateIconToSave() {
 */
 
 class Shape {
-    constructor(type, top, left, width, height, stroke) {
+    constructor(type) {
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
-        this.top = top;
-        this.left = left;
-        this.width = width;
-        this.height = height;
-        this.stroke = stroke;
     }
 
     get attributeClass() {
         return this.type + "-attribute";
     }
-    /*
-        toDraggableHTMLElement() {
-            const div = document.createElement("div");
-            div.classList.add("shape-container");
-            div.style.top = `${DEFAULT_X_COORD + PADDING_MARGIN}px`;
-            div.style.left = `${DEFAULT_Y_COORD + PADDING_MARGIN}px`;
-    
-            div.setAttribute("id", this.id);
-            div.setAttribute("draggable", "true");
-            div.addEventListener("dragstart", startDraggingShape);
-            div.addEventListener("mousedown", selectShapeOnMouseDown);
-            div.addEventListener("mouseup", mouseup);
-            div.appendChild(this.toSVGImage());
-    
-            return div;
-        }
-    
-        toSVGImage() {
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('style', DEFAULT_SVG_STYLE);
-            svg.setAttribute("width", this.width + ROUND_CORNER_MARGIN * 2);
-            svg.setAttribute("height", this.height + ROUND_CORNER_MARGIN * 2);
-            svg.appendChild(this.toSVGFragment());
-            return svg;
-        }
-    */
+
     toSVGFragment() {
         const fragment = document.createElementNS('http://www.w3.org/2000/svg', this.type);
         fragment.setAttribute("id", this.id);
@@ -351,14 +320,14 @@ class Shape {
 }
 
 class FilledShape extends Shape {
-    constructor(type, top, left, width, height, stroke, fill) {
-        super(type, top, left, width, height, stroke);
-        this.fill = fill;
+    constructor(type, filled) {
+        super(type);
+        this.filled = filled;
     }
 
     toSVGFragment() {
         const fragment = super.toSVGFragment();
-        if (this.fill) {
+        if (this.filled) {
             // TODO: will remove any other style on the fragment
             fragment.setAttribute('style', "fill: black;");
         }
@@ -368,71 +337,46 @@ class FilledShape extends Shape {
 }
 
 class Line extends Shape {
-    /**
-     * 
-     * @param {number} top 
-     * @param {number} left 
-     * @param {number} width 
-     * @param {number} height 
-     * @param {boolean} leftToRight
-     * @param {number} stroke 
-     */
-    constructor(top, left, width, height, leftToRight, stroke) {
-        super("line", top, left, width, height, stroke);
-        this.leftToRight = leftToRight;
+
+    constructor(x1, y1, x2, y2) {
+        super("line");
+
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
     }
 
     toSVGFragment() {
         const fragment = super.toSVGFragment();
-        if (this.leftToRight) {
-            fragment.setAttribute('x1', this.left);
-            fragment.setAttribute('x2', this.left + this.width);
-        } else {
-            fragment.setAttribute('x2', this.left);
-            fragment.setAttribute('x1', this.left + this.width);
-        }
-        fragment.setAttribute('y1', this.top);
-        fragment.setAttribute('y2', this.top + this.height);
+        fragment.setAttribute('x1', this.x1);
+        fragment.setAttribute('y1', this.y1);
+        fragment.setAttribute('x2', this.x2);
+        fragment.setAttribute('y2', this.y2);
         return fragment;
     }
 }
 
 class Circle extends FilledShape {
-    /**
-      * @param {string} id 
-      * @param {number} top 
-      * @param {number} left 
-      * @param {number} diameter 
-      * @param {number} stroke 
-      */
-    constructor(top, left, diameter, stroke, fill) {
-        super("circle", top, left, diameter, diameter, stroke, fill);
-    }
-
-    get centerX() {
-        return this.top + this.radius;
-    }
-
-    get centerY() {
-        return this.top + this.radius;
-    }
-
-    get radius() {
-        return this.width / 2;
+    constructor(cx, cy, r, filled) {
+        super("circle", filled);
+        this.cx=cx;
+        this.cy=cy;
+        this.r=r;
     }
 
     toSVGFragment() {
         const fragment = super.toSVGFragment();
-        fragment.setAttribute('cx', this.centerX + ROUND_CORNER_MARGIN);
-        fragment.setAttribute('cy', this.centerY + ROUND_CORNER_MARGIN);
-        fragment.setAttribute('r', this.radius);
+        fragment.setAttribute('cx', this.cx);
+        fragment.setAttribute('cy', this.cy);
+        fragment.setAttribute('r', this.r);
         return fragment;
     }
 }
 
 class Rectangle extends FilledShape {
-    constructor(x, y, width, height) {
-        super("rect");
+    constructor(x, y, width, height, filled) {
+        super("rect", filled);
         this.x = x;
         this.y = y;
         this.width = width;
