@@ -60,13 +60,18 @@ function makeWorkareaDraggable() {
 
     var selectedElement = null;
     var offset;
+    var transform;
 
     function startDrag(evt) {
         if (evt.target.classList.contains('draggable')) {
             selectedElement = evt.target;
+
+            var transforms = selectedElement.transform.baseVal;
+            transform = transforms.getItem(0);
+        
             offset = getMousePosition(evt);
-            offset.x -= parseFloat(selectedElement.getAttributeNS(null, "x"));
-            offset.y -= parseFloat(selectedElement.getAttributeNS(null, "y"));
+            offset.x -= transform.matrix.e;
+            offset.y -= transform.matrix.f;
         }
     }
 
@@ -88,15 +93,20 @@ function makeWorkareaDraggable() {
     function drag(evt) {
         if (selectedElement) {
             evt.preventDefault();
-            var pos = getNewPosition(evt);
 
-            selectedElement.setAttributeNS(null, "x", pos.x);
-            selectedElement.setAttributeNS(null, "y", pos.y);
+            var coord = getMousePosition(evt);
+            transform.setTranslate(coord.x - offset.x, coord.y - offset.y);
+/*            
+            var pos = getNewPosition(evt);
+            transform.setTranslate(pos.x - offset.x, pos.y - offset.y);
+            */
         }
     }
 
     function endDrag(evt) {
         selectedElement = null;
+        offset=null;
+        transform=null;
     }
 }
 
@@ -152,7 +162,11 @@ function addShape(shape) {
     shapes.set(shape.id, shape);
 
     const element = shape.toSVGFragment();
-    getWorkArea().appendChild(element);
+    const svg = getWorkArea();
+    svg.appendChild(element);
+    const translate = svg.createSVGTransform();
+    translate.setTranslate(0,0);
+    element.transform.baseVal.insertItemBefore(translate, 0);
     selectShape(element);
 }
 
