@@ -14,6 +14,7 @@ const DEFAULT_Y_COORD = -ROUND_CORNER_MARGIN;
 var shapeIdCounter = 0;
 var shapes = new Map();
 var selectedUIShape = null;
+var canStartDragging = false;
 var isDragging = false;
 var dragOffsetX, dragOffsetY;
 
@@ -128,20 +129,39 @@ function removeClass(elements, className) {
 */
 
 function selectShapeOnMouseDown(event) {
+    // console.log("Mouse down: " + event.target);
+    // console.log(event.target instanceof SVGSVGElement);
+
+    // Do nothing if outside of actual shape
+    if (event.target instanceof SVGSVGElement)
+        return;
+
     let shape = event.target;
     while (!shape.classList.contains('shape-container')) {
         shape = shape.parentElement;
     }
     selectShape(shape);
+    canStartDragging = true;
+}
+
+function mouseup(event) {
+    // console.log("Mouse up: " + event.target);
+    canStartDragging = false;
 }
 
 function startDraggingShape(event) {
-    isDragging = true;
-    dragOffsetX = event.offsetX;
-    dragOffsetY = event.offsetY;
+    // console.log("Start: " + event.target);
+    if (canStartDragging) {
+        isDragging = true;
+        dragOffsetX = event.offsetX;
+        dragOffsetY = event.offsetY;
+    } else {
+        event.preventDefault();
+    }
 }
 
 function dropDraggedShape(event) {
+    // console.log("Drop: " + event.target);
     if (isDragging) {
         event.preventDefault();
 
@@ -151,11 +171,14 @@ function dropDraggedShape(event) {
         selectedUIShape.style.left = x + "px";
 
         isDragging = false;
+        canStartDragging = false;
     }
 }
 
 function allowDrop(event) {
-    event.preventDefault();
+    if (isDragging) {
+        event.preventDefault();
+    }
 }
 
 
@@ -190,7 +213,7 @@ class Shape {
     }
 
     get attributeClass() {
-        return this.type+"-attribute";
+        return this.type + "-attribute";
     }
 
     toDraggableHTMLElement() {
@@ -201,8 +224,9 @@ class Shape {
 
         div.setAttribute("id", this.id);
         div.setAttribute("draggable", "true");
-        div.addEventListener("mousedown", selectShapeOnMouseDown);
         div.addEventListener("dragstart", startDraggingShape);
+        div.addEventListener("mousedown", selectShapeOnMouseDown);
+        div.addEventListener("mouseup", mouseup);
         div.appendChild(this.toSVGImage());
 
         return div;
@@ -218,7 +242,12 @@ class Shape {
     }
 
     toSVGFragment() {
-        return document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        const div = document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        //        div.setAttribute("draggable", "true");
+        //        div.addEventListener("mousedown", selectShapeOnMouseDown);
+        //        div.addEventListener("dragstart", startDraggingShape);
+
+        return div;
     }
 
 }
@@ -257,10 +286,10 @@ class Line extends Shape {
 
     toSVGFragment() {
         const fragment = super.toSVGFragment();
-        if(this.leftToRight){
+        if (this.leftToRight) {
             fragment.setAttribute('x1', this.left + ROUND_CORNER_MARGIN);
             fragment.setAttribute('x2', this.left + this.width + ROUND_CORNER_MARGIN);
-        }else{
+        } else {
             fragment.setAttribute('x2', this.left + ROUND_CORNER_MARGIN);
             fragment.setAttribute('x1', this.left + this.width + ROUND_CORNER_MARGIN);
         }
