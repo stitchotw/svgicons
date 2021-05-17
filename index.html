@@ -84,6 +84,7 @@
             <button class="function-button" onclick="openDialog('save-icon-dialog')">Save</button>
             <button class="function-button" onclick="openDialog('new-icon-dialog')">New icon</button>
             <button class="function-button" onclick="openDialog('settings-dialog')">Settings</button>
+            <button class="function-button" onclick="openDialog('help-dialog')">Help</button>
         </div>
         <div class="shape-library">
             <h2>Lines</h2>
@@ -141,6 +142,15 @@
             Placeholder text.
             <div class="functions">
                 <button class="function-button" onclick="closeDialog('settings-dialog')">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="help-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">Help</h1>
+            <iframe src="help.html" frameborder="0"></iframe>
+            <div class="functions">
+                <button class="function-button" onclick="closeDialog('help-dialog')">Close</button>
             </div>
         </div>
     </div>
