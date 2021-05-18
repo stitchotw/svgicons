@@ -32,24 +32,28 @@ h1 {
     text-align: center;
 }
 
-.workarea, .shape-library {
+.workarea-container, .shape-library {
     margin-left: var(--margin);
     margin-right: var(--margin);
 }
 
-.workarea {
+
+
+.workarea-container {
+    width: min-content;
+    height: min-content;
     padding: var(--margin);
-    border: 1px solid lightgray;
+    margin: auto;
+    border: 1px solid gray;
     position: relative;
-    height: 440px;
 }
 
-.shape-container {
-    position: absolute;
+.draggable-shape {
+    cursor: move;
 }
 
-.selected-shape > svg {
-    filter: drop-shadow(0 0 3mm green);
+.selected-shape {
+    filter: drop-shadow(0 0 0.75px rgb(26, 248, 26));
 }
 
 .add-shape-button {
