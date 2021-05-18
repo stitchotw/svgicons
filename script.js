@@ -169,8 +169,8 @@ function addCircle(cx, cy, r, filled) {
     addShape(circle);
 }
 
-function addRectangle(x, y, width, height) {
-    const rectangle = new Rectangle(x, y, width, height);
+function addRectangle(x, y, width, height, filled) {
+    const rectangle = new Rectangle(x, y, width, height, filled);
     addShape(rectangle);
 }
 
@@ -361,6 +361,7 @@ class FilledShape extends Shape {
     constructor(type, filled) {
         super(type);
         this.filled = filled;
+        console.log(filled);
     }
 
     toSVGFragment() {
