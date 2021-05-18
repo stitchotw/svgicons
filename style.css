@@ -37,11 +37,15 @@ h1 {
     margin-right: var(--margin);
 }
 
+
+
 .workarea-container {
+    width: min-content;
+    height: min-content;
     padding: var(--margin);
+    margin: auto;
     border: 1px solid gray;
     position: relative;
-    height: 440px;
 }
 
 .draggable-shape {
