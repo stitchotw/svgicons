@@ -53,11 +53,21 @@ function addBackgroundToWorkarea() {
 
 function makeWorkareaDraggable() {
     var svg = getWorkArea();
+
+    // Mouse
     svg.addEventListener('mousedown', startDrag);
     svg.addEventListener('mousedown', startDrag);
     svg.addEventListener('mousemove', drag);
     svg.addEventListener('mouseup', endDrag);
     svg.addEventListener('mouseleave', endDrag);
+
+    // Touch
+    svg.addEventListener('touchstart', startDrag);
+    svg.addEventListener('touchmove', drag);
+    svg.addEventListener('touchend', endDrag);
+    svg.addEventListener('touchleave', endDrag);
+    svg.addEventListener('touchcancel', endDrag);
+
 
     var selectedElement = null;
     var offset;
@@ -83,6 +93,12 @@ function makeWorkareaDraggable() {
 
     function getMousePosition(evt) {
         var CTM = svg.getScreenCTM();
+
+        // Handles several touches by picking the first one
+        if (evt.touches) { 
+            evt = evt.touches[0]; 
+        }
+
         return {
             x: (evt.clientX - CTM.e) / CTM.a,
             y: (evt.clientY - CTM.f) / CTM.d
