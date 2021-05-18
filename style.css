@@ -49,7 +49,7 @@ h1 {
 }
 
 .selected-shape {
-    filter: drop-shadow(0 0 2px green);
+    filter: drop-shadow(0 0 0.75px rgb(26, 248, 26));
 }
 
 .add-shape-button {
