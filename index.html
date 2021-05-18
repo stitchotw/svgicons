@@ -17,16 +17,16 @@
         </div>
         <div class="workarea-container">
             <svg id="workarea" width="320" height="320" viewBox="0 0 32 32" style='stroke:black;stroke-width:1'>
-               <line x1="0" y1="0" x2="32" y2="0" style="stroke:gray;opacity:50%;"/>
-               <line x1="0" y1="1" x2="32" y2="1" style="stroke:lightgray;opacity:50%;"/>
-               <line x1="0" y1="2" x2="32" y2="2" style="stroke:gray;opacity:50%;"/>
-               <line x1="0" y1="3" x2="32" y2="3" style="stroke:lightgray;opacity:50%;"/>
-               <line x1="0" y1="0" x2="0" y2="32" style="stroke:gray;opacity:50%;"/>
-               <line x1="1" y1="0" x2="1" y2="32" style="stroke:lightgray;opacity:50%;"/>
-               <line x1="2" y1="0" x2="2" y2="32" style="stroke:gray;opacity:50%;"/>
-               <line x1="3" y1="0" x2="3" y2="32" style="stroke:lightgray;opacity:50%;"/>
+                <defs>
+                    <pattern id="pixel-grid" x="0" y="0" width="1" height="1" patternUnits="userSpaceOnUse">
+                        <line x1="0" y1="0" x2="1" y2="0" style="stroke:gray;opacity:20%;" />
+                        <line x1="0" y1="0" x2="0" y2="1" style="stroke:gray;opacity:20%;" />
+                    </pattern>
+                </defs>
+
+                <rect x="0" y="0" width="32" height="32" stroke="none" fill="url(#pixel-grid)" />
             </svg>
-            </div>
+        </div>
         <div class="attributes">
             <div class="attribute-group">
                 <h2 class="attribute-header">Selected</h2>
@@ -97,18 +97,27 @@
         </div>
         <div class="shape-library">
             <h2>Lines</h2>
-            <button title="Horizontal line" class="add-shape-button" onclick="addLine(0,0,15,0)"><img src="img/line-horizontal.svg" alt=""></button>
-            <button title="Vertical line" class="add-shape-button" onclick="addLine(0,0,0,15)"><img src="img/line-vertical.svg" alt=""></button>
-            <button title="Diagonal line going from left to right" class="add-shape-button" onclick="addLine(0,0,15,15)"><img src="img/line-left-to-right.svg" alt=""></button>
-            <button title="Diagonal line going from right to left" class="add-shape-button" onclick="addLine(15,0,0,15)"><img src="img/line-right-to-left.svg" alt=""></button>
+            <button title="Horizontal line" class="add-shape-button" onclick="addLine(0,0,15,0)"><img
+                    src="img/line-horizontal.svg" alt=""></button>
+            <button title="Vertical line" class="add-shape-button" onclick="addLine(0,0,0,15)"><img
+                    src="img/line-vertical.svg" alt=""></button>
+            <button title="Diagonal line going from left to right" class="add-shape-button"
+                onclick="addLine(0,0,15,15)"><img src="img/line-left-to-right.svg" alt=""></button>
+            <button title="Diagonal line going from right to left" class="add-shape-button"
+                onclick="addLine(15,0,0,15)"><img src="img/line-right-to-left.svg" alt=""></button>
             <p>It doesn't really matter which type of line you add, it can always be changed later. The various
                 types are just for convenience.</p>
             <h2>Basic Shapes</h2>
-            <button title="Dot (small filled circle)" class="add-shape-button" onclick="addCircle(10,10,5,true)"><img src="img/dot.svg" alt=""></button>
-            <button title="Circle (filled)" class="add-shape-button" onclick="addCircle(15,15,15,true)"><img src="img/circle-filled.svg" alt=""></button>
-            <button title="Circle (not filled)" class="add-shape-button" onclick="addCircle(15,15,15, false)"><img src="img/circle-no-fill.svg" alt=""></button>
-            <button title="Rectangle (filled)" class="add-shape-button" onclick="addRectangle(0,0,20,15, true)"><img src="img/rectangle-filled.svg" alt=""></button>
-            <button title="Rectangle (not filled)" class="add-shape-button" onclick="addRectangle(0,0,20,15, false)"><img src="img/rectangle-no-fill.svg" alt=""></button>
+            <button title="Dot (small filled circle)" class="add-shape-button" onclick="addCircle(10,10,5,true)"><img
+                    src="img/dot.svg" alt=""></button>
+            <button title="Circle (filled)" class="add-shape-button" onclick="addCircle(15,15,15,true)"><img
+                    src="img/circle-filled.svg" alt=""></button>
+            <button title="Circle (not filled)" class="add-shape-button" onclick="addCircle(15,15,15, false)"><img
+                    src="img/circle-no-fill.svg" alt=""></button>
+            <button title="Rectangle (filled)" class="add-shape-button" onclick="addRectangle(0,0,20,15, true)"><img
+                    src="img/rectangle-filled.svg" alt=""></button>
+            <button title="Rectangle (not filled)" class="add-shape-button"
+                onclick="addRectangle(0,0,20,15, false)"><img src="img/rectangle-no-fill.svg" alt=""></button>
             <p>These can change size, location, and whether they are filled or not, but not type.</p>
             <h2>Complex shapes</h2>
             <button title="Polyline" class="add-shape-button" disabled><img src="img/polyline.svg" alt=""></button>
@@ -119,7 +128,8 @@
             </p>
             <h2>Text</h2>
             <button title="Line of text" class="add-shape-button" disabled><img src="img/text.svg" alt=""></button>
-            <button title="Unicode symbol (text)" class="add-shape-button" disabled><img src="img/symbol.svg" alt=""></button>
+            <button title="Unicode symbol (text)" class="add-shape-button" disabled><img src="img/symbol.svg"
+                    alt=""></button>
             <p>Be careful when using text since fonts may differ for viewers.</p>
             <h2>Premade shapes</h2>
             <button title="" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
