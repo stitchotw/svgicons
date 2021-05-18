@@ -18,6 +18,12 @@
 
 [Mozilla](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)
 
+# Draggable SVG Elements
+
+https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
+
+Helped a lot with the UI
+
 # Unicode Character Sets
 
 https://unicode-table.com/en/sets/
