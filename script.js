@@ -68,7 +68,7 @@ function makeWorkareaDraggable() {
 
             var transforms = selectedElement.transform.baseVal;
             transform = transforms.getItem(0);
-        
+
             offset = getMousePosition(evt);
             offset.x -= transform.matrix.e;
             offset.y -= transform.matrix.f;
@@ -95,18 +95,20 @@ function makeWorkareaDraggable() {
             evt.preventDefault();
 
             var coord = getMousePosition(evt);
-            transform.setTranslate(coord.x - offset.x, coord.y - offset.y);
-/*            
-            var pos = getNewPosition(evt);
-            transform.setTranslate(pos.x - offset.x, pos.y - offset.y);
-            */
+            transform.setTranslate(Math.round(coord.x - offset.x), Math.round(coord.y - offset.y));
+
+            //            selectedElement.setAttribute("x", Math.round(coord.x - offset.x));
+            /*            
+                        var pos = getNewPosition(evt);
+                        transform.setTranslate(pos.x - offset.x, pos.y - offset.y);
+                        */
         }
     }
 
     function endDrag(evt) {
         selectedElement = null;
-        offset=null;
-        transform=null;
+        offset = null;
+        transform = null;
     }
 }
 
@@ -140,7 +142,7 @@ function addLine(x1, y1, x2, y2) {
 /**
  * Adds a circle to the icon.
  */
-function addCircle(cx,cy,r, filled) {
+function addCircle(cx, cy, r, filled) {
     const circle = new Circle(cx, cy, r, filled);
     addShape(circle);
 }
@@ -165,7 +167,7 @@ function addShape(shape) {
     const svg = getWorkArea();
     svg.appendChild(element);
     const translate = svg.createSVGTransform();
-    translate.setTranslate(0,0);
+    translate.setTranslate(0, 0);
     element.transform.baseVal.insertItemBefore(translate, 0);
     selectShape(element);
 }
@@ -374,9 +376,9 @@ class Line extends Shape {
 class Circle extends FilledShape {
     constructor(cx, cy, r, filled) {
         super("circle", filled);
-        this.cx=cx;
-        this.cy=cy;
-        this.r=r;
+        this.cx = cx;
+        this.cy = cy;
+        this.r = r;
     }
 
     toSVGFragment() {
