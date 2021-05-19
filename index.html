@@ -5,6 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>SVG Icons v0.1</title>
+    <link rel="icon" type="image/svg" href="./img/favicon.svg" />
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script type="module" src='script/app.mjs'></script>
@@ -16,23 +17,24 @@
             <h1>SVG Icons v0.1</h1>
         </div>
         <div>
-        <div class="workarea-container">
-            <svg id="workarea" width="320" height="320" viewBox="0 0 32 32" style='stroke:black;stroke-width:1;fill:none;'>
-                <defs>
-                    <pattern id="pixel-grid" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
-                        <line x1="0" y1="0" x2="2" y2="0" style="stroke:gray;opacity:20%;stroke-width:2" />
-                        <line x1="0" y1="0" x2="0" y2="2" style="stroke:gray;opacity:20%;stroke-width:2" />
-                    </pattern>
-                    <pattern id="support-grid" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
-                        <line x1="0" y1="0" x2="5" y2="0" style="stroke:red;opacity:75%;stroke-width:0.2;" />
-                        <line x1="0" y1="0" x2="0" y2="5" style="stroke:red;opacity:75%;stroke-width:0.2;" />
-                    </pattern>
-                </defs>
+            <div class="workarea-container">
+                <svg id="workarea" width="320" height="320" viewBox="0 0 32 32"
+                    style='stroke:black;stroke-width:1;fill:none;'>
+                    <defs>
+                        <pattern id="pixel-grid" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="0" x2="2" y2="0" style="stroke:gray;opacity:20%;stroke-width:2" />
+                            <line x1="0" y1="0" x2="0" y2="2" style="stroke:gray;opacity:20%;stroke-width:2" />
+                        </pattern>
+                        <pattern id="support-grid" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="0" x2="5" y2="0" style="stroke:red;opacity:75%;stroke-width:0.2;" />
+                            <line x1="0" y1="0" x2="0" y2="5" style="stroke:red;opacity:75%;stroke-width:0.2;" />
+                        </pattern>
+                    </defs>
 
-                <rect x="0" y="0" width="32" height="32" stroke="none" fill="url(#pixel-grid)" />
-                <rect x="0" y="0" width="32" height="32" stroke="none" fill="url(#support-grid)" />
-            </svg>
-        </div>
+                    <rect x="0" y="0" width="32" height="32" stroke="none" fill="url(#pixel-grid)" />
+                    <rect x="0" y="0" width="32" height="32" stroke="none" fill="url(#support-grid)" />
+                </svg>
+            </div>
         </div>
         <div class="attributes">
             <div class="attribute-group">
