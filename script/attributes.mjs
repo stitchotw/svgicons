@@ -2,16 +2,23 @@
  * 
  */
 
-export function selectedShapeChanged(){
-    
+import {deleteCurrentlySelectedShape} from './workarea.mjs';
+import {addClass, removeClass} from './dom.mjs';
+import {shapeFromId} from './icon.mjs';
+
+export function setUpAttributes() {
+    addEventListeners();
 }
 
-function showAttributesOfCurrentlySelectedShape() {
-    const shape = getSelectedShapeNodel();
-    removeClass(document.getElementsByClassName(shape.attributeClass), "hidden");
+function addEventListeners() {
+    document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
+}
 
-    addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
-    removeClass(document.getElementsByClassName("shape-functions"), "hidden");
+
+export function selectedShapeChanged(id) {
+    hideAllShapeAttributes();
+    if (id)
+        showShapeAttributes(id);
 }
 
 function hideAllShapeAttributes() {
@@ -22,12 +29,12 @@ function hideAllShapeAttributes() {
     addClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
+function showShapeAttributes(id) {
+    removeClass(document.getElementsByClassName(shapeFromId(id).attributeClass), "hidden");
 
-export function setUpAttributes() {
-    addEventListeners();
+    addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
+    removeClass(document.getElementsByClassName("shape-functions"), "hidden");
 }
 
-function addEventListeners() {
-    // Current shape
-    document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
-}
+
+

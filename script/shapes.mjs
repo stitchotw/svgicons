@@ -1,41 +1,43 @@
-const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 20px; stroke-linecap: round; fill: none;"
+let     shapeIdCounter = 0;
 
-class Shape {
+export class Shape {
+
+
     constructor(type) {
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
+        this._uiShape = null;
     }
 
     get attributeClass() {
         return this.type + "-attribute";
     }
 
-    toSVGFragment() {
-        const fragment = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        fragment.setAttribute("id", this.id);
-        fragment.classList.add("draggable");
-        return fragment;
+
+    get uiShape() {
+        if (!this._uiShape) {
+            this._uiShape = this.svgShape();
+            this._uiShape.setAttribute("id", this.id);
+            this._uiShape.classList.add("draggable");
+        }
+        return this._uiShape;
     }
 
-
-    getNewSVGElement(width, height) {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('style', DEFAULT_SVG_STYLE);
-        svg.setAttribute("width", width);
-        svg.setAttribute("height", height);
-        return svg;
+    svgShape() {
+        const fragment = document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        return fragment;
     }
 
 }
 
-class FilledShape extends Shape {
+export class FilledShape extends Shape {
     constructor(type, filled) {
         super(type);
         this.filled = filled;
         console.log(filled);
     }
 
-    toSVGFragment() {
+    svgShape() {
         const fragment = super.toSVGFragment();
         if (this.filled) {
             // TODO: will remove any other style on the fragment
@@ -46,7 +48,7 @@ class FilledShape extends Shape {
     }
 }
 
-class Line extends Shape {
+export class Line extends Shape {
 
     constructor(x1, y1, x2, y2) {
         super("line");
@@ -57,8 +59,8 @@ class Line extends Shape {
         this.y2 = y2;
     }
 
-    toSVGFragment() {
-        const fragment = super.toSVGFragment();
+    svgShape() {
+        const fragment = super.svgShape();
         fragment.setAttribute('x1', this.x1);
         fragment.setAttribute('y1', this.y1);
         fragment.setAttribute('x2', this.x2);
@@ -67,7 +69,7 @@ class Line extends Shape {
     }
 }
 
-class Circle extends FilledShape {
+export class Circle extends FilledShape {
     constructor(cx, cy, r, filled) {
         super("circle", filled);
         this.cx = cx;
@@ -75,8 +77,8 @@ class Circle extends FilledShape {
         this.r = r;
     }
 
-    toSVGFragment() {
-        const fragment = super.toSVGFragment();
+    svgShape() {
+        const fragment = super.svgShape();
         fragment.setAttribute('cx', this.cx);
         fragment.setAttribute('cy', this.cy);
         fragment.setAttribute('r', this.r);
@@ -84,7 +86,7 @@ class Circle extends FilledShape {
     }
 }
 
-class Rectangle extends FilledShape {
+export class Rectangle extends FilledShape {
     constructor(x, y, width, height, filled) {
         super("rect", filled);
         this.x = x;
@@ -93,8 +95,8 @@ class Rectangle extends FilledShape {
         this.height = height;
     }
 
-    toSVGFragment() {
-        const fragment = super.toSVGFragment();
+    svgShape() {
+        const fragment = super.svgShape();
         fragment.setAttribute("x", this.x);
         fragment.setAttribute("y", this.y);
         fragment.setAttribute("width", this.width);

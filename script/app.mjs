@@ -5,7 +5,8 @@
 // TODO: rearrange these
 import { setUpDialogs } from './dialogs.mjs';
 import { setUpAttributes } from './attributes.mjs';
-import { setUpWorkArea } from './workarea';
+import { setUpWorkArea } from './workarea.mjs';
+import {setUpShapeLibrary} from './shapelibrary.mjs';
 
 setUpApp();
 
@@ -15,6 +16,7 @@ function setUpApp() {
     setUpDialogs();
     setUpAttributes();
     setUpWorkArea();
+    setUpShapeLibrary();
 }
 
 // TODO: Remove most (or all) of these
