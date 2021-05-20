@@ -34,7 +34,6 @@ export class FilledShape extends Shape {
     constructor(type, filled) {
         super(type);
         this.filled = filled;
-        console.log(filled);
     }
 
     svgShape() {

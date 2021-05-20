@@ -13,7 +13,6 @@ let shapes = new Map();
 export function getIconAsSVGImage() {
     const svg = getNewSVGElement(400, 400);
     for (const [id, shape] of shapes) {
-        console.log(shape);
         svg.appendChild(shape.toSVGFragment());
     }
     return svg;
@@ -43,8 +42,11 @@ function addShape(shape) {
     }
 
     shapes.set(shape.id, shape);
-console.log(shapes);
     addUIShape(shape);
+}
+
+export function deleteShapeById(id){
+    shapes.delete(id);
 }
 
 /**

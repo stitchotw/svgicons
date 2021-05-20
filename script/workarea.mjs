@@ -2,6 +2,7 @@
  * 
  */
 import { selectedShapeChanged } from './attributes.mjs';
+import { deleteShapeById } from './icon.mjs';
 
 
 const workarea = document.getElementById('workarea');
@@ -57,15 +58,9 @@ function allowDrop(event) {
 }
 
 function startDrag(evt) {
-    console.log(evt.target);
     if (evt.target.classList.contains('draggable')) {
-        selectedShape = evt.target;
+        selectShape(evt.target);
         dragging = true;
-
-        // TODO: not a good place for it, this is getting convoluted,
-        // especially since we have two representations of the selected
-        // shape.
-        selectShape(selectedShape);
 
         var transforms = selectedShape.transform.baseVal;
         transform = transforms.getItem(0);
@@ -133,8 +128,8 @@ export function addUIShape(shape) {
 
 export function deleteCurrentlySelectedShape() {
     if (selectedShape) {
-        shapes.delete(selectedShape.id);
-        getWorkArea().removeChild(selectedShape);
+        deleteShapeById(selectedShape.id);
+        workarea.removeChild(selectedShape);
         unselectCurrentlySelectedShape();
     }
 }
@@ -142,9 +137,12 @@ export function deleteCurrentlySelectedShape() {
 function selectShape(shape) {
     if (shape != selectedShape) {
         unselectCurrentlySelectedShape();
-        shape.classList.add('selected-shape');
-        selectedShape = shape;
-        selectedShapeChanged(shape.id);
+
+        if (shape) {
+            selectedShape = shape;
+            shape.classList.add('selected-shape');
+            selectedShapeChanged(shape.id);
+        }
     }
 }
 
