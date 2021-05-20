@@ -5,15 +5,15 @@ import { Line, Circle, Rectangle } from './shapes.mjs';
 import { addUIShape } from './workarea.mjs';
 
 
-const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 20px; stroke-linecap: round; fill: none;"
+const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 1px; stroke-linecap: round; fill: none;"
 
 let shapes = new Map();
 
 
 export function getIconAsSVGImage() {
-    const svg = getNewSVGElement(400, 400);
+    const svg = getNewSVGElement(32, 32);
     for (const [id, shape] of shapes) {
-        svg.appendChild(shape.toSVGFragment());
+        svg.appendChild(shape.svgShape());
     }
     return svg;
 }
