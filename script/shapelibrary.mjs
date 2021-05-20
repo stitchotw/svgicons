@@ -6,14 +6,28 @@ export function setUpShapeLibrary() {
 
 function addEventListeners() {
     // () => is necessary since otherwise the listener method would be called when addEventListeners runs
-    document.getElementById("add-horizontal-line-button").addEventListener("click", () => addLine(1, 1, 10, 1));
-    document.getElementById("add-vertical-line-button").addEventListener("click", () => addLine(1, 1, 1, 10));
-    document.getElementById("add-diagonal-left-to-right-button").addEventListener("click", () => addLine(1, 1, 10, 10));
-    document.getElementById("add-diagonal-right-to-left-button").addEventListener("click", () => addLine(10, 1, 1, 10));
-    /*
-    document.getElementById("").addEventListener("click", );
-    document.getElementById("").addEventListener("click", );
-    document.getElementById("").addEventListener("click", );
-    document.getElementById("").addEventListener("click", );
-    */
+    // Lines
+    document.getElementById("add-horizontal-line-button").addEventListener("click", () => addLine(1, 1, 11, 1));
+    document.getElementById("add-vertical-line-button").addEventListener("click", () => addLine(1, 1, 1, 11));
+    document.getElementById("add-diagonal-left-to-right-button").addEventListener("click", () => addLine(0, 0, 10, 10));
+    document.getElementById("add-diagonal-right-to-left-button").addEventListener("click", () => addLine(10, 0, 0, 10));
+
+    // Circles
+    document.getElementById("add-dot-button").addEventListener("click", () => addCircle(15, 15, 1, true));
+    document.getElementById("add-filled-circle-button").addEventListener("click", () => addCircle(15, 15, 5, true));
+    document.getElementById("add-circle-no-fill-button").addEventListener("click", () => addCircle(15, 15, 5, false));
+
+    // Rectangels
+    document.getElementById("add-filled-rectangle-button").addEventListener("click", () => addRectangle(5, 5, 5, 3, true));
+    document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => addRectangle(5, 5, 5, 3, false));
+
+    // 
+    document.getElementById("add-polyline-button").addEventListener("click", () => { });
+    document.getElementById("add-polygon-button").addEventListener("click", () => { });
+    document.getElementById("add-path-button").addEventListener("click", () => { });
+
+    //Text
+    document.getElementById("add-text-button").addEventListener("click", () => { });
+    document.getElementById("add-unicode-symbol-button").addEventListener("click", () => { });
+    // document.getElementById("").addEventListener("click", ()=>);
 }

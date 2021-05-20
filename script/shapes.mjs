@@ -38,7 +38,7 @@ export class FilledShape extends Shape {
     }
 
     svgShape() {
-        const fragment = super.toSVGFragment();
+        const fragment = super.svgShape();
         if (this.filled) {
             // TODO: will remove any other style on the fragment
             fragment.setAttribute('style', "fill: black;");
