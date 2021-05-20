@@ -8,6 +8,7 @@ import { addUIShape } from './workarea.mjs';
 const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 1px; stroke-linecap: round; fill: none;"
 
 let shapes = new Map();
+// let lastMovedShape = new Line(0, 0, 0, 0);
 
 
 export function getIconAsSVGImage() {
@@ -32,20 +33,20 @@ export function transformShape(shapeId, transform) {
 
 }
 
-export function shapeFromId(id){
+export function shapeFromId(id) {
     return shapes.get(id);
 }
 
 function addShape(shape) {
     if (shapes.has(shape.id)) {
-        throw "Duplicate id when adding shape: "+shape.id;
+        throw "Duplicate id when adding shape: " + shape.id;
     }
 
     shapes.set(shape.id, shape);
     addUIShape(shape);
 }
 
-export function deleteShapeById(id){
+export function deleteShapeById(id) {
     shapes.delete(id);
 }
 
@@ -69,3 +70,11 @@ export function addRectangle(x, y, width, height, filled) {
     const rectangle = new Rectangle(x, y, width, height, filled);
     addShape(rectangle);
 }
+
+/*
+export function moveShape(id, dx, dy) {
+    const shape = id === lastMovedShape.id ? lastMovedShape : shapeFromId(id);
+    shape.move(dx, dy);
+    lastMovedShape = shape;
+}
+*/

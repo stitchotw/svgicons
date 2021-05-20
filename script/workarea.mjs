@@ -2,8 +2,7 @@
  * 
  */
 import { selectedShapeChanged } from './attributes.mjs';
-import { deleteShapeById } from './icon.mjs';
-
+import { shapeFromId, deleteShapeById } from './icon.mjs';
 
 const workarea = document.getElementById('workarea');
 
@@ -86,7 +85,7 @@ function getMousePosition(evt) {
 }
 
 function getNewPosition(evt) {
-    var pos = getMousePosition(evt);
+    const pos = getMousePosition(evt);
     pos.x = Math.round(pos.x - offset.x);
     pos.y = Math.round(pos.y - offset.y);
     return pos;
@@ -95,19 +94,14 @@ function getNewPosition(evt) {
 function drag(evt) {
     if (dragging) {
         evt.preventDefault();
-
-        var coord = getMousePosition(evt);
-        transform.setTranslate(Math.round(coord.x - offset.x), Math.round(coord.y - offset.y));
-
-        //            selectedShape.setAttribute("x", Math.round(coord.x - offset.x));
-        /*            
-                    var pos = getNewPosition(evt);
-                    transform.setTranslate(pos.x - offset.x, pos.y - offset.y);
-                    */
+        const pos = getNewPosition(evt);
+        transform.setTranslate(pos.x, pos.y);
     }
 }
 
 function endDrag(evt) {
+    if (dragging)
+        shapeFromId(selectedShape.id).applyTransformMatrix();
     dragging = false;
     offset = null;
     transform = null;
@@ -116,13 +110,6 @@ function endDrag(evt) {
 export function addUIShape(shape) {
     const element = shape.uiShape;
     workarea.appendChild(element);
-
-    // Add translate to handle movement, see 
-    // https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
-    const translate = workarea.createSVGTransform();
-    translate.setTranslate(0, 0);
-    element.transform.baseVal.insertItemBefore(translate, 0);
-
     selectShape(element);
 }
 
@@ -154,7 +141,7 @@ function unselectCurrentlySelectedShape() {
     }
 }
 
-function getSelectedShapeNodel() {
+function getSelectedShapeNode() {
     if (!selectedShape) {
         throw "No UI shape selected";
     }

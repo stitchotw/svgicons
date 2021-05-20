@@ -1,7 +1,9 @@
-let     shapeIdCounter = 0;
+// Used to create translations for UI shapes
+const SVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+let shapeIdCounter = 0;
 
 export class Shape {
-
 
     constructor(type) {
         this.type = type;
@@ -19,13 +21,34 @@ export class Shape {
             this._uiShape = this.svgShape();
             this._uiShape.setAttribute("id", this.id);
             this._uiShape.classList.add("draggable");
+
+            const translate = SVG.createSVGTransform();
+            translate.setTranslate(0, 0);
+            this._uiShape.transform.baseVal.insertItemBefore(translate, 0);
+        
         }
         return this._uiShape;
     }
 
     svgShape() {
-        const fragment = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        return fragment;
+        const svgShape = document.createElementNS('http://www.w3.org/2000/svg', this.type);
+        this.applyAttributes(svgShape);
+        return svgShape;
+    }
+
+    /**
+     * Only applies movement
+     */
+    applyTransformMatrix(){
+        let matrix = this.uiShape.transform.baseVal.getItem(0).matrix;
+        this.move(matrix.e, matrix.f);
+        this.resetTransformMatrix();
+    }
+
+    resetTransformMatrix(){
+        let transform = this.uiShape.transform.baseVal.getItem(0);
+        transform.matrix.e=0;
+        transform.matrix.f=0;
     }
 
 }
@@ -58,13 +81,19 @@ export class Line extends Shape {
         this.y2 = y2;
     }
 
-    svgShape() {
-        const fragment = super.svgShape();
-        fragment.setAttribute('x1', this.x1);
-        fragment.setAttribute('y1', this.y1);
-        fragment.setAttribute('x2', this.x2);
-        fragment.setAttribute('y2', this.y2);
-        return fragment;
+    move(dx, dy) {
+        this.x1 += dx;
+        this.y1 += dy;
+        this.x2 += dx;
+        this.y2 += dy;
+        this.applyAttributes(this.uiShape);
+    }
+
+    applyAttributes(svgShape){
+        svgShape.setAttribute('x1', this.x1);
+        svgShape.setAttribute('y1', this.y1);
+        svgShape.setAttribute('x2', this.x2);
+        svgShape.setAttribute('y2', this.y2);
     }
 }
 
@@ -76,13 +105,18 @@ export class Circle extends FilledShape {
         this.r = r;
     }
 
-    svgShape() {
-        const fragment = super.svgShape();
-        fragment.setAttribute('cx', this.cx);
-        fragment.setAttribute('cy', this.cy);
-        fragment.setAttribute('r', this.r);
-        return fragment;
+    move(dx, dy) {
+        this.cx += dx;
+        this.cy += dy;
+        this.applyAttributes(this.uiShape);
     }
+
+    applyAttributes(svgShape){
+        svgShape.setAttribute('cx', this.cx);
+        svgShape.setAttribute('cy', this.cy);
+        svgShape.setAttribute('r', this.r);
+   }
+
 }
 
 export class Rectangle extends FilledShape {
@@ -94,12 +128,17 @@ export class Rectangle extends FilledShape {
         this.height = height;
     }
 
-    svgShape() {
-        const fragment = super.svgShape();
-        fragment.setAttribute("x", this.x);
-        fragment.setAttribute("y", this.y);
-        fragment.setAttribute("width", this.width);
-        fragment.setAttribute("height", this.height);
-        return fragment;
+    move(dx, dy) {
+        this.x += dx;
+        this.y += dy;
+        this.applyAttributes(this.uiShape);
     }
+
+    applyAttributes(svgShape){
+        svgShape.setAttribute("x", this.x);
+        svgShape.setAttribute("y", this.y);
+        svgShape.setAttribute("width", this.width);
+        svgShape.setAttribute("height", this.height);
+     }
+
 }
