@@ -1,6 +1,7 @@
 :root {
     --margin: 20px;
     --small-margin: 5px;
+    --text-color: black;
 }
 
 *, *::before, *::after {
@@ -17,6 +18,7 @@ html, body {
 body {
     padding: 0;
     margin: 0;
+    color: var(--text-color);
 }
 
 .app{
@@ -30,6 +32,15 @@ body {
 h1 {
     font-weight: bold;
     text-align: center;
+}
+
+.help-link {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.help-link:hover {
+    filter: drop-shadow(0 0 2px Chartreuse);
 }
 
 .workarea-container, .shape-library {
