@@ -38,3 +38,7 @@ https://unicode-table.com/en/sets/
 https://www.softr.io/tools/svg-shape-generator
 
 A free design tool to create colorful, random, unique, and organic-looking SVG shapes. [According to its own marketing pitch.]
+
+# Global Access Keys
+
+https://www.w3schools.com/tags/att_global_accesskey.asp
