@@ -42,3 +42,7 @@ A free design tool to create colorful, random, unique, and organic-looking SVG s
 # Global Access Keys
 
 https://www.w3schools.com/tags/att_global_accesskey.asp
+
+# Local Storage
+
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
