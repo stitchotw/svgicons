@@ -40,23 +40,23 @@
             <div class="attribute-group">
                 <h2 class="attribute-header">Selected</h2>
                 <p class="no-shape-selected-text">Click on a shape above to show its attributes.</p>
-                <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Top:</div>
+                <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">X:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
-                    <button class="attribute-button">-</button>
-                    50
-                    <button class="attribute-button">+</button>
+                    <button class="attribute-button" data-attribute-name="x" data-operation="dec">-</button>
+                    <div id="attribute-x">---</div>
+                    <button class="attribute-button" data-attribute-name="x" data-operation="inc">+</button>
                 </div>
-                <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Left:</div>
+                <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Y:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
-                    <button class="attribute-button">-</button>
-                    50
-                    <button class="attribute-button">+</button>
+                    <button class="attribute-button" data-attribute-name="y" data-operation="dec">-</button>
+                    <div id="attribute-y">---</div>
+                    <button class="attribute-button"data-attribute-name="y" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name circle-attribute hidden">Size:</div>
                 <div class="shape-attribute circle-attribute hidden">
-                    <button class="attribute-button">-</button>
-                    50px
-                    <button class="attribute-button">+</button>
+                    <button class="attribute-button" data-attribute-name="size" data-operation="dec">-</button>
+                    <div id="attribute-size">---</div>
+                    <button class="attribute-button"data-attribute-name="size" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name line-attribute rect-attribute hidden">Width:</div>
                 <div class="shape-attribute line-attribute hidden">
@@ -87,7 +87,7 @@
             <div class="attribute-group">
                 <h2 class="attribute-header">Whole Icon</h2>
                 <div class="icon-attribute-name">Viewbox:</div>
-                <div class="icon-attribute">128x128</div>
+                <div class="icon-attribute">32x32</div>
                 <div class="icon-attribute-name">Color:</div>
                 <div class="icon-attribute">Black</div>
                 <div class="icon-attribute-name">Stroke:</div>
