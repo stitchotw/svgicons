@@ -5,26 +5,38 @@
 import { currentlySelectedShapeId, deleteCurrentlySelectedShape } from './workarea.mjs';
 import { icon } from "./icon.mjs";
 import { addClass, removeClass } from './dom.mjs';
-//import { shapeFromId } from './icon.mjs';
 
 export function setUpAttributes() {
     addEventListeners();
+    initializeIconAttributesUI();
 }
 
 function addEventListeners() {
     document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
 
-    const buttons = document.getElementsByClassName("attribute-button");
+    let buttons = document.getElementsByClassName("attribute-button");
 
     for (const button of buttons) {
         button.addEventListener("click", (evt) => {
             changeShapeAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
         });
     }
+
+    buttons = document.getElementsByClassName("icon-attribute-button");
+
+    for (const button of buttons) {
+        button.addEventListener("click", (evt) => {
+            changeIconAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
+        });
+    }
+}
+
+function initializeIconAttributesUI() {
+    document.getElementById("attribute-stroke-width").innerHTML = icon.get("stroke-width").value;
 }
 
 function changeIconAttribute(name, operation, value) {
-
+    icon.get(name).update(operation, value);
 }
 
 
@@ -65,11 +77,11 @@ function changeShapeAttribute(name, operation, value) {
 
 class Attribute {
 
-    constructor(shape, name) {
-        if (!shape || !name)
-            throw "Both shape and name must be set";
+    constructor(item, name) {
+        if (!item || !name)
+            throw "Both item and name must be set";
         this.name = name;
-        this.shape = shape;
+        this.item = item;
     }
 
     update(operation, value) {
@@ -90,9 +102,12 @@ class Attribute {
     }
 
     updateUI() {
-        this.shape.updateUISvg();
+        this.item.updateUI();
 
         const label = document.getElementById("attribute-" + this.name);
+        if (!label)
+            throw "Could not find div with id attribute-" + this.name;
+            
         label.innerHTML = this.value;
     }
 
@@ -100,8 +115,8 @@ class Attribute {
 
 export class NumericAttribute extends Attribute {
 
-    constructor(shape, name, value) {
-        super(shape, name);
+    constructor(item, name, value) {
+        super(item, name);
         this.value = value ? value : 0;
     }
 
@@ -119,4 +134,13 @@ export class NumericAttribute extends Attribute {
         this.value += addend;
         this.updateUI();
     }
+}
+
+export class TextAttribute extends Attribute {
+
+    constructor(item, name, value) {
+        super(item, name);
+        this.value = value ? value : undefined;
+    }
+
 }

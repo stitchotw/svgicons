@@ -2,19 +2,42 @@
  * 
  */
 import { Line, Circle, Rectangle } from './shapes.mjs';
+import { NumericAttribute, TextAttribute } from "./attributes.mjs";
 import { addUIShape } from './workarea.mjs';
 
-
+const DEFAULT_STROKE_WIDTH = 3;
 const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 3; stroke-linecap: round; fill: none;"
 
 class Icon {
 
     constructor(width, height) {
         this.shapes = new Map();
+        this.style = new Map();
+
+        this.style.set("stroke", new TextAttribute(this, "stroke", "black"));
+        this.style.set("stroke-width", new NumericAttribute(this, "stroke-width", DEFAULT_STROKE_WIDTH));
+        this.style.set("stroke-linecap", new TextAttribute(this, "stroke-linecap", "round"));
+        this.style.set("fill", new TextAttribute(this, "fill", "none"));
     }
 
     isEmpty() {
         return this.shapes.size === 0;
+    }
+
+    /* Style attributes */
+
+    get globalStyle() {
+        return this.style;
+    }
+
+    get(name) {
+        return this.style.get(name);
+    }
+
+    updateUI() {
+        for (const [_, shape] of this.shapes) {
+            shape.updateUI();
+        }
     }
 
     getAsSVGImage() {
@@ -54,7 +77,7 @@ class Icon {
      * Adds a line to the icon. 
      */
     addLine(x1, y1, x2, y2) {
-        const line = new Line(x1, y1, x2, y2);
+        const line = new Line(this, x1, y1, x2, y2);
         this.addShape(line);
     }
 
@@ -62,12 +85,12 @@ class Icon {
      * Adds a circle to the icon.
      */
     addCircle(cx, cy, r, filled) {
-        const circle = new Circle(cx, cy, r, filled);
+        const circle = new Circle(this, cx, cy, r, filled);
         this.addShape(circle);
     }
 
     addRectangle(x, y, width, height, filled) {
-        const rectangle = new Rectangle(x, y, width, height, filled);
+        const rectangle = new Rectangle(this, x, y, width, height, filled);
         this.addShape(rectangle);
     }
 

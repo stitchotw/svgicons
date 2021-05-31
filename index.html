@@ -75,8 +75,9 @@
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">Default</div>
                 <div class="shape-attribute-name circle-attribute rect-attribute hidden">Fill:</div>
-                <div class="shape-attribute circle-attribute rect-attribute hidden">None</div>
-
+                <div class="shape-attribute circle-attribute rect-attribute hidden">
+                    <div id="attribute-fill">---</div>
+                </div>
                 <div class="shape-attribute-name hidden">Path:</div>
                 <div class="shape-attribute hidden">None</div>
 
@@ -96,7 +97,8 @@
                     <button class="attribute-button" data-attribute-name="valign" data-operation="">C</button>
                     <button class="attribute-button" data-attribute-name="valign" data-operation="">R</button>
                 </div>
-                <div class="shape-functions hidden"><button id="delete-selected-shape-button">Delete</button></div>
+                <div class="shape-functions hidden"><button id="delete-selected-shape-button">Delete</button>
+                </div>
                 <div class="shape-functions hidden"><button id="copy-selected-shape-button">Copy</button></div>
             </div>
             <div class="attribute-group">
@@ -105,12 +107,16 @@
                 <div class="icon-attribute">32x32</div>
                 <div class="icon-attribute-name">Color:</div>
                 <div class="icon-attribute">Black</div>
-                <div class="icon-attribute-name">Stroke:</div>
+                <div class="icon-attribute-name">Width:</div>
                 <div class="icon-attribute">
-                    <button class="attribute-button" data-attribute-name="stroke" data-operation="dec">-</button>
-                    <div id="attribute-dy">---</div>
-                    <button class="attribute-button" data-attribute-name="stroke" data-operation="inc">+</button>
+                    <button class="icon-attribute-button" data-attribute-name="stroke-width"
+                        data-operation="dec">-</button>
+                    <div id="attribute-stroke-width">---</div>
+                    <button class="icon-attribute-button" data-attribute-name="stroke-width"
+                        data-operation="inc">+</button>
                 </div>
+                <div class="icon-attribute-name">Linecap:</div>
+                <div class="icon-attribute">Rounded</div>
             </div>
         </div>
         <div class="functions">
@@ -168,7 +174,8 @@
                 <img src="img/path.svg" alt="">
             </button>
             <p><a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank" class="help-link"
-                    title="Opens in new tab/window">The viewbox of the shape corresponds to the viewbox of the icon.</a>
+                    title="Opens in new tab/window">The viewbox of the shape corresponds to the viewbox of the
+                    icon.</a>
                 <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank" class="help-link"
                     title="Opens in new tab/window">This will automatically scale if you change the size of the
                     shape.</a>
@@ -181,7 +188,8 @@
                 <img src="img/symbol.svg" alt="">
             </button>
             <p>Be careful when using text since <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank"
-                    class="help-link" title="Opens in new tab/window">fonts may differ for viewers</a>.</p>
+                    class="help-link" title="Opens in new tab/window">fonts may differ for
+                    viewers</a>.</p>
             <h2>Premade shapes</h2>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>

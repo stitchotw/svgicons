@@ -1,4 +1,6 @@
+import { TextAttribute } from "./attributes.mjs";
 import { NumericAttribute } from "./attributes.mjs";
+import { icon } from "./icon.mjs";
 
 
 // Used to create translations for UI shapes
@@ -8,7 +10,10 @@ let shapeIdCounter = 0;
 
 export class Shape {
 
-    constructor(type) {
+    constructor(parent, type) {
+        if (!parent || !type)
+            throw "Both parent and type is necessary"
+        this.parent = parent;
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
         this._svg = null;
@@ -42,13 +47,24 @@ export class Shape {
         return this._svg;
     }
 
+    get styleData() {
+        let data = "";
+        icon.globalStyle.forEach((attribute, name) => {
+            if (this.get(name)?.value) {
+                attribute = this.get(name);
+            }
+            data += name + ":" + attribute.value + ";";
+        });
+        return data;
+    }
+
     createNewSvgShape() {
         const svgShape = document.createElementNS('http://www.w3.org/2000/svg', this.type);
         this.update(svgShape);
         return svgShape;
     }
 
-    updateUISvg(){
+    updateUI() {
         this.update(this.uiSvg);
     }
 
@@ -70,26 +86,16 @@ export class Shape {
 }
 
 export class FilledShape extends Shape {
-    constructor(type, filled) {
-        super(type);
-        this.filled = filled;
-    }
-
-    createNewSvgShape() {
-        const fragment = super.createNewSvgShape();
-        if (this.filled) {
-            // TODO: will remove any other style on the fragment
-            fragment.setAttribute('style', "fill: black;");
-        }
-        return fragment;
-
+    constructor(parent, type, filled) {
+        super(parent, type);
+        this.attributes.set("fill", new TextAttribute(this, "fill", filled ? "black" : "none"));
     }
 }
 
 export class Line extends Shape {
 
-    constructor(x1, y1, x2, y2) {
-        super("line");
+    constructor(parent, x1, y1, x2, y2) {
+        super(parent, "line");
 
         this.attributes.set("x", new NumericAttribute(this, "x", x1));
         this.attributes.set("y", new NumericAttribute(this, "y", y1));
@@ -100,10 +106,11 @@ export class Line extends Shape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateUISvg();
+        this.updateUI();
     }
 
     update(svg) {
+        svg.setAttribute('style', this.styleData);
         svg.setAttribute('x1', this.get("x").value);
         svg.setAttribute('y1', this.get("y").value);
         svg.setAttribute('x2', this.get("x").value + this.get("dx").value);
@@ -112,8 +119,8 @@ export class Line extends Shape {
 }
 
 export class Circle extends FilledShape {
-    constructor(cx, cy, r, filled) {
-        super("circle", filled);
+    constructor(parent, cx, cy, r, filled) {
+        super(parent, "circle", filled);
         this.attributes.set("x", new NumericAttribute(this, "x", cx));
         this.attributes.set("y", new NumericAttribute(this, "y", cy));
         this.attributes.set("size", new NumericAttribute(this, "size", r));
@@ -123,10 +130,11 @@ export class Circle extends FilledShape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateUISvg();
+        this.updateUI();
     }
 
     update(svg) {
+        svg.setAttribute('style', this.styleData);
         svg.setAttribute('cx', this.get("x").value);
         svg.setAttribute('cy', this.get("y").value);
         svg.setAttribute('r', this.get("size").value);
@@ -135,8 +143,8 @@ export class Circle extends FilledShape {
 }
 
 export class Rectangle extends FilledShape {
-    constructor(x, y, width, height, filled) {
-        super("rect", filled);
+    constructor(parent, x, y, width, height, filled) {
+        super(parent, "rect", filled);
 
         this.attributes.set("x", new NumericAttribute(this, "x", x));
         this.attributes.set("y", new NumericAttribute(this, "y", y));
@@ -147,10 +155,11 @@ export class Rectangle extends FilledShape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateUISvg();
+        this.updateUI();
     }
 
     update(svg) {
+        svg.setAttribute('style', this.styleData);
         svg.setAttribute("x", this.get("x").value);
         svg.setAttribute("y", this.get("y").value);
         svg.setAttribute("width", this.get("dx").value);
