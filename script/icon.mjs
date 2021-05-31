@@ -6,7 +6,6 @@ import { NumericAttribute, TextAttribute } from "./attributes.mjs";
 import { addUIShape } from './workarea.mjs';
 
 const DEFAULT_STROKE_WIDTH = 3;
-const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 3; stroke-linecap: round; fill: none;"
 
 class Icon {
 
@@ -34,6 +33,15 @@ class Icon {
         return this.style.get(name);
     }
 
+    
+    styleData() {
+        let data = "";
+        icon.globalStyle.forEach((attribute, name) => {
+            data += name + ":" + attribute.value + ";";
+        });
+        return data;
+    }
+
     updateUI() {
         for (const [_, shape] of this.shapes) {
             shape.updateUI();
@@ -50,7 +58,7 @@ class Icon {
 
     getNewSVGElement(width, height) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('style', DEFAULT_SVG_STYLE);
+        svg.setAttribute('style', this.styleData());
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
         return svg;

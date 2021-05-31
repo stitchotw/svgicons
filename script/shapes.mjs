@@ -47,13 +47,14 @@ export class Shape {
         return this._svg;
     }
 
-    get styleData() {
+    styleData(all) {
         let data = "";
         icon.globalStyle.forEach((attribute, name) => {
-            if (this.get(name)?.value) {
-                attribute = this.get(name);
+            const local = this.get(name);
+            const changed = local && local.value !== attribute.value;
+            if (all || changed) {
+                data += name + ":" + (changed ? local.value : attribute.value) + ";";
             }
-            data += name + ":" + attribute.value + ";";
         });
         return data;
     }
@@ -65,8 +66,17 @@ export class Shape {
     }
 
     updateUI() {
-        this.update(this.uiSvg);
+        this.update(this.uiSvg, true);
     }
+
+    update(svg, all) {
+        const style = this.styleData(all);
+        if (style)
+            svg.setAttribute('style', style);
+        else
+            svg.removeAttribute('style');
+    }
+
 
     /**
      * Only applies movement
@@ -109,8 +119,8 @@ export class Line extends Shape {
         this.updateUI();
     }
 
-    update(svg) {
-        svg.setAttribute('style', this.styleData);
+    update(svg, all) {
+        super.update(svg, all);
         svg.setAttribute('x1', this.get("x").value);
         svg.setAttribute('y1', this.get("y").value);
         svg.setAttribute('x2', this.get("x").value + this.get("dx").value);
@@ -133,8 +143,8 @@ export class Circle extends FilledShape {
         this.updateUI();
     }
 
-    update(svg) {
-        svg.setAttribute('style', this.styleData);
+    update(svg, all) {
+        super.update(svg, all);
         svg.setAttribute('cx', this.get("x").value);
         svg.setAttribute('cy', this.get("y").value);
         svg.setAttribute('r', this.get("size").value);
@@ -158,8 +168,8 @@ export class Rectangle extends FilledShape {
         this.updateUI();
     }
 
-    update(svg) {
-        svg.setAttribute('style', this.styleData);
+    update(svg, all) {
+        super.update(svg, all);
         svg.setAttribute("x", this.get("x").value);
         svg.setAttribute("y", this.get("y").value);
         svg.setAttribute("width", this.get("dx").value);
