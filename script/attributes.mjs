@@ -85,7 +85,7 @@ class Attribute {
     }
 
     updateUI() {
-        this.shape.updateSVGShape();
+        this.shape.updateUISvg();
 
         const label = document.getElementById("attribute-" + this.name);
         label.innerHTML = this.value;

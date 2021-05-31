@@ -22,6 +22,10 @@ function addEventListeners() {
     document.getElementById("close-new-icon-dialog-button").addEventListener("click", (event) => closeDialog("new-icon-dialog"));
     document.getElementById("close-settings-dialog-button").addEventListener("click", (event) => closeDialog("settings-dialog"));
     document.getElementById("close-help-dialog-button").addEventListener("click", (event) => closeDialog("help-dialog"));
+
+    // Save icon dialog
+    document.getElementById("save-icon-to-file-button").addEventListener("click", saveIconToFile);
+    document.getElementById("copy-icon-to-clipboard-button").addEventListener("click", copyIconToClipobard);
 }
 
 
@@ -42,8 +46,42 @@ function closeDialog(id, onCloseDialog) {
     dialog.style.display = "none";
 }
 
+
+/*
+    Save icon dialog
+*/
+
 function updateIconToSave() {
+    const previews = document.getElementsByClassName("icon-preview");
+    for(const preview of previews){
+        // innerHtml does not work, 
+        preview.replaceChildren(getIconAsSVGImage());
+    }
+
+
     const container = document.getElementById("icon-to-save");
-    container.replaceChildren(getIconAsSVGImage());
+    container.textContent = previews[0].innerHTML;
 }
 
+
+function saveIconToFile(){
+    const container = document.getElementById("icon-to-save");
+    console.log(container.innerHTML)
+}
+
+function copyIconToClipobard(){
+    var text_to_copy = document.getElementById("icon-to-save").innerHTML;
+
+    if (!navigator.clipboard){
+        // use old commandExec() way
+    } else{
+        navigator.clipboard.writeText(text_to_copy).then(
+            function(){
+                alert("yeah!"); // success 
+            })
+          .catch(
+             function() {
+                alert("err"); // error
+          });
+    }  
+}

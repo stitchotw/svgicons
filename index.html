@@ -175,9 +175,20 @@
     <div id="save-icon-dialog" class="dialog">
         <div class="dialog-content">
             <h1 class="dialog-header">Save icon</h1>
-            Placeholder text.
-            <div id="icon-to-save" style="border: solid;"></div>
+            <div id="save-dialog-content">
+                <table class="icon-preview-table">
+                    <tr><th>Size</th><th>Icon</th><th>Code</th></tr>
+                    <tr><td>16</td><td><div class="icon-preview icon-16"></div></td><td rowspan="6"><div id="icon-to-save"></div></td></tr>
+                    <tr><td>20</td><td><div class="icon-preview icon-20"></div></td></tr>
+                    <tr><td>24</td><td><div class="icon-preview icon-24"></div></td></tr>
+                    <tr><td>32</td><td><div class="icon-preview icon-32"></div></td></tr>
+                    <tr><td>48</td><td><div class="icon-preview icon-48"></div></td></tr>
+                    <tr><td>64</td><td><div class="icon-preview icon-64"></div></td></tr>
+                </table>
+            </div>
             <div class="functions">
+                <button id="save-icon-to-file-button" class="function-button">Save</button>
+                <button id="copy-icon-to-clipboard-button" class="function-button">Copy</button>
                 <button id="close-save-icon-dialog-button" class="function-button">Close</button>
             </div>
         </div>

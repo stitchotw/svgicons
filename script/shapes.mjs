@@ -44,8 +44,12 @@ export class Shape {
 
     createNewSvgShape() {
         const svgShape = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        // TODO: Fill this.updateSVGShape();
+        this.update(svgShape);
         return svgShape;
+    }
+
+    updateUISvg(){
+        this.update(this.uiSvg);
     }
 
     /**
@@ -76,7 +80,6 @@ export class FilledShape extends Shape {
         if (this.filled) {
             // TODO: will remove any other style on the fragment
             fragment.setAttribute('style', "fill: black;");
-            console.log("asd")
         }
         return fragment;
 
@@ -97,14 +100,14 @@ export class Line extends Shape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateSVGShape();
+        this.updateUISvg();
     }
 
-    updateSVGShape() {
-        this.uiSvg.setAttribute('x1', this.get("x").value);
-        this.uiSvg.setAttribute('y1', this.get("y").value);
-        this.uiSvg.setAttribute('x2', this.get("x").value + this.get("dx").value);
-        this.uiSvg.setAttribute('y2', this.get("y").value + this.get("dy").value);
+    update(svg) {
+        svg.setAttribute('x1', this.get("x").value);
+        svg.setAttribute('y1', this.get("y").value);
+        svg.setAttribute('x2', this.get("x").value + this.get("dx").value);
+        svg.setAttribute('y2', this.get("y").value + this.get("dy").value);
     }
 }
 
@@ -120,13 +123,13 @@ export class Circle extends FilledShape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateSVGShape();
+        this.updateUISvg();
     }
 
-    updateSVGShape() {
-        this.uiSvg.setAttribute('cx', this.get("x").value);
-        this.uiSvg.setAttribute('cy', this.get("y").value);
-        this.uiSvg.setAttribute('r', this.get("size").value);
+    update(svg) {
+        svg.setAttribute('cx', this.get("x").value);
+        svg.setAttribute('cy', this.get("y").value);
+        svg.setAttribute('r', this.get("size").value);
     }
 
 }
@@ -144,14 +147,14 @@ export class Rectangle extends FilledShape {
     move(dx, dy) {
         this.get("x").add(dx);
         this.get("y").add(dy);
-        this.updateSVGShape();
+        this.updateUISvg();
     }
 
-    updateSVGShape() {
-        this.uiSvg.setAttribute("x", this.get("x").value);
-        this.uiSvg.setAttribute("y", this.get("y").value);
-        this.uiSvg.setAttribute("width", this.get("dx").value);
-        this.uiSvg.setAttribute("height", this.get("dy").value);
+    update(svg) {
+        svg.setAttribute("x", this.get("x").value);
+        svg.setAttribute("y", this.get("y").value);
+        svg.setAttribute("width", this.get("dx").value);
+        svg.setAttribute("height", this.get("dy").value);
     }
 
 }

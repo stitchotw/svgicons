@@ -14,7 +14,7 @@ let shapes = new Map();
 export function getIconAsSVGImage() {
     const svg = getNewSVGElement(32, 32);
     for (const [id, shape] of shapes) {
-        svg.appendChild(shape.svgShape());
+        svg.appendChild(shape.createNewSvgShape());
     }
     return svg;
 }
@@ -23,8 +23,7 @@ export function getIconAsSVGImage() {
 function getNewSVGElement(width, height) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('style', DEFAULT_SVG_STYLE);
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`)
     return svg;
 }
 
