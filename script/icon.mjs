@@ -10,6 +10,9 @@ const DEFAULT_SVG_STYLE = "stroke: black; stroke-width: 1px; stroke-linecap: rou
 let shapes = new Map();
 // let lastMovedShape = new Line(0, 0, 0, 0);
 
+export function isEmpty(){
+    return shapes.size===0;
+}
 
 export function getIconAsSVGImage() {
     const svg = getNewSVGElement(32, 32);

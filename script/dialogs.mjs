@@ -2,7 +2,7 @@
  * 
  */
 
-import {getIconAsSVGImage} from './icon.mjs';
+import { isEmpty, getIconAsSVGImage } from './icon.mjs';
 
 // TODO: possibly switch on constant names instead, or maybe a map or object?
 
@@ -12,7 +12,7 @@ export function setUpDialogs() {
 
 function addEventListeners() {
     // Open dialogs
-    document.getElementById("save-icon-button").addEventListener("click", (event) => openDialog("save-icon-dialog", updateIconToSave));
+    document.getElementById("save-icon-button").addEventListener("click", (event) => openDialog("save-icon-dialog", beforeSaveDialogOpen));
     document.getElementById("new-icon-button").addEventListener("click", (event) => openDialog("new-icon-dialog"));
     document.getElementById("settings-button").addEventListener("click", (event) => openDialog("settings-dialog"));
     document.getElementById("help-button").addEventListener("click", (event) => openDialog("help-dialog"));
@@ -31,8 +31,13 @@ function addEventListeners() {
 
 
 function openDialog(id, onOpenDialog) {
-    if (onOpenDialog)
-        onOpenDialog();
+    if (onOpenDialog) {
+        const close = onOpenDialog();
+        if (close) {
+            closeDialog(id);
+            return;
+        }
+    }
 
     const dialog = document.getElementById(id);
     dialog.style.display = "grid";
@@ -51,9 +56,14 @@ function closeDialog(id, onCloseDialog) {
     Save icon dialog
 */
 
-function updateIconToSave() {
+function beforeSaveDialogOpen() {
+    if (isEmpty()) {
+        alert("Nothing to save, icon is empty");
+        return true;
+    }
+
     const previews = document.getElementsByClassName("icon-preview");
-    for(const preview of previews){
+    for (const preview of previews) {
         // innerHtml does not work, 
         preview.replaceChildren(getIconAsSVGImage());
     }
@@ -64,7 +74,7 @@ function updateIconToSave() {
 }
 
 
-function saveIconToFile(){
+function saveIconToFile() {
     const container = document.getElementById("icon-to-save");
     console.log(container.textContent);
     const text = container.textContent;
@@ -72,29 +82,30 @@ function saveIconToFile(){
     const element = document.createElement('a');
     element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', "test.svg");
-  
+
     element.style.display = 'none';
     document.body.appendChild(element);
-  
+
     element.click();
-  
+
     document.body.removeChild(element);
-  
+
 }
 
-function copyIconToClipobard(){
+function copyIconToClipobard() {
     var text_to_copy = document.getElementById("icon-to-save").innerHTML;
 
-    if (!navigator.clipboard){
-        // use old commandExec() way
-    } else{
+    if (!navigator.clipboard) {
+        // use old commandExec() way ?
+        alert("Clipboard not supported");
+    } else {
         navigator.clipboard.writeText(text_to_copy).then(
-            function(){
-                alert("yeah!"); // success 
+            function () {
+                alert("SVG data copied to clipboard");
             })
-          .catch(
-             function() {
-                alert("err"); // error
-          });
-    }  
+            .catch(
+                function () {
+                    alert("Unable to copy SVG data to clipboard");
+                });
+    }
 }
