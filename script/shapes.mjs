@@ -11,6 +11,10 @@ export class Shape {
         this._uiShape = null;
     }
 
+    get x(){ return "---"; }
+    get y(){ return "---"; }
+    get size(){ return "---"; }
+
     get attributeClass() {
         return this.type + "-attribute";
     }
@@ -81,6 +85,9 @@ export class Line extends Shape {
         this.y2 = y2;
     }
 
+    get x(){ return this.x1; }
+    get y(){ return this.y1; }
+
     move(dx, dy) {
         this.x1 += dx;
         this.y1 += dy;
@@ -105,6 +112,10 @@ export class Circle extends FilledShape {
         this.r = r;
     }
 
+    get x(){ return this.cx; }
+    get y(){ return this.cy; }
+    get size(){ return this.r; }
+
     move(dx, dy) {
         this.cx += dx;
         this.cy += dy;
@@ -127,6 +138,9 @@ export class Rectangle extends FilledShape {
         this.width = width;
         this.height = height;
     }
+
+    get x(){ return this.x; }
+    get y(){ return this.y; }
 
     move(dx, dy) {
         this.x += dx;

@@ -1,7 +1,7 @@
 /*
  * 
  */
-import { selectedShapeChanged } from './attributes.mjs';
+import { selectedShapeChanged, updateShapeAttributeValues } from './attributes.mjs';
 import { shapeFromId, deleteShapeById } from './icon.mjs';
 
 const workarea = document.getElementById('workarea');
@@ -13,18 +13,11 @@ let transform;
 
 export function setUpWorkArea() {
     addBackgroundToWorkarea();
-    addEventListeners();
     makeWorkareaDraggable();
 }
 
 function addBackgroundToWorkarea() {
 }
-
-function addEventListeners() {
-    //    workarea.addEventListener("drop", dropDraggedShape);
-    //    workarea.addEventListener("dragover", allowDrop);
-}
-
 
 /*
  * Drag'n drop of shapes
@@ -100,8 +93,10 @@ function drag(evt) {
 }
 
 function endDrag(evt) {
-    if (dragging)
+    if (dragging) {
         shapeFromId(selectedShape.id).applyTransformMatrix();
+        updateShapeAttributeValues();
+    }
     dragging = false;
     offset = null;
     transform = null;
@@ -141,6 +136,10 @@ function unselectCurrentlySelectedShape() {
     }
 }
 
+export function currentlySelectedShapeId(){
+    return selectedShape?.id;
+}
+
 function getSelectedShapeNode() {
     if (!selectedShape) {
         throw "No UI shape selected";
@@ -148,3 +147,4 @@ function getSelectedShapeNode() {
 
     return shapes.get(selectedShape.id);
 }
+

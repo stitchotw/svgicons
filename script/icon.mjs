@@ -28,11 +28,6 @@ function getNewSVGElement(width, height) {
     return svg;
 }
 
-
-export function transformShape(shapeId, transform) {
-
-}
-
 export function shapeFromId(id) {
     return shapes.get(id);
 }
@@ -71,10 +66,4 @@ export function addRectangle(x, y, width, height, filled) {
     addShape(rectangle);
 }
 
-/*
-export function moveShape(id, dx, dy) {
-    const shape = id === lastMovedShape.id ? lastMovedShape : shapeFromId(id);
-    shape.move(dx, dy);
-    lastMovedShape = shape;
-}
-*/
+
