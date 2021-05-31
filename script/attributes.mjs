@@ -50,20 +50,68 @@ function showShapeAttributes() {
 
 export function updateShapeAttributeValues() {
     const shape = shapeFromId(currentlySelectedShapeId());
-    setAttribute("x", shape.x);
-    setAttribute("y", shape.y);
-    setAttribute("size", shape.size);
+    shape.updateAttributesUI();
 }
 
-function setAttribute(name, value) {
-    const label = document.getElementById("attribute-" + name);
-    label.innerHTML = value;
+function changeAttribute(name, operation, value) {
+    const shape = shapeFromId(currentlySelectedShapeId());
+    shape.attributes.get(name).update(operation, value);
 }
 
-function changeAttribute(attributeName, operation) {
-    console.log(attributeName + " " + operation);
+class Attribute {
 
-    updateShapeAttributeValues();
+    constructor(shape, name) {
+        if (!shape || !name)
+            throw "Both shape and name must be set";
+        this.name = name;
+        this.shape = shape;
+    }
+
+    update(operation, value) {
+        switch (operation) {
+            case "inc":
+                this.increase();
+                break;
+            case "dec":
+                this.decrease();
+                break;
+            case "set":
+                this.set(value);
+                break;
+            default:
+                throw "Unexpected operation: " + operation;
+        }
+        this.updateUI();
+    }
+
+    updateUI() {
+        this.shape.updateSVGShape();
+
+        const label = document.getElementById("attribute-" + this.name);
+        label.innerHTML = this.value;
+    }
+
 }
 
+export class NumericAttribute extends Attribute {
 
+    constructor(shape, name, value) {
+        super(shape, name);
+        this.value = value ? value : 0;
+    }
+
+    increase() {
+        this.value++;
+        this.updateUI();
+    }
+
+    decrease() {
+        this.value--;
+        this.updateUI();
+    }
+
+    add(addend) {
+        this.value += addend;
+        this.updateUI();
+    }
+}

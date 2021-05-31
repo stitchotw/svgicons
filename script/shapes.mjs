@@ -1,3 +1,6 @@
+import { NumericAttribute } from "./attributes.mjs";
+
+
 // Used to create translations for UI shapes
 const SVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
@@ -8,51 +11,56 @@ export class Shape {
     constructor(type) {
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
-        this._uiShape = null;
+        this._svg = null;
+        this.attributes = new Map();
     }
 
-    get x(){ return "---"; }
-    get y(){ return "---"; }
-    get size(){ return "---"; }
+
+    get(name) {
+        return this.attributes.get(name);
+    }
 
     get attributeClass() {
         return this.type + "-attribute";
     }
 
+    updateAttributesUI() {
+        this.attributes.forEach((attribute) => { attribute.updateUI(); });
+    }
 
-    get uiShape() {
-        if (!this._uiShape) {
-            this._uiShape = this.svgShape();
-            this._uiShape.setAttribute("id", this.id);
-            this._uiShape.classList.add("draggable");
+    get uiSvg() {
+        if (!this._svg) {
+            this._svg = this.createNewSvgShape();
+            this._svg.setAttribute("id", this.id);
+            this._svg.classList.add("draggable");
 
             const translate = SVG.createSVGTransform();
             translate.setTranslate(0, 0);
-            this._uiShape.transform.baseVal.insertItemBefore(translate, 0);
-        
+            this._svg.transform.baseVal.insertItemBefore(translate, 0);
+
         }
-        return this._uiShape;
+        return this._svg;
     }
 
-    svgShape() {
+    createNewSvgShape() {
         const svgShape = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        this.applyAttributes(svgShape);
+        // TODO: Fill this.updateSVGShape();
         return svgShape;
     }
 
     /**
      * Only applies movement
      */
-    applyTransformMatrix(){
-        let matrix = this.uiShape.transform.baseVal.getItem(0).matrix;
+    applyTransformMatrix() {
+        let matrix = this.uiSvg.transform.baseVal.getItem(0).matrix;
         this.move(matrix.e, matrix.f);
         this.resetTransformMatrix();
     }
 
-    resetTransformMatrix(){
-        let transform = this.uiShape.transform.baseVal.getItem(0);
-        transform.matrix.e=0;
-        transform.matrix.f=0;
+    resetTransformMatrix() {
+        let transform = this.uiSvg.transform.baseVal.getItem(0);
+        transform.matrix.e = 0;
+        transform.matrix.f = 0;
     }
 
 }
@@ -79,28 +87,23 @@ export class Line extends Shape {
     constructor(x1, y1, x2, y2) {
         super("line");
 
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        this.attributes.set("x", new NumericAttribute(this, "x", x1));
+        this.attributes.set("y", new NumericAttribute(this, "y", y1));
+        this.attributes.set("dx", new NumericAttribute(this, "dx", x2 - x1));
+        this.attributes.set("dy", new NumericAttribute(this, "dy", y2 - y1));
     }
-
-    get x(){ return this.x1; }
-    get y(){ return this.y1; }
 
     move(dx, dy) {
-        this.x1 += dx;
-        this.y1 += dy;
-        this.x2 += dx;
-        this.y2 += dy;
-        this.applyAttributes(this.uiShape);
+        this.get("x").add(dx);
+        this.get("y").add(dy);
+        this.updateSVGShape();
     }
 
-    applyAttributes(svgShape){
-        svgShape.setAttribute('x1', this.x1);
-        svgShape.setAttribute('y1', this.y1);
-        svgShape.setAttribute('x2', this.x2);
-        svgShape.setAttribute('y2', this.y2);
+    updateSVGShape() {
+        this.uiSvg.setAttribute('x1', this.get("x").value);
+        this.uiSvg.setAttribute('y1', this.get("y").value);
+        this.uiSvg.setAttribute('x2', this.get("x").value + this.get("dx").value);
+        this.uiSvg.setAttribute('y2', this.get("y").value + this.get("dy").value);
     }
 }
 
@@ -112,21 +115,21 @@ export class Circle extends FilledShape {
         this.r = r;
     }
 
-    get x(){ return this.cx; }
-    get y(){ return this.cy; }
-    get size(){ return this.r; }
+    get x() { return this.cx; }
+    get y() { return this.cy; }
+    get size() { return this.r; }
 
     move(dx, dy) {
         this.cx += dx;
         this.cy += dy;
-        this.applyAttributes(this.uiShape);
+        this.updateSVGShape();
     }
 
-    applyAttributes(svgShape){
-        svgShape.setAttribute('cx', this.cx);
-        svgShape.setAttribute('cy', this.cy);
-        svgShape.setAttribute('r', this.r);
-   }
+    updateSVGShape() {
+        this.uiSvg.setAttribute('cx', this.cx);
+        this.uiSvg.setAttribute('cy', this.cy);
+        this.uiSvg.setAttribute('r', this.r);
+    }
 
 }
 
@@ -139,20 +142,20 @@ export class Rectangle extends FilledShape {
         this.height = height;
     }
 
-    get x(){ return this.x; }
-    get y(){ return this.y; }
+    get x() { return this.x; }
+    get y() { return this.y; }
 
     move(dx, dy) {
         this.x += dx;
         this.y += dy;
-        this.applyAttributes(this.uiShape);
+        this.updateSVGShape();
     }
 
-    applyAttributes(svgShape){
-        svgShape.setAttribute("x", this.x);
-        svgShape.setAttribute("y", this.y);
-        svgShape.setAttribute("width", this.width);
-        svgShape.setAttribute("height", this.height);
-     }
+    updateSVGShape() {
+        this.uiSvg.setAttribute("x", this.x);
+        this.uiSvg.setAttribute("y", this.y);
+        this.uiSvg.setAttribute("width", this.width);
+        this.uiSvg.setAttribute("height", this.height);
+    }
 
 }

@@ -103,7 +103,7 @@ function endDrag(evt) {
 }
 
 export function addUIShape(shape) {
-    const element = shape.uiShape;
+    const element = shape.uiSvg;
     workarea.appendChild(element);
     selectShape(element);
 }
