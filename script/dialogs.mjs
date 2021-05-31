@@ -2,7 +2,7 @@
  * 
  */
 
-import { isEmpty, getIconAsSVGImage } from './icon.mjs';
+import { icon } from './icon.mjs';
 
 // TODO: possibly switch on constant names instead, or maybe a map or object?
 
@@ -57,7 +57,7 @@ function closeDialog(id, onCloseDialog) {
 */
 
 function beforeSaveDialogOpen() {
-    if (isEmpty()) {
+    if (icon.isEmpty()) {
         alert("Nothing to save, icon is empty");
         return true;
     }
@@ -65,7 +65,7 @@ function beforeSaveDialogOpen() {
     const previews = document.getElementsByClassName("icon-preview");
     for (const preview of previews) {
         // innerHtml does not work, 
-        preview.replaceChildren(getIconAsSVGImage());
+        preview.replaceChildren(icon.getAsSVGImage());
     }
 
 

@@ -2,7 +2,7 @@
  * 
  */
 import { selectedShapeChanged, updateShapeAttributeValues } from './attributes.mjs';
-import { shapeFromId, deleteShapeById } from './icon.mjs';
+import { icon } from './icon.mjs';
 
 const workarea = document.getElementById('workarea');
 
@@ -94,7 +94,7 @@ function drag(evt) {
 
 function endDrag(evt) {
     if (dragging) {
-        shapeFromId(selectedShape.id).applyTransformMatrix();
+        icon.shapeFromId(selectedShape.id).applyTransformMatrix();
         updateShapeAttributeValues();
     }
     dragging = false;
@@ -110,7 +110,7 @@ export function addUIShape(shape) {
 
 export function deleteCurrentlySelectedShape() {
     if (selectedShape) {
-        deleteShapeById(selectedShape.id);
+        icon.deleteShapeById(selectedShape.id);
         workarea.removeChild(selectedShape);
         unselectCurrentlySelectedShape();
     }

@@ -3,7 +3,7 @@
  */
 
 import { currentlySelectedShapeId, deleteCurrentlySelectedShape } from './workarea.mjs';
-import { shapeFromId } from "./icon.mjs";
+import { icon } from "./icon.mjs";
 import { addClass, removeClass } from './dom.mjs';
 //import { shapeFromId } from './icon.mjs';
 
@@ -18,10 +18,15 @@ function addEventListeners() {
 
     for (const button of buttons) {
         button.addEventListener("click", (evt) => {
-            changeAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
+            changeShapeAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
         });
     }
 }
+
+function changeIconAttribute(name, operation, value) {
+
+}
+
 
 
 export function selectedShapeChanged() {
@@ -41,7 +46,7 @@ function hideAllShapeAttributes() {
 }
 
 function showShapeAttributes() {
-    const shape = shapeFromId(currentlySelectedShapeId());
+    const shape = icon.shapeFromId(currentlySelectedShapeId());
     removeClass(document.getElementsByClassName(shape.attributeClass), "hidden");
 
     addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
@@ -49,12 +54,12 @@ function showShapeAttributes() {
 }
 
 export function updateShapeAttributeValues() {
-    const shape = shapeFromId(currentlySelectedShapeId());
+    const shape = icon.shapeFromId(currentlySelectedShapeId());
     shape.updateAttributesUI();
 }
 
-function changeAttribute(name, operation, value) {
-    const shape = shapeFromId(currentlySelectedShapeId());
+function changeShapeAttribute(name, operation, value) {
+    const shape = icon.shapeFromId(currentlySelectedShapeId());
     shape.attributes.get(name).update(operation, value);
 }
 
