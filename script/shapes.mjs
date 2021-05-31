@@ -71,11 +71,12 @@ export class FilledShape extends Shape {
         this.filled = filled;
     }
 
-    svgShape() {
-        const fragment = super.svgShape();
+    createNewSvgShape() {
+        const fragment = super.createNewSvgShape();
         if (this.filled) {
             // TODO: will remove any other style on the fragment
             fragment.setAttribute('style', "fill: black;");
+            console.log("asd")
         }
         return fragment;
 
@@ -110,25 +111,22 @@ export class Line extends Shape {
 export class Circle extends FilledShape {
     constructor(cx, cy, r, filled) {
         super("circle", filled);
-        this.cx = cx;
-        this.cy = cy;
-        this.r = r;
+        this.attributes.set("x", new NumericAttribute(this, "x", cx));
+        this.attributes.set("y", new NumericAttribute(this, "y", cy));
+        this.attributes.set("size", new NumericAttribute(this, "size", r));
     }
 
-    get x() { return this.cx; }
-    get y() { return this.cy; }
-    get size() { return this.r; }
 
     move(dx, dy) {
-        this.cx += dx;
-        this.cy += dy;
+        this.get("x").add(dx);
+        this.get("y").add(dy);
         this.updateSVGShape();
     }
 
     updateSVGShape() {
-        this.uiSvg.setAttribute('cx', this.cx);
-        this.uiSvg.setAttribute('cy', this.cy);
-        this.uiSvg.setAttribute('r', this.r);
+        this.uiSvg.setAttribute('cx', this.get("x").value);
+        this.uiSvg.setAttribute('cy', this.get("y").value);
+        this.uiSvg.setAttribute('r', this.get("size").value);
     }
 
 }
@@ -136,26 +134,24 @@ export class Circle extends FilledShape {
 export class Rectangle extends FilledShape {
     constructor(x, y, width, height, filled) {
         super("rect", filled);
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+
+        this.attributes.set("x", new NumericAttribute(this, "x", x));
+        this.attributes.set("y", new NumericAttribute(this, "y", y));
+        this.attributes.set("dx", new NumericAttribute(this, "dx", width));
+        this.attributes.set("dy", new NumericAttribute(this, "dy", height));
     }
 
-    get x() { return this.x; }
-    get y() { return this.y; }
-
     move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
+        this.get("x").add(dx);
+        this.get("y").add(dy);
         this.updateSVGShape();
     }
 
     updateSVGShape() {
-        this.uiSvg.setAttribute("x", this.x);
-        this.uiSvg.setAttribute("y", this.y);
-        this.uiSvg.setAttribute("width", this.width);
-        this.uiSvg.setAttribute("height", this.height);
+        this.uiSvg.setAttribute("x", this.get("x").value);
+        this.uiSvg.setAttribute("y", this.get("y").value);
+        this.uiSvg.setAttribute("width", this.get("dx").value);
+        this.uiSvg.setAttribute("height", this.get("dy").value);
     }
 
 }
