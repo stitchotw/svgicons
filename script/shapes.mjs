@@ -97,10 +97,10 @@ export class Line extends Shape {
     constructor(parent, x1, y1, x2, y2) {
         super(parent, "line");
 
-        this.attributes.set("x", new NumericAttribute(this, "x", x1));
-        this.attributes.set("y", new NumericAttribute(this, "y", y1));
-        this.attributes.set("dx", new NumericAttribute(this, "dx", x2 - x1));
-        this.attributes.set("dy", new NumericAttribute(this, "dy", y2 - y1));
+        this.attributes.set("x", new NumericAttribute(this, "x", x1, 0));
+        this.attributes.set("y", new NumericAttribute(this, "y", y1, 0));
+        this.attributes.set("dx", new NumericAttribute(this, "dx", x2 - x1, -32));
+        this.attributes.set("dy", new NumericAttribute(this, "dy", y2 - y1, -32));
     }
 
     move(dx, dy) {
@@ -121,8 +121,8 @@ export class Line extends Shape {
 export class Circle extends FilledShape {
     constructor(parent, cx, cy, r, filled) {
         super(parent, "circle", filled);
-        this.attributes.set("x", new NumericAttribute(this, "x", cx));
-        this.attributes.set("y", new NumericAttribute(this, "y", cy));
+        this.attributes.set("x", new NumericAttribute(this, "x", cx, 0));
+        this.attributes.set("y", new NumericAttribute(this, "y", cy, 0));
         this.attributes.set("size", new NumericAttribute(this, "size", r));
     }
 
@@ -146,10 +146,10 @@ export class Rectangle extends FilledShape {
     constructor(parent, x, y, width, height, filled) {
         super(parent, "rect", filled);
 
-        this.attributes.set("x", new NumericAttribute(this, "x", x));
-        this.attributes.set("y", new NumericAttribute(this, "y", y));
-        this.attributes.set("dx", new NumericAttribute(this, "dx", width));
-        this.attributes.set("dy", new NumericAttribute(this, "dy", height));
+        this.attributes.set("x", new NumericAttribute(this, "x", x, 0));
+        this.attributes.set("y", new NumericAttribute(this, "y", y, 0));
+        this.attributes.set("dx", new NumericAttribute(this, "dx", width, 32));
+        this.attributes.set("dy", new NumericAttribute(this, "dy", height, 32));
     }
 
     move(dx, dy) {

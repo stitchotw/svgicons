@@ -107,7 +107,7 @@ class Attribute {
         const label = document.getElementById("attribute-" + this.name);
         if (!label)
             throw "Could not find div with id attribute-" + this.name;
-            
+
         label.innerHTML = this.value;
     }
 
@@ -115,19 +115,25 @@ class Attribute {
 
 export class NumericAttribute extends Attribute {
 
-    constructor(item, name, value) {
+    constructor(item, name, value, min = 1, max = 32) {
         super(item, name);
-        this.value = value ? value : 0;
+        this.value = value;
+        this.min = min;
+        this.max = max;
     }
 
     increase() {
-        this.value++;
-        this.updateUI();
+        if (this.value < this.max) {
+            this.value++;
+            this.updateUI();
+        }
     }
 
     decrease() {
-        this.value--;
-        this.updateUI();
+        if (this.value > this.min) {
+            this.value--;
+            this.updateUI();
+        }
     }
 
     add(addend) {
