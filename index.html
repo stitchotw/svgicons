@@ -50,7 +50,7 @@
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
                     <button class="attribute-button" data-attribute-name="y" data-operation="dec">-</button>
                     <div id="attribute-y">---</div>
-                    <button class="attribute-button"data-attribute-name="y" data-operation="inc">+</button>
+                    <button class="attribute-button" data-attribute-name="y" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name circle-attribute text-attribute hidden">Size:</div>
                 <div class="shape-attribute circle-attribute hidden">
@@ -107,9 +107,9 @@
                 <div class="icon-attribute">Black</div>
                 <div class="icon-attribute-name">Stroke:</div>
                 <div class="icon-attribute">
-                    <button class="attribute-button">-</button>
-                    4px
-                    <button class="attribute-button">+</button>
+                    <button class="attribute-button" data-attribute-name="stroke" data-operation="dec">-</button>
+                    <div id="attribute-dy">---</div>
+                    <button class="attribute-button" data-attribute-name="stroke" data-operation="inc">+</button>
                 </div>
             </div>
         </div>
@@ -194,13 +194,50 @@
             <h1 class="dialog-header">Save icon</h1>
             <div id="save-dialog-content">
                 <table class="icon-preview-table">
-                    <tr><th>Size</th><th>Icon</th><th>Code</th></tr>
-                    <tr><td>16</td><td><div class="icon-preview icon-16"></div></td><td rowspan="6"><div id="icon-to-save"></div></td></tr>
-                    <tr><td>20</td><td><div class="icon-preview icon-20"></div></td></tr>
-                    <tr><td>24</td><td><div class="icon-preview icon-24"></div></td></tr>
-                    <tr><td>32</td><td><div class="icon-preview icon-32"></div></td></tr>
-                    <tr><td>48</td><td><div class="icon-preview icon-48"></div></td></tr>
-                    <tr><td>64</td><td><div class="icon-preview icon-64"></div></td></tr>
+                    <tr>
+                        <th>Size</th>
+                        <th>Icon</th>
+                        <th>Code</th>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>
+                            <div class="icon-preview icon-16"></div>
+                        </td>
+                        <td rowspan="6">
+                            <div id="icon-to-save"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>
+                            <div class="icon-preview icon-20"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td>
+                            <div class="icon-preview icon-24"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>32</td>
+                        <td>
+                            <div class="icon-preview icon-32"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>48</td>
+                        <td>
+                            <div class="icon-preview icon-48"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>64</td>
+                        <td>
+                            <div class="icon-preview icon-64"></div>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="functions">
