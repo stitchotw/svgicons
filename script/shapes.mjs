@@ -99,6 +99,7 @@ export class FilledShape extends Shape {
     constructor(parent, type, filled) {
         super(parent, type);
         this.attributes.set("fill", new TextAttribute(this, "fill", filled ? "black" : "none"));
+        // this.attributes.set("stroke", new TextAttribute(this, "stroke", filled?"none":"black"));
     }
 }
 
@@ -176,4 +177,38 @@ export class Rectangle extends FilledShape {
         svg.setAttribute("height", this.get("dy").value);
     }
 
+}
+
+export class Text extends FilledShape {
+    //<text x="50" y="50" text-anchor="middle" dominant-baseline="middle" 
+    //font-family="'Courier New', Courier, monospace" font-weight="bold" font-size="40px">TEXT</text>
+
+    constructor(parent, text, x, y) {
+        super(parent, "text", true);
+        this.text = text;
+        this.attributes.set("x", new NumericAttribute(this, "x", x, 0));
+        this.attributes.set("y", new NumericAttribute(this, "y", y, 0));
+        this.attributes.set("size", new NumericAttribute(this, "size", 10, 1));
+
+        this.attributes.set("stroke-width", new NumericAttribute(this, "stroke-width", 1));
+    }
+
+    move(dx, dy) {
+        this.get("x").add(dx);
+        this.get("y").add(dy);
+        this.updateUI();
+    }
+
+    update(svg, all) {
+        super.update(svg, all);
+        svg.setAttribute("x", this.get("x").value);
+        svg.setAttribute("y", this.get("y").value);
+        svg.setAttribute("text-anchor", "middle");
+        svg.setAttribute("dominant-baseline", "middle");
+        svg.setAttribute("font-family", "'Courier New', Courier, monospace");
+        svg.setAttribute("font-weight", "bold");
+        svg.setAttribute("font-size", this.get("size").value);
+
+        svg.replaceChildren(this.text)
+    }
 }

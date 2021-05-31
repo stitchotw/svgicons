@@ -4,6 +4,7 @@
 import { Line, Circle, Rectangle } from './shapes.mjs';
 import { NumericAttribute, TextAttribute } from "./attributes.mjs";
 import { addUIShape } from './workarea.mjs';
+import { Text } from './shapes.mjs';
 
 const DEFAULT_STROKE_WIDTH = 3;
 
@@ -85,21 +86,26 @@ class Icon {
      * Adds a line to the icon. 
      */
     addLine(x1, y1, x2, y2) {
-        const line = new Line(this, x1, y1, x2, y2);
-        this.addShape(line);
+        const shape = new Line(this, x1, y1, x2, y2);
+        this.addShape(shape);
     }
 
     /**
      * Adds a circle to the icon.
      */
     addCircle(cx, cy, r, filled) {
-        const circle = new Circle(this, cx, cy, r, filled);
-        this.addShape(circle);
+        const shape = new Circle(this, cx, cy, r, filled);
+        this.addShape(shape);
     }
 
     addRectangle(x, y, width, height, filled) {
-        const rectangle = new Rectangle(this, x, y, width, height, filled);
-        this.addShape(rectangle);
+        const shape = new Rectangle(this, x, y, width, height, filled);
+        this.addShape(shape);
+    }
+
+    addText(text, x, y){
+        const shape = new Text(this, text, x, y);
+        this.addShape(shape);
     }
 
 }

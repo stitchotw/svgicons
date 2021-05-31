@@ -27,7 +27,12 @@ function addEventListeners() {
     document.getElementById("add-path-button").addEventListener("click", () => { });
 
     //Text
-    document.getElementById("add-text-button").addEventListener("click", () => { });
+    document.getElementById("add-text-button").addEventListener("click", () => {
+        const text = prompt("What text do you want to add?", "X");
+        if(text){
+            icon.addText(text, 16, 16);
+        }
+     });
     document.getElementById("add-unicode-symbol-button").addEventListener("click", () => { });
     // document.getElementById("").addEventListener("click", ()=>);
 }

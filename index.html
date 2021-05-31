@@ -40,6 +40,7 @@
             <div class="attribute-group">
                 <h2 class="attribute-header">Selected</h2>
                 <p class="no-shape-selected-text">Click on a shape above to show its attributes.</p>
+                <!-- POSITION-->
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">X:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
                     <button class="attribute-button" data-attribute-name="x" data-operation="dec">-</button>
@@ -52,8 +53,9 @@
                     <div id="attribute-y">---</div>
                     <button class="attribute-button" data-attribute-name="y" data-operation="inc">+</button>
                 </div>
+                <!-- SIZE -->
                 <div class="shape-attribute-name circle-attribute text-attribute hidden">Size:</div>
-                <div class="shape-attribute circle-attribute hidden">
+                <div class="shape-attribute circle-attribute text-attribute hidden">
                     <button class="attribute-button" data-attribute-name="size" data-operation="dec">-</button>
                     <div id="attribute-size">---</div>
                     <button class="attribute-button" data-attribute-name="size" data-operation="inc">+</button>
@@ -70,6 +72,7 @@
                     <div id="attribute-dy">---</div>
                     <button class="attribute-button" data-attribute-name="dy" data-operation="inc">+</button>
                 </div>
+                <!-- STYLE -->
                 <div class="shape-attribute-name line-attribute hidden">Style:</div>
                 <div class="shape-attribute line-attribute hidden">Rounded</div>
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
@@ -85,18 +88,6 @@
                 <div class="shape-attribute text-attribute hidden">None</div>
                 <div class="shape-attribute-name text-attribute hidden">Family:</div>
                 <div class="shape-attribute text-attribute hidden">Courier</div>
-                <div class="shape-attribute-name text-attribute hidden">V-align:</div>
-                <div class="shape-attribute text-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">T</button>
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">M</button>
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">B</button>
-                </div>
-                <div class="shape-attribute-name text-attribute hidden">H-align:</div>
-                <div class="shape-attribute text-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">L</button>
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">C</button>
-                    <button class="attribute-button" data-attribute-name="valign" data-operation="">R</button>
-                </div>
                 <div class="shape-functions hidden"><button id="delete-selected-shape-button">Delete</button>
                 </div>
                 <div class="shape-functions hidden"><button id="copy-selected-shape-button">Copy</button></div>
@@ -181,7 +172,7 @@
                     shape.</a>
             </p>
             <h2>Text</h2>
-            <button id="add-text-button" title="Line of text" class="add-shape-button" disabled>
+            <button id="add-text-button" title="Line of text" class="add-shape-button">
                 <img src="img/text.svg" alt="">
             </button>
             <button id="add-unicode-symbol-button" title="Unicode symbol (text)" class="add-shape-button" disabled>
@@ -189,7 +180,8 @@
             </button>
             <p>Be careful when using text since <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank"
                     class="help-link" title="Opens in new tab/window">fonts may differ for
-                    viewers</a>.</p>
+                    viewers</a>. If nothing happens when you click on "Text" you might have <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank"
+                    class="help-link" title="Opens in new tab/window">turned off dialogs</a>.</p>
             <h2>Premade shapes</h2>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
