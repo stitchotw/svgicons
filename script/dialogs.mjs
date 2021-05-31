@@ -66,7 +66,20 @@ function updateIconToSave() {
 
 function saveIconToFile(){
     const container = document.getElementById("icon-to-save");
-    console.log(container.innerHTML)
+    console.log(container.textContent);
+    const text = container.textContent;
+
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', "test.svg");
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  
 }
 
 function copyIconToClipobard(){

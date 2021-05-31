@@ -209,4 +209,6 @@ h2.attribute-header {
 #icon-to-save {
     margin-left: 20px;
     max-width: 50vw;
+    max-height: 50vh;
+    overflow: auto;
 }

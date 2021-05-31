@@ -23,7 +23,8 @@ export function getIconAsSVGImage() {
 function getNewSVGElement(width, height) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('style', DEFAULT_SVG_STYLE);
-    svg.setAttribute("viewBox", `0 0 ${width} ${height}`)
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+    svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
     return svg;
 }
 
