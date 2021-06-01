@@ -19,6 +19,10 @@ export function setUpWorkArea() {
 function addBackgroundToWorkarea() {
 }
 
+export function updateSvgStyle(){
+    workarea.setAttribute("style", icon.svgStyle.asText());
+}
+
 /*
  * Drag'n drop of shapes
  * Based on https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/

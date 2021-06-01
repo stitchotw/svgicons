@@ -3,7 +3,7 @@
  */
 import { Line, Circle, Rectangle } from './shapes.mjs';
 import { SVGData } from "./attributes.mjs";
-import { addUIShape } from './workarea.mjs';
+import { addUIShape, updateSvgStyle } from './workarea.mjs';
 import { Text } from './shapes.mjs';
 
 const DEFAULT_STROKE_WIDTH = 3;
@@ -14,10 +14,10 @@ class Icon {
         this.shapes = new Map();
         this.style = new SVGData("icon-style-attribute-");
 
-        this.style.addText(null, "stroke", "black");
-        this.style.addNumeric(null, "stroke-width", DEFAULT_STROKE_WIDTH);
-        this.style.addText(null, "stroke-linecap", "round");
-        this.style.addText(null, "fill", "none");
+        this.style.addText(this, "stroke", "black");
+        this.style.addNumeric(this, "stroke-width", DEFAULT_STROKE_WIDTH, 1);
+        this.style.addText(this, "stroke-linecap", "round");
+        this.style.addText(this, "fill", "none");
     }
 
     isEmpty() {
@@ -25,6 +25,10 @@ class Icon {
     }
 
     /* Style attributes */
+
+    updateSvgUI(){
+        updateSvgStyle();
+    }
 
     get svgStyle() {
         return this.style;
@@ -41,7 +45,7 @@ class Icon {
     getNewSVGElement(width, height) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         console.log(this.style)
-        console.log(this.style.asText(null))
+        console.log(this.style.asText())
         svg.setAttribute('style', this.style.asText());
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");

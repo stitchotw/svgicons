@@ -23,6 +23,7 @@ function addEventListenersToButtons(className, listener) {
     let buttons = document.getElementsByClassName(className);
 
     for (const button of buttons) {
+        console.log(button);
         button.addEventListener("click", (evt) => {
             listener(evt.target.dataset.attributeName, evt.target.dataset.operation);
         });
@@ -97,15 +98,17 @@ export class SVGData {
         });
     }
 
-    asText(parent) {
+    asText() {
         let data = "";
         this.data.forEach((attribute, name) => {
-            console.log("Parent: ", parent)
-            if(parent)
-                console.log(attribute.value, parent.get(name).value, attribute.value != parent.get(name).value)
-            if (parent && attribute.value != parent.get(name).value)
-                attribute = parent.get(name);
-            data += name + ":" + attribute.value + ";";
+            if (attribute.value !== undefined) {
+                /*
+                console.log("Parent: ", parent)
+                if (parent)
+                    console.log(attribute.value, parent.get(name).value, attribute.value != parent.get(name).value)
+    */
+                data += name + ":" + attribute.value + ";";
+            }
         });
         return data;
     }
@@ -130,6 +133,10 @@ class Attribute {
         this.uiPrefix = uiPrefix;
     }
 
+    set(value) {
+        this.value = value;
+    }
+
     update(operation, value) {
         switch (operation) {
             case "inc":
@@ -141,6 +148,9 @@ class Attribute {
             case "set":
                 this.set(value);
                 break;
+            case "clear":
+                this.set(undefined);
+                break;
             default:
                 throw "Unexpected operation: " + operation;
         }
@@ -148,13 +158,13 @@ class Attribute {
     }
 
     updateUI() {
-        this.item?.updateSvgUI();
+        this.item.updateSvgUI();
 
         const label = document.getElementById(this.uiPrefix + this.name);
         if (!label)
             throw "Could not find div with id " + this.uiPrefix + this.name;
 
-        label.innerHTML = this.value;
+        label.innerHTML = this.value === undefined ? "U/A" : this.value;
     }
 
 }
@@ -169,6 +179,10 @@ class NumericAttribute extends Attribute {
     }
 
     increase() {
+        // Only things redefined from icon can be undefined
+        if (this.value === undefined) {
+            this.value = icon.svgStyle.get(this.name).value;
+        }
         if (this.value < this.max) {
             this.value++;
             this.updateUI();
@@ -176,6 +190,10 @@ class NumericAttribute extends Attribute {
     }
 
     decrease() {
+        // Only things redefined from icon can be undefined
+        if (this.value === undefined) {
+            this.value = icon.svgStyle.get(this.name).value;
+        }
         if (this.value > this.min) {
             this.value--;
             this.updateUI();

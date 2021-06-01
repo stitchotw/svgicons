@@ -18,7 +18,7 @@ export class Shape {
         this._svg = null;
         this.attributes = new SVGData("shape-attribute-");
         this.style = new SVGData("shape-style-attribute-");
-        this.style.addNumeric(this, "stroke-width", 1);
+        this.style.addNumeric(this, "stroke-width", undefined);
     }
 
     get svgAttributes() {
@@ -64,7 +64,7 @@ export class Shape {
     }
 
     updateSvg(svg) {
-        const style = this.svgStyle.asText(icon.svgStyle);
+        const style = this.svgStyle.asText();
         if (style)
             svg.setAttribute('style', style);
         else
