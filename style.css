@@ -253,3 +253,14 @@ p.no-shape-selected-text {
     text-align: start;
     overflow: auto;
 }
+
+#selectable-symbols {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.symbol-button {
+    width: 1.5cm;
+    height: 1.5cm;
+    font-size: 25px;
+}

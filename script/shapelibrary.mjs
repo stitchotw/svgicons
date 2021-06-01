@@ -63,15 +63,33 @@ class AddSymbolDialog extends StandardDialog {
     constructor() {
         super("add-symbol-dialog", "add-symbol-button", "cancel-add-symbol-dialog-button");
 
-        const buttons = document.getElementsByClassName("symbol-button");
-        for (const button of buttons) {
-            button.addEventListener("click", evt => this.addSymbol(evt.target));
+        this.addSectionToDialog("Common", "!?%#+*");
+        this.addSectionToDialog("Random", "†‡%‰‱‽⁋⁜※⁂");
+    }
+
+    addSectionToDialog(name, symbols) {
+        const parent = document.getElementById("selectable-symbols");
+
+        const header = document.createElement("h2");
+        header.textContent = name;
+        parent.appendChild(header);
+
+        const content = document.createElement("div");
+        parent.appendChild(content);
+
+        for (const c of symbols) {
+            console.log(c)
+            const button = document.createElement("button");
+            button.classList.add("symbol-button");
+            button.innerText = c;
+            button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
+            content.appendChild(button);
         }
     }
 
-    addSymbol(button) {
+    addSymbolToIcon(button) {
         icon.addText(button.innerText);
         this.close();
-}
+    }
 
 }
