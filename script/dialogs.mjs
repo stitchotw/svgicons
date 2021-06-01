@@ -101,13 +101,14 @@ class SaveIconDialog extends StandardDialog {
 
 class InputTextDialog extends Dialog {
     constructor() {
-        super("input-text-dialog", "cancel-input-text-dialog-button");
+        super("input-text-dialog");
         this.addListener("input-text-to-icon-button", evt => {
             if (this.textChecker(this.text)) {
                 this.textHandler(this.text);
                 this.close();
             }
         });
+        this.addListener("cancel-input-text-dialog-button", evt => this.close());
     }
 
     set header(h) {

@@ -24,9 +24,9 @@ function addEventListeners() {
     document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, false));
 
     // 
-    document.getElementById("add-polyline-button").addEventListener("click", () => { });
-    document.getElementById("add-polygon-button").addEventListener("click", () => { });
-    document.getElementById("add-path-button").addEventListener("click", () => { });
+    document.getElementById("add-polyline-button").addEventListener("click", () => { inputDialog.open("Polyline data", text => { icon.addText(text) }); });
+    document.getElementById("add-polygon-button").addEventListener("click", () => { inputDialog.open("Polygon data", text => { icon.addText(text) }); });
+    document.getElementById("add-path-button").addEventListener("click", () => { inputDialog.open("Path data", text => { icon.addText(text) }); });
 
     //Text
     document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", text => { icon.addText(text) }); });
