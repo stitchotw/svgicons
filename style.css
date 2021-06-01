@@ -131,11 +131,8 @@ p.no-shape-selected-text {
     grid-column: 2/-1;
 }
 
-.shape-attribute, .shape-style-attribute, .icon-attribute {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+.centered {
+    margin: auto;
 }
 
 .no-shape-selected-text {
