@@ -9,6 +9,8 @@ import { addClass, removeClass } from './dom.mjs';
 export function setUpAttributes() {
     addEventListeners();
     initializeIconAttributesUI();
+    // Trigger hiding of shape attributes
+    selectedShapeChanged();
 }
 
 function addEventListeners() {
@@ -185,7 +187,7 @@ class Attribute {
 
         const label = document.getElementById(this.uiPrefix + this.name);
         if (!label)
-            throw "Could not find div with id " + this.uiPrefix + this.name;
+            throw "Could not find id " + this.uiPrefix + this.name;
 
         label.innerHTML = this.value === undefined ? "U/A" : this.value;
     }

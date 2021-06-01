@@ -18,7 +18,7 @@ export class Shape {
         this._svg = null;
         this.attributes = new SVGData("shape-attribute-");
         this.style = new SVGData("shape-style-attribute-");
-        this.style.addNumeric(this, "stroke-width", undefined);
+        this.style.addNumeric(this, "stroke-width", undefined, 1);
     }
 
     get svgAttributes() {
@@ -92,8 +92,7 @@ export class Shape {
 export class FilledShape extends Shape {
     constructor(parent, type, filled) {
         super(parent, type);
-        this.attributes.set("fill", new TextAttribute(this, "fill", filled ? "black" : "none"));
-        // this.attributes.set("stroke", new TextAttribute(this, "stroke", filled?"none":"black"));
+        this.style.addText(this, "fill", filled ? "black" : "none");
     }
 }
 
@@ -180,6 +179,7 @@ export class Text extends FilledShape {
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
         this.attributes.addNumeric(this, "size", 20, 1);
+        this.style.get("stroke-width").set(1);
     }
 
     move(dx, dy) {

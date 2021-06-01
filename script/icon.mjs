@@ -44,8 +44,6 @@ class Icon {
 
     getNewSVGElement(width, height) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        console.log(this.style)
-        console.log(this.style.asText())
         svg.setAttribute('style', this.style.asText());
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
