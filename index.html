@@ -56,6 +56,10 @@
                 <button class="shape-attribute-button shape-attribute-y" data-attribute-name="y"
                     data-operation="inc">+</button>
 
+                <div class="shape-attribute-name shape-attribute-data">Data:</div>
+                <div id="shape-attribute-data" class="shape-attribute shape-attribute-data text">---
+                </div>
+
                 <!-- SIZE -->
                 <div class="shape-attribute-name shape-attribute-size">Size:</div>
                 <button class="shape-attribute-button shape-attribute-size" data-attribute-name="size"
@@ -302,7 +306,8 @@
     <div id="input-text-dialog" class="dialog">
         <div class="dialog-content">
             <h1 id="input-text-dialog-header" class="dialog-header">Add text</h1>
-            <input id="input-text" type="text">
+            <textarea id="input-text" cols="10" rows="5"></textarea>
+            <div id="input-text-error"></div>
             <div class="functions">
                 <button id="input-text-to-icon-button" class="function-button">Done</button>
                 <button id="cancel-input-text-dialog-button" class="function-button">Cancel</button>

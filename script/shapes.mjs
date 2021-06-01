@@ -203,3 +203,10 @@ export class Text extends FilledShape {
         svg.replaceChildren(this.text)
     }
 }
+
+export class Polyline extends FilledShape{
+    constructor(parent, points){
+        super(parent, "polyline", false);
+        this.attributes.addText(this, "data", points);
+    }
+}

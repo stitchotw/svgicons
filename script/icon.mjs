@@ -5,6 +5,7 @@ import { Line, Circle, Rectangle } from './shapes.mjs';
 import { SVGData } from "./attributes.mjs";
 import { addUIShape, updateSvgStyle } from './workarea.mjs';
 import { Text } from './shapes.mjs';
+import { Polyline } from './shapes.mjs';
 
 const DEFAULT_STROKE_WIDTH = 3;
 
@@ -90,6 +91,11 @@ class Icon {
 
     addText(text) {
         const shape = new Text(this, text, 16, 16);
+        this.addShape(shape);
+    }
+
+    addPolyline(data){
+        const shape = new Polyline(this, data);
         this.addShape(shape);
     }
 

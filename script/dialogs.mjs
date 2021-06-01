@@ -103,9 +103,11 @@ class InputTextDialog extends Dialog {
     constructor() {
         super("input-text-dialog");
         this.addListener("input-text-to-icon-button", evt => {
-            if (this.textChecker(this.text)) {
+            if (this.regex.test(this.text)) {
                 this.textHandler(this.text);
                 this.close();
+            } else {
+                this.error = "Must match " + this.regex;
             }
         });
         this.addListener("cancel-input-text-dialog-button", evt => this.close());
@@ -123,11 +125,16 @@ class InputTextDialog extends Dialog {
         document.getElementById("input-text").value = t;
     }
 
-    open(header, textHandler, textChecker = (text) => { return text; }) {
+    set error(e) {
+        document.getElementById("input-text-error").innerText = e;
+    }
+
+    open(header, textHandler, regex = /^\S([\S ]*\S)?$/) {
         this.header = header;
         this.text = "";
+        this.error = "";
         this.textHandler = textHandler;
-        this.textChecker = textChecker;
+        this.regex = regex;
         super.open();
     }
 }
