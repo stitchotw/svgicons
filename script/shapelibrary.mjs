@@ -24,7 +24,9 @@ function addEventListeners() {
     document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, false));
 
     // 
-    document.getElementById("add-polyline-button").addEventListener("click", () => { inputDialog.open("Polyline data", data => { icon.addPolyline(data) }); });
+    document.getElementById("add-polyline-button").addEventListener("click", () => {
+        inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
+    });
     document.getElementById("add-polygon-button").addEventListener("click", () => { inputDialog.open("Polygon data", text => { icon.addText(text) }); });
     document.getElementById("add-path-button").addEventListener("click", () => { inputDialog.open("Path data", text => { icon.addText(text) }); });
 

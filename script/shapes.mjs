@@ -39,7 +39,7 @@ export class Shape {
         this.updateSvg(this.uiSvg, true);
     }
 
-    updateSvgUI(){
+    updateSvgUI() {
         this.updateSvg(this.uiSvg, true);
     }
 
@@ -204,9 +204,19 @@ export class Text extends FilledShape {
     }
 }
 
-export class Polyline extends FilledShape{
-    constructor(parent, points){
+export class Polyline extends FilledShape {
+    
+    constructor(parent, points) {
         super(parent, "polyline", false);
         this.attributes.addText(this, "data", points);
+    }
+
+    move(dx, dy) {
+        this.updateUI();
+    }
+    
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute("points", this.attributes.get("data").value);
     }
 }

@@ -104,7 +104,7 @@ class InputTextDialog extends Dialog {
         super("input-text-dialog");
         this.addListener("input-text-to-icon-button", evt => {
             if (this.regex.test(this.text)) {
-                this.textHandler(this.text);
+                this.listener(this.text);
                 this.close();
             } else {
                 this.error = "Must match " + this.regex;
@@ -129,11 +129,11 @@ class InputTextDialog extends Dialog {
         document.getElementById("input-text-error").innerText = e;
     }
 
-    open(header, textHandler, regex = /^\S([\S ]*\S)?$/) {
+    open(header, listener, regex = /^\S([\S ]*\S)?$/) {
         this.header = header;
         this.text = "";
         this.error = "";
-        this.textHandler = textHandler;
+        this.listener = listener;
         this.regex = regex;
         super.open();
     }
