@@ -1,3 +1,4 @@
+import { inputDialog } from './dialogs.mjs';
 import { StandardDialog } from './dialogs.mjs';
 import { icon } from './icon.mjs';
 
@@ -28,35 +29,9 @@ function addEventListeners() {
     document.getElementById("add-path-button").addEventListener("click", () => { });
 
     //Text
-    new AddTextDialog();
+    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", text => { icon.addText(text) }); });
     new AddSymbolDialog();
 }
-
-class AddTextDialog extends StandardDialog {
-    constructor() {
-        super("add-text-dialog", "add-text-button", "cancel-add-text-dialog-button");
-        this.addListener("add-text-to-icon-button", evt => {
-            if (this.text) {
-                icon.addText(this.text);
-                this.close();
-            }
-        });
-    }
-
-    get text() {
-        return document.getElementById("added-text").value;
-    }
-
-    set text(t) {
-        document.getElementById("added-text").value = t;
-    }
-
-    open() {
-        this.text = "";
-        super.open();
-    }
-}
-
 
 class AddSymbolDialog extends StandardDialog {
 
@@ -97,7 +72,7 @@ class AddSymbolDialog extends StandardDialog {
         if (symbol !== this.preview) {
             this.preview = symbol;
             const previews = document.getElementsByClassName("symbol-preview");
-            for(const p of previews){
+            for (const p of previews) {
                 p.innerText = symbol;
             }
         }

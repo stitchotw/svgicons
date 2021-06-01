@@ -99,6 +99,40 @@ class SaveIconDialog extends StandardDialog {
     }
 }
 
+class InputTextDialog extends Dialog {
+    constructor() {
+        super("input-text-dialog", "cancel-input-text-dialog-button");
+        this.addListener("input-text-to-icon-button", evt => {
+            if (this.textChecker(this.text)) {
+                this.textHandler(this.text);
+                this.close();
+            }
+        });
+    }
+
+    set header(h) {
+        document.getElementById("input-text-dialog-header").innerText = h;
+    }
+
+    get text() {
+        return document.getElementById("input-text").value;
+    }
+
+    set text(t) {
+        document.getElementById("input-text").value = t;
+    }
+
+    open(header, textHandler, textChecker = (text) => { return text; }) {
+        this.header = header;
+        this.text = "";
+        this.textHandler = textHandler;
+        this.textChecker = textChecker;
+        super.open();
+    }
+}
+
+export const inputDialog = new InputTextDialog();
+
 export function setUpDialogs() {
     // No need to save these in variables,
     // The listeners are enough
