@@ -42,58 +42,70 @@
                 <p class="no-shape-selected-text">Click on a shape above to show its attributes.</p>
 
                 <!-- POSITION-->
-                <div class="attribute-name">X:</div>
-                <button class="shape-attribute-button" data-attribute-name="x" data-operation="dec">-</button>
-                <div id="shape-attribute-x">---</div>
-                <button class="shape-attribute-button" data-attribute-name="x" data-operation="inc">+</button>
+                <div class="shape-attribute-name shape-attribute-x">X:</div>
+                <button class="shape-attribute-button shape-attribute-x" data-attribute-name="x"
+                    data-operation="dec">-</button>
+                <div id="shape-attribute-x" class="shape-attribute shape-attribute-x">---</div>
+                <button class="shape-attribute-button shape-attribute-x" data-attribute-name="x"
+                    data-operation="inc">+</button>
 
-                <div class="attribute-name">Y:</div>
-                <button class="shape-attribute-button" data-attribute-name="y" data-operation="dec">-</button>
-                <div id="shape-attribute-y">---</div>
-                <button class="shape-attribute-button" data-attribute-name="y" data-operation="inc">+</button>
+                <div class="shape-attribute-name shape-attribute-y">Y:</div>
+                <button class="shape-attribute-button shape-attribute-y" data-attribute-name="y"
+                    data-operation="dec">-</button>
+                <div id="shape-attribute-y" class="shape-attribute shape-attribute-y">---</div>
+                <button class="shape-attribute-button shape-attribute-y" data-attribute-name="y"
+                    data-operation="inc">+</button>
 
                 <!-- SIZE -->
-                <div class="attribute-name">Size:</div>
-                <button class="shape-attribute-button" data-attribute-name="size" data-operation="dec">-</button>
-                <div id="shape-attribute-size">---</div>
-                <button class="shape-attribute-button" data-attribute-name="size" data-operation="inc">+</button>
+                <div class="shape-attribute-name shape-attribute-size">Size:</div>
+                <button class="shape-attribute-button shape-attribute-size" data-attribute-name="size"
+                    data-operation="dec">-</button>
+                <div id="shape-attribute-size" class="shape-attribute shape-attribute-size">---</div>
+                <button class="shape-attribute-button shape-attribute-size" data-attribute-name="size"
+                    data-operation="inc">+</button>
 
-                <div class="attribute-name">DX:</div>
-                <button class="shape-attribute-button" data-attribute-name="dx" data-operation="dec">-</button>
-                <div id="shape-attribute-dx">---</div>
-                <button class="shape-attribute-button" data-attribute-name="dx" data-operation="inc">+</button>
+                <div class="shape-attribute-name shape-attribute-dx">DX:</div>
+                <button class="shape-attribute-button shape-attribute-dx" data-attribute-name="dx"
+                    data-operation="dec">-</button>
+                <div id="shape-attribute-dx" class="shape-attribute shape-attribute-dx">---</div>
+                <button class="shape-attribute-button shape-attribute-dx" data-attribute-name="dx"
+                    data-operation="inc">+</button>
 
-                <div class="attribute-name">DY:</div>
-                <button class="shape-attribute-button" data-attribute-name="dy" data-operation="dec">-</button>
-                <div id="shape-attribute-dy">---</div>
-                <button class="shape-attribute-button" data-attribute-name="dy" data-operation="inc">+</button>
+                <div class="shape-attribute-name shape-attribute-dy">DY:</div>
+                <button class="shape-attribute-button shape-attribute-dy" data-attribute-name="dy"
+                    data-operation="dec">-</button>
+                <div id="shape-attribute-dy" class="shape-attribute shape-attribute-dy">---</div>
+                <button class="shape-attribute-button shape-attribute-dy" data-attribute-name="dy"
+                    data-operation="inc">+</button>
 
                 <!-- STYLE -->
-                <div class="attribute-name">Width:</div>
-                <button class="shape-style-attribute-button" data-attribute-name="stroke-width"
-                    data-operation="dec">-</button>
-                <div id="shape-style-attribute-stroke-width">---</div>
-                <button class="shape-style-attribute-button" data-attribute-name="stroke-width"
-                    data-operation="inc">+</button>
-                <button class="shape-style-attribute-button" data-attribute-name="stroke-width"
-                    data-operation="clear">C</button>
+                <div class="shape-attribute-name shape-style-attribute-stroke-width">Width:</div>
+                <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
+                    data-attribute-name="stroke-width" data-operation="dec">-</button>
+                <div id="shape-style-attribute-stroke-width"
+                    class="shape-style-attribute shape-style-attribute-stroke-width">---
+                </div>
+                <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
+                    data-attribute-name="stroke-width" data-operation="inc">+</button>
+                <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
+                    data-attribute-name="stroke-width" data-operation="clear">C</button>
 
 
                 <!--
-            <div class="attribute-name line-attribute hidden">Style:</div>
+            <div class="shape-attribute-name line-attribute hidden">Style:</div>
             <div class="shape-attribute line-attribute hidden">Rounded</div>
-            <div class="attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
+            <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
             <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">Default</div>
-            <div class="attribute-name circle-attribute rect-attribute hidden">Fill:</div>
+            <div class="shape-attribute-name circle-attribute rect-attribute hidden">Fill:</div>
             <div class="shape-attribute circle-attribute rect-attribute hidden">
                 <div id="shape-attribute-fill">---</div>
             </div>
-            <div class="attribute-name hidden">Path:</div>
+            <div class="shape-attribute-name hidden">Path:</div>
             <div class="shape-attribute hidden">None</div>
 
-            <div class="attribute-name text-attribute hidden">Text:</div>
+            <div class="shape-attribute-name text-attribute hidden">Text:</div>
             <div class="shape-attribute text-attribute hidden">None</div>
-            <div class="attribute-name text-attribute hidden">Family:</div>
+            <div class="shape-attribute-name text-attribute hidden">Family:</div>
             <div class="shape-attribute text-attribute hidden">Courier</div>
             -->
 
@@ -105,20 +117,20 @@
             <div class="icon-attribute-group">
                 <h2 class="attribute-header">Whole Icon</h2>
 
-                <div class="attribute-name">Viewbox:</div>
+                <div class="icon-attribute-name">Viewbox:</div>
                 <div class="icon-attribute text">32x32</div>
 
-                <div class="attribute-name">Color:</div>
+                <div class="icon-attribute-name">Color:</div>
                 <div class="icon-attribute text">Black</div>
 
-                <div class="attribute-name">Width:</div>
+                <div class="icon-attribute-name">Width:</div>
                 <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
                     data-operation="dec">-</button>
                 <div id="icon-style-attribute-stroke-width">---</div>
                 <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
                     data-operation="inc">+</button>
 
-                <div class="attribute-name">Linecap:</div>
+                <div class="shape-attribute-name">Linecap:</div>
                 <div class="icon-attribute text">Rounded</div>
             </div>
         </div>

@@ -23,7 +23,6 @@ function addEventListenersToButtons(className, listener) {
     let buttons = document.getElementsByClassName(className);
 
     for (const button of buttons) {
-        console.log(button);
         button.addEventListener("click", (evt) => {
             listener(evt.target.dataset.attributeName, evt.target.dataset.operation);
         });
@@ -36,13 +35,23 @@ export function selectedShapeChanged() {
     hideAllShapeAttributes();
     if (currentlySelectedShapeId()) {
         showShapeAttributes();
-        updateShapeAttributeValues();
+        showShapeStyleAttributes();
+
+        addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
+        removeClass(document.getElementsByClassName("shape-functions"), "hidden");
+
+        //updateShapeAttributeValues();
     }
 }
 
 function hideAllShapeAttributes() {
     addClass(document.getElementsByClassName("shape-attribute-name"), "hidden");
+
+    addClass(document.getElementsByClassName("shape-attribute-button"), "hidden");
     addClass(document.getElementsByClassName("shape-attribute"), "hidden");
+
+    addClass(document.getElementsByClassName("shape-style-attribute-button"), "hidden");
+    addClass(document.getElementsByClassName("shape-style-attribute"), "hidden");
 
     removeClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
     addClass(document.getElementsByClassName("shape-functions"), "hidden");
@@ -50,16 +59,22 @@ function hideAllShapeAttributes() {
 
 function showShapeAttributes() {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    removeClass(document.getElementsByClassName(shape.attributeClass), "hidden");
-
-    addClass(document.getElementsByClassName("no-shape-selected-text"), "hidden");
-    removeClass(document.getElementsByClassName("shape-functions"), "hidden");
+    shape.svgAttributes.showAllInUI();
 }
 
+function showShapeStyleAttributes() {
+    const shape = icon.shapeFromId(currentlySelectedShapeId());
+    shape.svgStyle.showAllInUI();
+}
+
+
+
+// TODO: Used when dragging, should be possible to remove
 export function updateShapeAttributeValues() {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
     shape.updateUI();
 }
+
 
 function changeShapeAttribute(name, operation, value) {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
@@ -92,6 +107,17 @@ export class SVGData {
         return this.data.get(name);
     }
 
+    showAllInUI() {
+        this.data.forEach((attribute) => {
+            const elements = document.getElementsByClassName(attribute.uiName);
+            if (elements.length === 0)
+                console.warn("Could not find any UI elements for " + attribute.uiName);
+            removeClass(elements, "hidden");
+        });
+
+        this.updateUI();
+    }
+
     updateUI() {
         this.data.forEach((attribute) => {
             attribute.updateUI();
@@ -102,11 +128,6 @@ export class SVGData {
         let data = "";
         this.data.forEach((attribute, name) => {
             if (attribute.value !== undefined) {
-                /*
-                console.log("Parent: ", parent)
-                if (parent)
-                    console.log(attribute.value, parent.get(name).value, attribute.value != parent.get(name).value)
-    */
                 data += name + ":" + attribute.value + ";";
             }
         });
@@ -121,8 +142,6 @@ export class SVGData {
         this.data.set(name, new TextAttribute(item, name, this.uiPrefix, value));
     }
 
-
-
 }
 
 class Attribute {
@@ -131,6 +150,10 @@ class Attribute {
         this.item = item;
         this.name = name;
         this.uiPrefix = uiPrefix;
+    }
+
+    get uiName() {
+        return this.uiPrefix + this.name;
     }
 
     set(value) {
