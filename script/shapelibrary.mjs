@@ -78,7 +78,6 @@ class AddSymbolDialog extends StandardDialog {
         parent.appendChild(content);
 
         for (const c of symbols) {
-            console.log(c)
             const button = document.createElement("button");
             button.classList.add("symbol-button");
             button.innerText = c;
