@@ -118,11 +118,11 @@ class InputTextDialog extends Dialog {
     }
 
     get text() {
-        return document.getElementById("input-text").value;
+        return document.getElementById("input-text").value.trim();
     }
 
     set text(t) {
-        document.getElementById("input-text").value = t;
+        document.getElementById("input-text").value = t.trim();
     }
 
     set error(e) {
