@@ -2,7 +2,7 @@
  * 
  */
 import { Line, Circle, Rectangle } from './shapes.mjs';
-import { NumericAttribute, TextAttribute } from "./attributes.mjs";
+import { SVGData } from "./attributes.mjs";
 import { addUIShape } from './workarea.mjs';
 import { Text } from './shapes.mjs';
 
@@ -12,12 +12,12 @@ class Icon {
 
     constructor(width, height) {
         this.shapes = new Map();
-        this.style = new Map();
+        this.style = new SVGData("icon-style-attribute-");
 
-        this.style.set("stroke", new TextAttribute(this, "stroke", "black"));
-        this.style.set("stroke-width", new NumericAttribute(this, "stroke-width", DEFAULT_STROKE_WIDTH));
-        this.style.set("stroke-linecap", new TextAttribute(this, "stroke-linecap", "round"));
-        this.style.set("fill", new TextAttribute(this, "fill", "none"));
+        this.style.addText(null, "stroke", "black");
+        this.style.addNumeric(null, "stroke-width", DEFAULT_STROKE_WIDTH);
+        this.style.addText(null, "stroke-linecap", "round");
+        this.style.addText(null, "fill", "none");
     }
 
     isEmpty() {
@@ -26,27 +26,8 @@ class Icon {
 
     /* Style attributes */
 
-    get globalStyle() {
+    get svgStyle() {
         return this.style;
-    }
-
-    get(name) {
-        return this.style.get(name);
-    }
-
-    
-    styleData() {
-        let data = "";
-        icon.globalStyle.forEach((attribute, name) => {
-            data += name + ":" + attribute.value + ";";
-        });
-        return data;
-    }
-
-    updateUI() {
-        for (const [_, shape] of this.shapes) {
-            shape.updateUI();
-        }
     }
 
     getAsSVGImage() {
@@ -59,7 +40,9 @@ class Icon {
 
     getNewSVGElement(width, height) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('style', this.styleData());
+        console.log(this.style)
+        console.log(this.style.asText(null))
+        svg.setAttribute('style', this.style.asText());
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
         return svg;
@@ -103,8 +86,8 @@ class Icon {
         this.addShape(shape);
     }
 
-    addText(text, x, y){
-        const shape = new Text(this, text, x, y);
+    addText(text) {
+        const shape = new Text(this, text, 16, 16);
         this.addShape(shape);
     }
 

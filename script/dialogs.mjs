@@ -6,106 +6,106 @@ import { icon } from './icon.mjs';
 
 // TODO: possibly switch on constant names instead, or maybe a map or object?
 
-export function setUpDialogs() {
-    addEventListeners();
+export class Dialog {
+
+    constructor(id) {
+        this.id = id;
+    }
+
+    addListener(buttonId, listener) {
+        document.getElementById(buttonId).addEventListener("click", listener);
+    }
+
+    open() {
+        const dialog = document.getElementById(this.id);
+        dialog.style.display = "grid";
+    }
+
+    close() {
+        const dialog = document.getElementById(this.id);
+        dialog.style.display = "none";
+    }
 }
 
-function addEventListeners() {
-    // Open dialogs
-    document.getElementById("save-icon-button").addEventListener("click", (event) => openDialog("save-icon-dialog", beforeSaveDialogOpen));
-    document.getElementById("new-icon-button").addEventListener("click", (event) => openDialog("new-icon-dialog"));
-    document.getElementById("settings-button").addEventListener("click", (event) => openDialog("settings-dialog"));
-    document.getElementById("help-button").addEventListener("click", (event) => openDialog("help-dialog"));
+export class StandardDialog extends Dialog {
 
-    // Close dialogs
-    document.getElementById("close-save-icon-dialog-button").addEventListener("click", (event) => closeDialog("save-icon-dialog"));
-    document.getElementById("close-new-icon-dialog-button").addEventListener("click", (event) => closeDialog("new-icon-dialog"));
-    document.getElementById("close-settings-dialog-button").addEventListener("click", (event) => closeDialog("settings-dialog"));
-    document.getElementById("close-help-dialog-button").addEventListener("click", (event) => closeDialog("help-dialog"));
+    constructor(id, openButtonId, closeButtonId) {
+        super(id);
+        // Arrow function necessary to give this correct scope
+        this.addListener(openButtonId, evt => this.open());
+        this.addListener(closeButtonId, evt => this.close());
+    }
 
-    // Save icon dialog
-    document.getElementById("save-icon-to-file-button").addEventListener("click", saveIconToFile);
-    document.getElementById("copy-icon-to-clipboard-button").addEventListener("click", copyIconToClipobard);
 }
 
+class SaveIconDialog extends StandardDialog {
+    constructor() {
+        super("save-icon-dialog", "save-icon-button", "close-save-icon-dialog-button");
+        this.addListener("save-icon-to-file-button", evt => this.saveIconToFile());
+        this.addListener("copy-icon-to-clipboard-button", evt => this.copyIconToClipobard());
+    }
 
-
-function openDialog(id, onOpenDialog) {
-    if (onOpenDialog) {
-        const close = onOpenDialog();
-        if (close) {
-            closeDialog(id);
+    open() {
+        if (icon.isEmpty()) {
+            alert("Nothing to save, icon is empty");
             return;
         }
+
+        const previews = document.getElementsByClassName("icon-preview");
+        for (const preview of previews) {
+            // innerHtml does not work, 
+            preview.replaceChildren(icon.getAsSVGImage());
+        }
+
+        const container = document.getElementById("icon-to-save");
+        container.textContent = previews[0].innerHTML;
+
+        super.open();
     }
 
-    const dialog = document.getElementById(id);
-    dialog.style.display = "grid";
-}
+    saveIconToFile() {
+        const container = document.getElementById("icon-to-save");
+        const text = container.textContent;
 
-function closeDialog(id, onCloseDialog) {
-    if (onCloseDialog)
-        onCloseDialog();
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', "test.svg");
 
-    const dialog = document.getElementById(id);
-    dialog.style.display = "none";
-}
+        element.style.display = 'none';
+        document.body.appendChild(element);
 
+        element.click();
 
-/*
-    Save icon dialog
-*/
+        document.body.removeChild(element);
 
-function beforeSaveDialogOpen() {
-    if (icon.isEmpty()) {
-        alert("Nothing to save, icon is empty");
-        return true;
     }
 
-    const previews = document.getElementsByClassName("icon-preview");
-    for (const preview of previews) {
-        // innerHtml does not work, 
-        preview.replaceChildren(icon.getAsSVGImage());
-    }
+    copyIconToClipobard() {
+        var text_to_copy = document.getElementById("icon-to-save").textContent;
 
-
-    const container = document.getElementById("icon-to-save");
-    container.textContent = previews[0].innerHTML;
-}
-
-
-function saveIconToFile() {
-    const container = document.getElementById("icon-to-save");
-    console.log(container.textContent);
-    const text = container.textContent;
-
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', "test.svg");
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-
-}
-
-function copyIconToClipobard() {
-    var text_to_copy = document.getElementById("icon-to-save").innerHTML;
-
-    if (!navigator.clipboard) {
-        // use old commandExec() way ?
-        alert("Clipboard not supported");
-    } else {
-        navigator.clipboard.writeText(text_to_copy).then(
-            function () {
-                alert("SVG data copied to clipboard");
-            })
-            .catch(
+        if (!navigator.clipboard) {
+            // use old commandExec() way ?
+            alert("Clipboard not supported");
+        } else {
+            navigator.clipboard.writeText(text_to_copy).then(
                 function () {
-                    alert("Unable to copy SVG data to clipboard");
-                });
+                    alert("SVG data copied to clipboard");
+                })
+                .catch(
+                    function () {
+                        alert("Unable to copy SVG data to clipboard");
+                    });
+        }
     }
+}
+
+export function setUpDialogs() {
+    // No need to save these in variables,
+    // The listeners are enough
+
+    new SaveIconDialog();
+    new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button");
+    new StandardDialog("settings-dialog", "settings-button", "close-settings-dialog-button");
+    new StandardDialog("help-dialog", "help-button", "close-help-dialog-button");
+
 }

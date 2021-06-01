@@ -100,7 +100,7 @@ h2.attribute-header {
     grid-column: 1 / -1;
 }
 
-.shape-attribute, .icon-attribute {
+.shape-attribute, .shape-style-attribute, .icon-attribute {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -155,6 +155,10 @@ h2.attribute-header {
     background-color: rgba(175, 175, 175, 0.5);
 }
 
+.dialog-header {
+    margin-top: 0px;
+}
+
 .dialog-content {
     padding: var(--margin);
 
@@ -162,10 +166,11 @@ h2.attribute-header {
 
     border: 1px solid black;
     border-radius: var(--small-margin);
-}
 
-.dialog-header {
-    margin-top: 0px;
+    max-width: 50vw;
+    max-height: 50vh;
+
+    text-align: center;
 }
 
 .dialog-content > .functions {
@@ -206,9 +211,14 @@ h2.attribute-header {
     height: 64px;
 }
 
+#save-dialog-content {
+    display: flex;
+    max-height: 30vh;
+    flex-direction: row;
+}
+
 #icon-to-save {
     margin-left: 20px;
-    max-width: 50vw;
-    max-height: 50vh;
+    text-align: start;
     overflow: auto;
 }

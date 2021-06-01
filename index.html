@@ -43,43 +43,52 @@
                 <!-- POSITION-->
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">X:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="x" data-operation="dec">-</button>
-                    <div id="attribute-x">---</div>
-                    <button class="attribute-button" data-attribute-name="x" data-operation="inc">+</button>
+                    <button class="shape-attribute-button" data-attribute-name="x" data-operation="dec">-</button>
+                    <div id="shape-attribute-x">---</div>
+                    <button class="shape-attribute-button" data-attribute-name="x" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Y:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="y" data-operation="dec">-</button>
-                    <div id="attribute-y">---</div>
-                    <button class="attribute-button" data-attribute-name="y" data-operation="inc">+</button>
+                    <button class="shape-attribute-button" data-attribute-name="y" data-operation="dec">-</button>
+                    <div id="shape-attribute-y">---</div>
+                    <button class="shape-attribute-button" data-attribute-name="y" data-operation="inc">+</button>
                 </div>
                 <!-- SIZE -->
                 <div class="shape-attribute-name circle-attribute text-attribute hidden">Size:</div>
                 <div class="shape-attribute circle-attribute text-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="size" data-operation="dec">-</button>
-                    <div id="attribute-size">---</div>
-                    <button class="attribute-button" data-attribute-name="size" data-operation="inc">+</button>
+                    <button class="shape-attribute-button" data-attribute-name="size" data-operation="dec">-</button>
+                    <div id="shape-attribute-size">---</div>
+                    <button class="shape-attribute-button" data-attribute-name="size" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name line-attribute rect-attribute hidden">DX:</div>
                 <div class="shape-attribute line-attribute rect-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="dx" data-operation="dec">-</button>
-                    <div id="attribute-dx">---</div>
-                    <button class="attribute-button" data-attribute-name="dx" data-operation="inc">+</button>
+                    <button class="shape-attribute-button" data-attribute-name="dx" data-operation="dec">-</button>
+                    <div id="shape-attribute-dx">---</div>
+                    <button class="shape-attribute-button" data-attribute-name="dx" data-operation="inc">+</button>
                 </div>
                 <div class="shape-attribute-name line-attribute rect-attribute hidden">DY:</div>
                 <div class="shape-attribute line-attribute rect-attribute hidden">
-                    <button class="attribute-button" data-attribute-name="dy" data-operation="dec">-</button>
-                    <div id="attribute-dy">---</div>
-                    <button class="attribute-button" data-attribute-name="dy" data-operation="inc">+</button>
+                    <button class="shape-attribute-button" data-attribute-name="dy" data-operation="dec">-</button>
+                    <div id="shape-attribute-dy">---</div>
+                    <button class="shape-attribute-button" data-attribute-name="dy" data-operation="inc">+</button>
                 </div>
                 <!-- STYLE -->
+                <div class="shape-style-attribute-name line-attribute circle-attribute rect-attribute text-attribute hidden">Width:</div>
+                <div class="shape-style-attribute line-attribute circle-attribute rect-attribute text-attribute hidden">
+                    <button class="shape-style-attribute-button" data-attribute-name="stroke-width"
+                        data-operation="dec">-</button>
+                    <div id="shape-style-attribute-stroke-width">---</div>
+                    <button class="shape-style-attribute-button" data-attribute-name="stroke-width"
+                        data-operation="inc">+</button>
+                </div>
+
                 <div class="shape-attribute-name line-attribute hidden">Style:</div>
                 <div class="shape-attribute line-attribute hidden">Rounded</div>
                 <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
                 <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">Default</div>
                 <div class="shape-attribute-name circle-attribute rect-attribute hidden">Fill:</div>
                 <div class="shape-attribute circle-attribute rect-attribute hidden">
-                    <div id="attribute-fill">---</div>
+                    <div id="shape-attribute-fill">---</div>
                 </div>
                 <div class="shape-attribute-name hidden">Path:</div>
                 <div class="shape-attribute hidden">None</div>
@@ -100,10 +109,10 @@
                 <div class="icon-attribute">Black</div>
                 <div class="icon-attribute-name">Width:</div>
                 <div class="icon-attribute">
-                    <button class="icon-attribute-button" data-attribute-name="stroke-width"
+                    <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
                         data-operation="dec">-</button>
-                    <div id="attribute-stroke-width">---</div>
-                    <button class="icon-attribute-button" data-attribute-name="stroke-width"
+                    <div id="icon-style-attribute-stroke-width">---</div>
+                    <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
                         data-operation="inc">+</button>
                 </div>
                 <div class="icon-attribute-name">Linecap:</div>
@@ -175,13 +184,14 @@
             <button id="add-text-button" title="Line of text" class="add-shape-button">
                 <img src="img/text.svg" alt="">
             </button>
-            <button id="add-unicode-symbol-button" title="Unicode symbol (text)" class="add-shape-button" disabled>
+            <button id="add-symbol-button" title="Unicode symbol (text)" class="add-shape-button">
                 <img src="img/symbol.svg" alt="">
             </button>
             <p>Be careful when using text since <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank"
                     class="help-link" title="Opens in new tab/window">fonts may differ for
-                    viewers</a>. If nothing happens when you click on "Text" you might have <a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank"
-                    class="help-link" title="Opens in new tab/window">turned off dialogs</a>.</p>
+                    viewers</a>. If nothing happens when you click on "Text" you might have <a
+                    href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank" class="help-link"
+                    title="Opens in new tab/window">turned off dialogs</a>.</p>
             <h2>Premade shapes</h2>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
             <button title="add--button" class="add-shape-button" disabled><img src="img/empty.svg" alt=""></button>
@@ -197,15 +207,11 @@
                     <tr>
                         <th>Size</th>
                         <th>Icon</th>
-                        <th>Code</th>
                     </tr>
                     <tr>
                         <td>16</td>
                         <td>
                             <div class="icon-preview icon-16"></div>
-                        </td>
-                        <td rowspan="6">
-                            <div id="icon-to-save"></div>
                         </td>
                     </tr>
                     <tr>
@@ -239,6 +245,7 @@
                         </td>
                     </tr>
                 </table>
+                <div id="icon-to-save"></div>
             </div>
             <div class="functions">
                 <button id="save-icon-to-file-button" class="function-button">Save</button>
@@ -271,6 +278,64 @@
             <iframe src="help.html" frameborder="0"></iframe>
             <div class="functions">
                 <button id="close-help-dialog-button" class="function-button">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="add-text-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">Add text</h1>
+            <input id="added-text" type="text">
+            <div class="functions">
+                <button id="add-text-to-icon-button" class="function-button">Add</button>
+                <button id="cancel-add-text-dialog-button" class="function-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="add-symbol-dialog" class="dialog">
+        <div class="dialog-content">
+            <h1 class="dialog-header">Select symbol</h1>
+            <div class="selectable-symbols">
+                <h1>Group name</h1>
+                <div class="symbol-group">
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                </div>
+                <h1>Group name</h1>
+                <div class="symbol-group">
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                    <button class="symbol-button">#</button>
+                </div>
+            </div>
+            <div class="functions">
+                <button id="cancel-add-symbol-dialog-button" class="function-button">Cancel</button>
             </div>
         </div>
     </div>

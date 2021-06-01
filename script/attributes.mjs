@@ -14,32 +14,22 @@ export function setUpAttributes() {
 function addEventListeners() {
     document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
 
-    let buttons = document.getElementsByClassName("attribute-button");
+    addEventListenersToButtons("shape-attribute-button", changeShapeAttribute);
+    addEventListenersToButtons("shape-style-attribute-button", changeShapeStyleAttribute);
+    addEventListenersToButtons("icon-style-attribute-button", changeIconStyleAttribute);
+}
+
+function addEventListenersToButtons(className, listener) {
+    let buttons = document.getElementsByClassName(className);
 
     for (const button of buttons) {
         button.addEventListener("click", (evt) => {
-            changeShapeAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
-        });
-    }
-
-    buttons = document.getElementsByClassName("icon-attribute-button");
-
-    for (const button of buttons) {
-        button.addEventListener("click", (evt) => {
-            changeIconAttribute(evt.target.dataset.attributeName, evt.target.dataset.operation);
+            listener(evt.target.dataset.attributeName, evt.target.dataset.operation);
         });
     }
 }
 
-function initializeIconAttributesUI() {
-    document.getElementById("attribute-stroke-width").innerHTML = icon.get("stroke-width").value;
-}
-
-function changeIconAttribute(name, operation, value) {
-    icon.get(name).update(operation, value);
-}
-
-
+// Shape attributes
 
 export function selectedShapeChanged() {
     hideAllShapeAttributes();
@@ -67,21 +57,77 @@ function showShapeAttributes() {
 
 export function updateShapeAttributeValues() {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    shape.updateAttributesUI();
+    shape.updateUI();
 }
 
 function changeShapeAttribute(name, operation, value) {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    shape.attributes.get(name).update(operation, value);
+    shape.svgAttributes.get(name).update(operation, value);
+}
+
+function changeShapeStyleAttribute(name, operation, value) {
+    const shape = icon.shapeFromId(currentlySelectedShapeId());
+    shape.svgStyle.get(name).update(operation, value);
+}
+
+// Global style attributes
+
+function initializeIconAttributesUI() {
+    document.getElementById("icon-style-attribute-stroke-width").innerHTML = icon.svgStyle.get("stroke-width").value;
+}
+
+function changeIconStyleAttribute(name, operation, value) {
+    icon.svgStyle.get(name).update(operation, value);
+}
+
+export class SVGData {
+
+    constructor(uiPrefix) {
+        this.uiPrefix = uiPrefix;
+        this.data = new Map();
+    }
+
+    get(name) {
+        return this.data.get(name);
+    }
+
+    updateUI() {
+        this.data.forEach((attribute) => {
+            attribute.updateUI();
+        });
+    }
+
+    asText(parent) {
+        let data = "";
+        this.data.forEach((attribute, name) => {
+            console.log("Parent: ", parent)
+            if(parent)
+                console.log(attribute.value, parent.get(name).value, attribute.value != parent.get(name).value)
+            if (parent && attribute.value != parent.get(name).value)
+                attribute = parent.get(name);
+            data += name + ":" + attribute.value + ";";
+        });
+        return data;
+    }
+
+    addNumeric(item, name, value, min = 0, max = 32) {
+        this.data.set(name, new NumericAttribute(item, name, this.uiPrefix, value, min, max));
+    }
+
+    addText(item, name, value) {
+        this.data.set(name, new TextAttribute(item, name, this.uiPrefix, value));
+    }
+
+
+
 }
 
 class Attribute {
 
-    constructor(item, name) {
-        if (!item || !name)
-            throw "Both item and name must be set";
-        this.name = name;
+    constructor(item, name, uiPrefix) {
         this.item = item;
+        this.name = name;
+        this.uiPrefix = uiPrefix;
     }
 
     update(operation, value) {
@@ -102,21 +148,21 @@ class Attribute {
     }
 
     updateUI() {
-        this.item.updateUI();
+        this.item?.updateSvgUI();
 
-        const label = document.getElementById("attribute-" + this.name);
+        const label = document.getElementById(this.uiPrefix + this.name);
         if (!label)
-            throw "Could not find div with id attribute-" + this.name;
+            throw "Could not find div with id " + this.uiPrefix + this.name;
 
         label.innerHTML = this.value;
     }
 
 }
 
-export class NumericAttribute extends Attribute {
+class NumericAttribute extends Attribute {
 
-    constructor(item, name, value, min = 1, max = 32) {
-        super(item, name);
+    constructor(item, name, uiPrefix, value, min = 1, max = 32) {
+        super(item, name, uiPrefix);
         this.value = value;
         this.min = min;
         this.max = max;
@@ -142,10 +188,10 @@ export class NumericAttribute extends Attribute {
     }
 }
 
-export class TextAttribute extends Attribute {
+class TextAttribute extends Attribute {
 
-    constructor(item, name, value) {
-        super(item, name);
+    constructor(item, name, uiPrefix, value) {
+        super(item, name, uiPrefix);
         this.value = value ? value : undefined;
     }
 

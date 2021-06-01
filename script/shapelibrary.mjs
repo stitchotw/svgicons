@@ -1,3 +1,4 @@
+import { StandardDialog } from './dialogs.mjs';
 import { icon } from './icon.mjs';
 
 export function setUpShapeLibrary() {
@@ -27,12 +28,50 @@ function addEventListeners() {
     document.getElementById("add-path-button").addEventListener("click", () => { });
 
     //Text
-    document.getElementById("add-text-button").addEventListener("click", () => {
-        const text = prompt("What text do you want to add?", "X");
-        if(text){
-            icon.addText(text, 16, 16);
+    new AddTextDialog();
+    new AddSymbolDialog();
+}
+
+class AddTextDialog extends StandardDialog {
+    constructor() {
+        super("add-text-dialog", "add-text-button", "cancel-add-text-dialog-button");
+        this.addListener("add-text-to-icon-button", evt => {
+            if (this.text) {
+                icon.addText(this.text);
+                this.close();
+            }
+        });
+    }
+
+    get text() {
+        return document.getElementById("added-text").value;
+    }
+
+    set text(t) {
+        document.getElementById("added-text").value = t;
+    }
+
+    open() {
+        this.text = "";
+        super.open();
+    }
+}
+
+
+class AddSymbolDialog extends StandardDialog {
+
+    constructor() {
+        super("add-symbol-dialog", "add-symbol-button", "cancel-add-symbol-dialog-button");
+
+        const buttons = document.getElementsByClassName("symbol-button");
+        for (const button of buttons) {
+            button.addEventListener("click", evt => this.addSymbol(evt.target));
         }
-     });
-    document.getElementById("add-unicode-symbol-button").addEventListener("click", () => { });
-    // document.getElementById("").addEventListener("click", ()=>);
+    }
+
+    addSymbol(button) {
+        icon.addText(button.innerText);
+        this.close();
+}
+
 }

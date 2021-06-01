@@ -1,5 +1,4 @@
-import { TextAttribute } from "./attributes.mjs";
-import { NumericAttribute } from "./attributes.mjs";
+import { SVGData } from "./attributes.mjs";
 import { icon } from "./icon.mjs";
 
 
@@ -17,20 +16,31 @@ export class Shape {
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
         this._svg = null;
-        this.attributes = new Map();
+        this.attributes = new SVGData("shape-attribute-");
+        this.style = new SVGData("shape-style-attribute-");
+        this.style.addNumeric(this, "stroke-width", 1);
     }
 
+    get svgAttributes() {
+        return this.attributes;
+    }
 
-    get(name) {
-        return this.attributes.get(name);
+    get svgStyle() {
+        return this.style;
     }
 
     get attributeClass() {
         return this.type + "-attribute";
     }
 
-    updateAttributesUI() {
-        this.attributes.forEach((attribute) => { attribute.updateUI(); });
+    updateUI() {
+        this.attributes.updateUI();
+        this.style.updateUI();
+        this.updateSvg(this.uiSvg, true);
+    }
+
+    updateSvgUI(){
+        this.updateSvg(this.uiSvg, true);
     }
 
     get uiSvg() {
@@ -47,30 +57,14 @@ export class Shape {
         return this._svg;
     }
 
-    styleData(all) {
-        let data = "";
-        icon.globalStyle.forEach((attribute, name) => {
-            const local = this.get(name);
-            const changed = local && local.value !== attribute.value;
-            if (all || changed) {
-                data += name + ":" + (changed ? local.value : attribute.value) + ";";
-            }
-        });
-        return data;
-    }
-
     createNewSvgShape() {
         const svgShape = document.createElementNS('http://www.w3.org/2000/svg', this.type);
-        this.update(svgShape);
+        this.updateSvg(svgShape);
         return svgShape;
     }
 
-    updateUI() {
-        this.update(this.uiSvg, true);
-    }
-
-    update(svg, all) {
-        const style = this.styleData(all);
+    updateSvg(svg) {
+        const style = this.svgStyle.asText(icon.svgStyle);
         if (style)
             svg.setAttribute('style', style);
         else
@@ -108,47 +102,47 @@ export class Line extends Shape {
     constructor(parent, x1, y1, x2, y2) {
         super(parent, "line");
 
-        this.attributes.set("x", new NumericAttribute(this, "x", x1, 0));
-        this.attributes.set("y", new NumericAttribute(this, "y", y1, 0));
-        this.attributes.set("dx", new NumericAttribute(this, "dx", x2 - x1, -32));
-        this.attributes.set("dy", new NumericAttribute(this, "dy", y2 - y1, -32));
+        this.attributes.addNumeric(this, "x", x1, 0);
+        this.attributes.addNumeric(this, "y", y1, 0);
+        this.attributes.addNumeric(this, "dx", x2 - x1, -32);
+        this.attributes.addNumeric(this, "dy", y2 - y1, -32);
     }
 
     move(dx, dy) {
-        this.get("x").add(dx);
-        this.get("y").add(dy);
+        this.attributes.get("x").add(dx);
+        this.attributes.get("y").add(dy);
         this.updateUI();
     }
 
-    update(svg, all) {
-        super.update(svg, all);
-        svg.setAttribute('x1', this.get("x").value);
-        svg.setAttribute('y1', this.get("y").value);
-        svg.setAttribute('x2', this.get("x").value + this.get("dx").value);
-        svg.setAttribute('y2', this.get("y").value + this.get("dy").value);
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute('x1', this.attributes.get("x").value);
+        svg.setAttribute('y1', this.attributes.get("y").value);
+        svg.setAttribute('x2', this.attributes.get("x").value + this.attributes.get("dx").value);
+        svg.setAttribute('y2', this.attributes.get("y").value + this.attributes.get("dy").value);
     }
 }
 
 export class Circle extends FilledShape {
     constructor(parent, cx, cy, r, filled) {
         super(parent, "circle", filled);
-        this.attributes.set("x", new NumericAttribute(this, "x", cx, 0));
-        this.attributes.set("y", new NumericAttribute(this, "y", cy, 0));
-        this.attributes.set("size", new NumericAttribute(this, "size", r));
+        this.attributes.addNumeric(this, "x", cx, 0);
+        this.attributes.addNumeric(this, "y", cy, 0);
+        this.attributes.addNumeric(this, "size", r);
     }
 
 
     move(dx, dy) {
-        this.get("x").add(dx);
-        this.get("y").add(dy);
+        this.attributes.get("x").add(dx);
+        this.attributes.get("y").add(dy);
         this.updateUI();
     }
 
-    update(svg, all) {
-        super.update(svg, all);
-        svg.setAttribute('cx', this.get("x").value);
-        svg.setAttribute('cy', this.get("y").value);
-        svg.setAttribute('r', this.get("size").value);
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute('cx', this.attributes.get("x").value);
+        svg.setAttribute('cy', this.attributes.get("y").value);
+        svg.setAttribute('r', this.attributes.get("size").value);
     }
 
 }
@@ -157,57 +151,54 @@ export class Rectangle extends FilledShape {
     constructor(parent, x, y, width, height, filled) {
         super(parent, "rect", filled);
 
-        this.attributes.set("x", new NumericAttribute(this, "x", x, 0));
-        this.attributes.set("y", new NumericAttribute(this, "y", y, 0));
-        this.attributes.set("dx", new NumericAttribute(this, "dx", width, 32));
-        this.attributes.set("dy", new NumericAttribute(this, "dy", height, 32));
+        this.attributes.addNumeric(this, "x", x, 0);
+        this.attributes.addNumeric(this, "y", y, 0);
+        this.attributes.addNumeric(this, "dx", width, 32);
+        this.attributes.addNumeric(this, "dy", height, 32);
     }
 
     move(dx, dy) {
-        this.get("x").add(dx);
-        this.get("y").add(dy);
+        this.attributes.get("x").add(dx);
+        this.attributes.get("y").add(dy);
         this.updateUI();
     }
 
-    update(svg, all) {
-        super.update(svg, all);
-        svg.setAttribute("x", this.get("x").value);
-        svg.setAttribute("y", this.get("y").value);
-        svg.setAttribute("width", this.get("dx").value);
-        svg.setAttribute("height", this.get("dy").value);
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute("x", this.attributes.get("x").value);
+        svg.setAttribute("y", this.attributes.get("y").value);
+        svg.setAttribute("width", this.attributes.get("dx").value);
+        svg.setAttribute("height", this.attributes.get("dy").value);
     }
 
 }
 
 export class Text extends FilledShape {
-    //<text x="50" y="50" text-anchor="middle" dominant-baseline="middle" 
-    //font-family="'Courier New', Courier, monospace" font-weight="bold" font-size="40px">TEXT</text>
-
     constructor(parent, text, x, y) {
         super(parent, "text", true);
         this.text = text;
-        this.attributes.set("x", new NumericAttribute(this, "x", x, 0));
-        this.attributes.set("y", new NumericAttribute(this, "y", y, 0));
-        this.attributes.set("size", new NumericAttribute(this, "size", 10, 1));
-
-        this.attributes.set("stroke-width", new NumericAttribute(this, "stroke-width", 1));
+        this.attributes.addNumeric(this, "x", x, 0);
+        this.attributes.addNumeric(this, "y", y, 0);
+        this.attributes.addNumeric(this, "size", 20, 1);
     }
 
     move(dx, dy) {
-        this.get("x").add(dx);
-        this.get("y").add(dy);
+        this.attributes.get("x").add(dx);
+        this.attributes.get("y").add(dy);
         this.updateUI();
     }
 
-    update(svg, all) {
-        super.update(svg, all);
-        svg.setAttribute("x", this.get("x").value);
-        svg.setAttribute("y", this.get("y").value);
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute("x", this.attributes.get("x").value);
+        svg.setAttribute("y", this.attributes.get("y").value);
+
+        svg.setAttribute("font-family", "'Courier New', Courier, monospace");
+        svg.setAttribute("font-weight", "normal");
+        svg.setAttribute("font-size", this.attributes.get("size").value);
+
         svg.setAttribute("text-anchor", "middle");
         svg.setAttribute("dominant-baseline", "middle");
-        svg.setAttribute("font-family", "'Courier New', Courier, monospace");
-        svg.setAttribute("font-weight", "bold");
-        svg.setAttribute("font-size", this.get("size").value);
 
         svg.replaceChildren(this.text)
     }
