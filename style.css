@@ -195,8 +195,7 @@ p.no-shape-selected-text {
     border: 1px solid black;
     border-radius: var(--small-margin);
 
-    max-width: 50vw;
-    max-height: 50vh;
+    max-width: 75vw;
 
     text-align: center;
 }
@@ -251,6 +250,25 @@ p.no-shape-selected-text {
     overflow: auto;
 }
 
+#add-symbol-dialog > .dialog-content {
+    display: grid;
+    grid-template-columns: minmax(100px, 50vw) auto;
+    grid-template-rows: auto minmax(100px, 50vh) auto;
+}
+
+#add-symbol-dialog > .dialog-content > * {
+    overflow-y: auto;
+}
+
+
+#add-symbol-dialog > .dialog-content > h1{
+    grid-column: 1 / -1;
+}
+#add-symbol-dialog > .dialog-content > .functions{
+    grid-column: 1 / -1;
+}
+
+
 #selectable-symbols {
     max-height: 30vh;
     overflow-y: auto;
@@ -260,4 +278,43 @@ p.no-shape-selected-text {
     width: 1.5cm;
     height: 1.5cm;
     font-size: 25px;
+}
+
+.symbol-preview {
+    font-size: 30px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.font-name {
+    margin: 0px;
+    padding: 0px;
+}
+
+.font-cn{
+    font-family: 'Courier New';
+}
+
+.font-ar{
+    font-family: Arial;
+}
+
+.font-tnr{
+    font-family: 'Times New Roman';
+}
+
+.font-bsmt{
+    font-family: 'Brush Script MT' ;
+}
+
+.font-s{
+    font-family: serif;
+}
+
+.font-ss{
+    font-family: sans-serif;
+}
+
+.font-ver{
+    font-family: Verdana;
 }

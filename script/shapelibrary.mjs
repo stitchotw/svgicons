@@ -68,7 +68,7 @@ class AddSymbolDialog extends StandardDialog {
     }
 
     addSectionToDialog(name, symbols) {
-        const parent = document.getElementById("selectable-symbols");
+        const parent = document.getElementById("select-symbol-panel");
 
         const header = document.createElement("h2");
         header.textContent = name;
@@ -82,6 +82,7 @@ class AddSymbolDialog extends StandardDialog {
             button.classList.add("symbol-button");
             button.innerText = c;
             button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
+            button.addEventListener("mouseover", evt => this.updatePreview(evt.target));
             content.appendChild(button);
         }
     }
@@ -89,6 +90,17 @@ class AddSymbolDialog extends StandardDialog {
     addSymbolToIcon(button) {
         icon.addText(button.innerText);
         this.close();
+    }
+
+    updatePreview(button) {
+        const symbol = button.innerText;
+        if (symbol !== this.preview) {
+            this.preview = symbol;
+            const previews = document.getElementsByClassName("symbol-preview");
+            for(const p of previews){
+                p.innerText = symbol;
+            }
+        }
     }
 
 }
