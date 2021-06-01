@@ -78,16 +78,26 @@ h1 {
 }
 
 .attributes {
-    width: 400px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: var(--margin);
     margin-bottom: 0px;
 }
 
-.attribute-group {
+.shape-attribute-group {
+    width: 200px;
     display: grid;
-    grid-template-columns: 0.75fr 1fr;
+    grid-template-columns: 1fr auto 1fr auto auto;
+    grid-auto-rows: min-content;
+    column-gap: var(--small-margin);
+    row-gap: var(--small-margin);
+    overflow-y: auto;
+}
+
+.icon-attribute-group {
+    width: 200px;
+    display: grid;
+    grid-template-columns: 1fr 0fr 1fr 0fr;
     grid-auto-rows: min-content;
     column-gap: var(--small-margin);
     row-gap: var(--small-margin);
@@ -98,6 +108,27 @@ h2.attribute-header {
     margin-top: 0px;
     margin-top: 0px;
     grid-column: 1 / -1;
+}
+
+p.no-shape-selected-text {
+    grid-column: 1 / -1;
+}
+
+.shape-functions {
+    grid-column: 1 / -1;
+    margin-top: 15px;
+}
+
+.shape-functions > button {
+    width: 75px;
+}
+
+.attribute-name {
+    grid-column: 1/1;
+}
+
+.icon-attribute.text {
+    grid-column: 2/-1;
 }
 
 .shape-attribute, .shape-style-attribute, .icon-attribute {
