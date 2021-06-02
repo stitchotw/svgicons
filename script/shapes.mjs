@@ -146,6 +146,32 @@ export class Circle extends FilledShape {
 
 }
 
+export class Ellipse extends FilledShape {
+    constructor(parent, cx, cy, rx, ry, filled) {
+        super(parent, "ellipse", filled);
+        this.attributes.addNumeric(this, "x", cx, 0);
+        this.attributes.addNumeric(this, "y", cy, 0);
+        this.attributes.addNumeric(this, "dx", rx, 1);
+        this.attributes.addNumeric(this, "dy", ry, 1);
+    }
+
+
+    move(dx, dy) {
+        this.attributes.get("x").add(dx);
+        this.attributes.get("y").add(dy);
+        this.updateUI();
+    }
+
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute('cx', this.attributes.get("x").value);
+        svg.setAttribute('cy', this.attributes.get("y").value);
+        svg.setAttribute('rx', this.attributes.get("dx").value);
+        svg.setAttribute('ry', this.attributes.get("dy").value);
+    }
+
+}
+
 export class Rectangle extends FilledShape {
     constructor(parent, x, y, width, height, filled) {
         super(parent, "rect", filled);
