@@ -27,7 +27,9 @@ function addEventListeners() {
     document.getElementById("add-polyline-button").addEventListener("click", () => {
         inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
     });
-    document.getElementById("add-polygon-button").addEventListener("click", () => { inputDialog.open("Polygon data", text => { icon.addText(text) }); });
+    document.getElementById("add-polygon-button").addEventListener("click", () => {
+        inputDialog.open("Polyline data", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
+    });
     document.getElementById("add-path-button").addEventListener("click", () => { inputDialog.open("Path data", text => { icon.addText(text) }); });
 
     //Text

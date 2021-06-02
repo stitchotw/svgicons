@@ -220,3 +220,20 @@ export class Polyline extends FilledShape {
         svg.setAttribute("points", this.attributes.get("data").value);
     }
 }
+
+export class Polygon extends FilledShape {
+    
+    constructor(parent, points) {
+        super(parent, "polygon", true);
+        this.attributes.addText(this, "data", points);
+    }
+
+    move(dx, dy) {
+        this.updateUI();
+    }
+    
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute("points", this.attributes.get("data").value);
+    }
+}
