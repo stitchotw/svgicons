@@ -54,6 +54,15 @@ function addCircleButton(parentId, caption, p, filled) {
     addButton(parentId, caption, imageSrc, () => icon.addCircle(16, 16, r, filled));
 }
 
+function addEllipseButton(parentId, caption, px, py, filled) {
+    const imageSrc = `./img/add-ellipse-${px}-${py}.svg`;
+    const rx = length(px / 2);
+    const ry = length(py / 2);
+
+    addButton(parentId, caption, imageSrc, () => icon.addEllipse(16, 16, rx, ry, filled));
+}
+
+
 function addEventListeners() {
     // () => is necessary since otherwise the listener method would be called when addEventListeners runs
     // Lines
@@ -75,21 +84,25 @@ function addEventListeners() {
     addCircleButton("add-filled-circle-buttons", "FC-Medium", 50, true);
     addCircleButton("add-filled-circle-buttons", "FC-Large", 100, true);
 
-    addCircleButton("add-not-filled-circle-buttons", "FC-Small", 5, false);
-    addCircleButton("add-not-filled-circle-buttons", "FC-Medium", 50, false);
-    addCircleButton("add-not-filled-circle-buttons", "FC-Large", 100, false);
+    addCircleButton("add-not-filled-circle-buttons", "NFC-Small", 5, false);
+    addCircleButton("add-not-filled-circle-buttons", "NFC-Medium", 50, false);
+    addCircleButton("add-not-filled-circle-buttons", "NFC-Large", 100, false);
 
-    document.getElementById("add-dot-button").addEventListener("click", () => icon.addCircle(15, 15, 1, true));
-    document.getElementById("add-filled-circle-button").addEventListener("click", () => icon.addCircle(15, 15, 5, true));
-    document.getElementById("add-circle-no-fill-button").addEventListener("click", () => icon.addCircle(15, 15, 5, false));
+    // Ellipses
+    addEllipseButton("add-filled-ellipse-buttons", "FHE-Medium", 50, 25, true);
+    addEllipseButton("add-filled-ellipse-buttons", "FHE-Large", 100, 50, true);
+    addEllipseButton("add-filled-ellipse-buttons", "FVE-Medium", 25, 50, true);
+    addEllipseButton("add-filled-ellipse-buttons", "FVE-Large", 50, 100, true);
 
+    addEllipseButton("add-not-filled-ellipse-buttons", "NFHE-Medium", 50, 25, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "NFHE-Large", 100, 50, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Medium", 25, 50, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Large", 50, 100, false);
+
+    
     // Rectangels
     document.getElementById("add-filled-rectangle-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, true));
     document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, false));
-
-    // Ellipses
-    document.getElementById("add-filled-ellipse-button").addEventListener("click", () => icon.addEllipse(5, 5, 5, 3, true));
-    document.getElementById("add-ellipse-no-fill-button").addEventListener("click", () => icon.addEllipse(5, 5, 5, 3, false));
 
     // 
     document.getElementById("add-polyline-button").addEventListener("click", () => {
