@@ -93,6 +93,8 @@ export class FilledShape extends Shape {
     constructor(parent, type, filled) {
         super(parent, type);
         this.style.addText(this, "fill", filled ? "black" : "none");
+        if (filled)
+            this.style.get("stroke-width").value = 1;
     }
 }
 
@@ -231,7 +233,7 @@ export class Text extends FilledShape {
 }
 
 export class Polyline extends FilledShape {
-    
+
     constructor(parent, points) {
         super(parent, "polyline", false);
         this.attributes.addText(this, "data", points);
@@ -240,7 +242,7 @@ export class Polyline extends FilledShape {
     move(dx, dy) {
         this.updateUI();
     }
-    
+
     updateSvg(svg, all) {
         super.updateSvg(svg, all);
         svg.setAttribute("points", this.attributes.get("data").value);
@@ -248,7 +250,7 @@ export class Polyline extends FilledShape {
 }
 
 export class Polygon extends FilledShape {
-    
+
     constructor(parent, points) {
         super(parent, "polygon", true);
         this.attributes.addText(this, "data", points);
@@ -257,7 +259,7 @@ export class Polygon extends FilledShape {
     move(dx, dy) {
         this.updateUI();
     }
-    
+
     updateSvg(svg, all) {
         super.updateSvg(svg, all);
         svg.setAttribute("points", this.attributes.get("data").value);
@@ -266,7 +268,7 @@ export class Polygon extends FilledShape {
 
 
 export class Path extends FilledShape {
-    
+
     constructor(parent, points) {
         super(parent, "path", false);
         this.attributes.addText(this, "data", points);
@@ -275,7 +277,7 @@ export class Path extends FilledShape {
     move(dx, dy) {
         this.updateUI();
     }
-    
+
     updateSvg(svg, all) {
         super.updateSvg(svg, all);
         svg.setAttribute("d", this.attributes.get("data").value);
