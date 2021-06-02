@@ -127,7 +127,7 @@ export class Circle extends FilledShape {
         super(parent, "circle", filled);
         this.attributes.addNumeric(this, "x", cx, 0);
         this.attributes.addNumeric(this, "y", cy, 0);
-        this.attributes.addNumeric(this, "size", r);
+        this.attributes.addNumeric(this, "size", r, 1);
     }
 
 
