@@ -70,12 +70,6 @@ h1 {
     filter: drop-shadow(0 0 0.75px rgb(26, 248, 26));
 }
 
-.add-shape-button {
-    width: 1.5cm;
-    height: 1.5cm;
-    padding: var(--small-margin);
-}
-
 .attributes, .functions {
     margin: var(--margin);
 }
@@ -157,9 +151,26 @@ p.no-shape-selected-text {
     overflow-y: auto;
 }
 
-.shape-library  div {
+.shape-library div {
     display: flex;
     flex-wrap: wrap;
+}
+
+.add-shape-button {
+    position: relative;
+    width: 2cm;
+    height: 2cm;
+    padding: var(--small-margin);
+    text-align: center;
+}
+
+
+.add-shape-button > img {
+    display: block;
+    position: absolute;
+    top: 10%;
+    width: 80%;
+    opacity: 25%;
 }
 
 .functions {
