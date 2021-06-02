@@ -52,14 +52,14 @@ function addLineButton(parentId, caption, px, py) {
 }
 
 function addCircleButton(parentId, caption, p, filled) {
-    const imageSrc = `./img/add-circle-${p}.svg`;
+    const imageSrc = `./img/add-circle-${p}${filled?"-filled":""}.svg`;
     const r = size(p / 2);
 
     addButton(parentId, caption, imageSrc, () => icon.addCircle(16, 16, r, filled));
 }
 
 function addEllipseButton(parentId, caption, px, py, filled) {
-    const imageSrc = `./img/add-ellipse-${px}-${py}.svg`;
+    const imageSrc = `./img/add-ellipse-${px}-${py}${filled?"-filled":""}.svg`;
     const rx = length(px / 2);
     const ry = length(py / 2);
 
@@ -67,7 +67,7 @@ function addEllipseButton(parentId, caption, px, py, filled) {
 }
 
 function addRectangleButton(parentId, caption, pw, ph, filled) {
-    const imageSrc = `./img/add-ellipse-${pw}-${ph}.svg`;
+    const imageSrc = `./img/add-ellipse-${pw}-${ph}${filled?"-filled":""}.svg`;
 
     const x = start(0);
     const y = start(0);
