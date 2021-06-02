@@ -15,7 +15,11 @@ function end(p) {
 }
 
 function length(percent) {
-    const len = Math.floor((32 - 2 - 2) * percent / 100);
+    return Math.floor((32 - 2 - 2) * percent / 100);
+}
+
+function size(percent) {
+    const len = length(percent);
     return len > 0 ? len : 1;
 }
 
@@ -49,7 +53,7 @@ function addLineButton(parentId, caption, px, py) {
 
 function addCircleButton(parentId, caption, p, filled) {
     const imageSrc = `./img/add-circle-${p}.svg`;
-    const r = length(p / 2);
+    const r = size(p / 2);
 
     addButton(parentId, caption, imageSrc, () => icon.addCircle(16, 16, r, filled));
 }
@@ -111,13 +115,13 @@ function addEventListeners() {
     addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Large", 50, 100, false);
 
     // Rectangels
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Small", 25, 25,true);
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Medium", 50, 50,true);
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Large", 100, 100,true);
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Small", 25, 25, true);
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Medium", 50, 50, true);
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Large", 100, 100, true);
 
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Small", 25, 25,false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Medium", 50, 50,false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Large", 100, 100,false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Small", 25, 25, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Medium", 50, 50, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Large", 100, 100, false);
 
     // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {
