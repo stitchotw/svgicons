@@ -67,7 +67,7 @@ function addEllipseButton(parentId, caption, px, py, filled) {
 }
 
 function addRectangleButton(parentId, caption, pw, ph, filled) {
-    const imageSrc = `./img/add-ellipse-${pw}-${ph}${filled?"-filled":""}.svg`;
+    const imageSrc = `./img/add-rectangle-${pw}-${ph}${filled?"-filled":""}.svg`;
 
     const x = start(0);
     const y = start(0);
