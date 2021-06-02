@@ -8,6 +8,7 @@ import { Text } from './shapes.mjs';
 import { Polyline } from './shapes.mjs';
 import { Polygon } from './shapes.mjs';
 import { Path } from './shapes.mjs';
+import { Ellipse } from './shapes.mjs';
 
 const DEFAULT_STROKE_WIDTH = 3;
 
@@ -70,19 +71,18 @@ class Icon {
         this.shapes.delete(id);
     }
 
-    /**
-     * Adds a line to the icon. 
-     */
     addLine(x1, y1, x2, y2) {
         const shape = new Line(this, x1, y1, x2, y2);
         this.addShape(shape);
     }
 
-    /**
-     * Adds a circle to the icon.
-     */
     addCircle(cx, cy, r, filled) {
         const shape = new Circle(this, cx, cy, r, filled);
+        this.addShape(shape);
+    }
+
+    addEllipse(cx, cy, rx, ry, filled) {
+        const shape = new Ellipse(this, cx, cy, rx, ry, filled);
         this.addShape(shape);
     }
 

@@ -23,6 +23,10 @@ function addEventListeners() {
     document.getElementById("add-filled-rectangle-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, true));
     document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, false));
 
+    // Ellipses
+    document.getElementById("add-filled-ellipse-button").addEventListener("click", () => icon.addEllipse(5, 5, 5, 3, true));
+    document.getElementById("add-ellipse-no-fill-button").addEventListener("click", () => icon.addEllipse(5, 5, 5, 3, false));
+
     // 
     document.getElementById("add-polyline-button").addEventListener("click", () => {
         inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
