@@ -129,10 +129,10 @@ function addEventListeners() {
 
     // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {
-        inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
+        inputDialog.open("Polyline data","At least two points separated space or newline, e.g.: 1,1 2,2", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
     });
     document.getElementById("add-polygon-button").addEventListener("click", () => {
-        inputDialog.open("Polygon data", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
+        inputDialog.open("Polygon data", "At least three points separated space or newline, e.g.: 1,1 2,2 3,3", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
     });
     document.getElementById("add-path-button").addEventListener("click", () => {
 
@@ -150,14 +150,14 @@ function addEventListeners() {
         }
 
         const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
-        //        const all = "^" + initialpos.source +space.source+ oneparam.source + "$";
-        console.log(all)
 
-        inputDialog.open("Path data", data => { icon.addPath(data) }, new RegExp(all));
+        inputDialog.open("Path data", 
+        "<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>", 
+        data => { icon.addPath(data) }, new RegExp(all));
     });
 
     //Text
-    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", text => { icon.addText(text) }); });
+    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.",  text => { icon.addText(text) }); });
     new AddSymbolDialog();
 }
 

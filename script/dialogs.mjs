@@ -125,14 +125,16 @@ class InputTextDialog extends Dialog {
         document.getElementById("input-text").value = t.trim();
     }
 
-    set error(e) {
-        document.getElementById("input-text-error").innerText = e;
+    set instructions(i) {
+        document.getElementById("input-text-instructions").innerHTML = i;
     }
 
-    open(header, listener, regex = /^\S([\S ]*\S)?$/) {
+    open(header, instructions, listener, regex = /^\S([\S ]*\S)?$/) {
         this.header = header;
         this.text = "";
-        this.error = "";
+        if(!instructions || instructions.charAt(0)==='/')
+        throw "asd"
+        this.instructions =""+ instructions + "<pre>" + regex.source + "</pre>";
         this.listener = listener;
         this.regex = regex;
         super.open();
