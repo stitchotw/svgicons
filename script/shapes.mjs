@@ -180,8 +180,8 @@ export class Rectangle extends FilledShape {
 
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
-        this.attributes.addNumeric(this, "dx", width, 32);
-        this.attributes.addNumeric(this, "dy", height, 32);
+        this.attributes.addNumeric(this, "dx", width, 1);
+        this.attributes.addNumeric(this, "dy", height, 1);
     }
 
     move(dx, dy) {
