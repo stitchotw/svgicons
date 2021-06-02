@@ -37,6 +37,7 @@ h1 {
 .help-link {
     text-decoration: none;
     color: var(--text-color);
+    cursor: help;
 }
 
 .help-link:hover {
