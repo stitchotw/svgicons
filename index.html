@@ -148,22 +148,17 @@
             <button id="help-button" class="function-button">Help</button>
         </div>
         <div class="shape-library">
-
             <h2>Lines</h2>
-            <button id="add-horizontal-line-button" title="Horizontal line" class="add-shape-button">
-                <img src="img/line-horizontal.svg" alt="">
-            </button>
-            <button id="add-vertical-line-button" title="Vertical line" class="add-shape-button">
-                <img src="img/line-vertical.svg" alt="">
-            </button>
-            <button id="add-diagonal-left-to-right-button" title="Diagonal line going from left to right"
-                class="add-shape-button">
-                <img src="img/line-left-to-right.svg" alt="">
-            </button>
-            <button id="add-diagonal-right-to-left-button" title="Diagonal line going from right to left"
-                class="add-shape-button">
-                <img src="img/line-right-to-left.svg" alt="">
-            </button>
+            <div>
+            <div>
+                <div id="horizontal-add-line-buttons"></div>
+                <div id="vertical-add-line-buttons"></div>
+            </div>
+            <div>
+                <div id="diagonal-left-to-right-add-line-buttons"></div>
+                <div id="diagonal-right-to-left-add-line-buttons"></div>
+            </div>
+        </div>
             <p>It doesn't really matter which type of line you add, it can always be changed later. The various
                 types are just for convenience.</p>
 
@@ -177,12 +172,14 @@
             <button id="add-circle-no-fill-button" title="Circle (not filled)" class="add-shape-button">
                 <img src="img/circle-no-fill.svg" alt="">
             </button>
-            <button id="add-filled-ellipse-button" title="Ellipse (filled)" class="add-shape-button">
-                <img src="img/ellipse-filled.svg" alt="">
-            </button>
-            <button id="add-ellipse-no-fill-button" title="Ellipse (not filled)" class="add-shape-button">
-                <img src="img/ellipse-no-fill.svg" alt="">
-            </button>
+            <div>
+                <button id="add-filled-ellipse-button" title="Ellipse (filled)" class="add-shape-button">
+                    <img src="img/ellipse-filled.svg" alt="">
+                </button>
+                <button id="add-ellipse-no-fill-button" title="Ellipse (not filled)" class="add-shape-button">
+                    <img src="img/ellipse-no-fill.svg" alt="">
+                </button>
+            </div>
             <button id="add-filled-rectangle-button" title="Rectangle (filled)" class="add-shape-button">
                 <img src="img/rectangle-filled.svg" alt="">
             </button>

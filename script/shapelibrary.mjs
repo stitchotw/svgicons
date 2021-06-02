@@ -6,13 +6,61 @@ export function setUpShapeLibrary() {
     addEventListeners();
 }
 
+function start(p) {
+    return p + 2;
+}
+
+function end(p) {
+    return p - 2;
+}
+
+function length(percent) {
+    return Math.floor((32 - 2 - 2) * percent / 100);
+}
+
+function addButton(parentId, caption, imageSrc, listener){
+    const parent = document.getElementById(parentId);
+
+    const button = document.createElement("button");
+    parent.appendChild(button);
+
+    button.classList.add("add-shape-button");
+    button.innerText = caption;
+
+    const img = document.createElement("img");
+    img.src = imageSrc;
+    img.style.outline = "1px solid gray"
+
+    button.addEventListener("click", listener);
+
+    button.appendChild(img);
+}
+
+function addLineButton(parentId, caption, px, py) {
+    const imageSrc = `./img/add-line-${px}-${py}.svg`;
+    const x1 = px>=0 ? start(0): end(32);
+    const y1= start(0);
+    const x2 = x1 + length(px);
+    const y2 = y1 + length(py);
+
+    addButton(parentId, caption,  imageSrc, () => icon.addLine(x1, y1, x2, y2));
+}
+
 function addEventListeners() {
     // () => is necessary since otherwise the listener method would be called when addEventListeners runs
     // Lines
-    document.getElementById("add-horizontal-line-button").addEventListener("click", () => icon.addLine(1, 1, 11, 1));
-    document.getElementById("add-vertical-line-button").addEventListener("click", () => icon.addLine(1, 1, 1, 11));
-    document.getElementById("add-diagonal-left-to-right-button").addEventListener("click", () => icon.addLine(0, 0, 10, 10));
-    document.getElementById("add-diagonal-right-to-left-button").addEventListener("click", () => icon.addLine(10, 0, 0, 10));
+
+    addLineButton("horizontal-add-line-buttons","H-Short", 50, 0);
+    addLineButton("horizontal-add-line-buttons","H-Long", 100, 0);
+
+    addLineButton("vertical-add-line-buttons","V-Short", 0, 50);
+    addLineButton("vertical-add-line-buttons","V-Long", 0, 100);
+
+    addLineButton("diagonal-left-to-right-add-line-buttons","LR-Short", 50, 50);
+    addLineButton("diagonal-left-to-right-add-line-buttons","LR-Long", 100, 100);
+
+    addLineButton("diagonal-right-to-left-add-line-buttons","RL-Short", -50, 50);
+    addLineButton("diagonal-right-to-left-add-line-buttons","RL-Long", -100, 100);
 
     // Circles
     document.getElementById("add-dot-button").addEventListener("click", () => icon.addCircle(15, 15, 1, true));

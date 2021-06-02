@@ -49,8 +49,6 @@ h1 {
     margin-right: var(--margin);
 }
 
-
-
 .workarea-container {
     width: min-content;
     height: min-content;
@@ -157,6 +155,11 @@ p.no-shape-selected-text {
 .shape-library {
     grid-area: 1 / 2 / -1; /* Place into column 2, span all rows */
     overflow-y: auto;
+}
+
+.shape-library  div {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .functions {
