@@ -237,3 +237,21 @@ export class Polygon extends FilledShape {
         svg.setAttribute("points", this.attributes.get("data").value);
     }
 }
+
+
+export class Path extends FilledShape {
+    
+    constructor(parent, points) {
+        super(parent, "path", false);
+        this.attributes.addText(this, "data", points);
+    }
+
+    move(dx, dy) {
+        this.updateUI();
+    }
+    
+    updateSvg(svg, all) {
+        super.updateSvg(svg, all);
+        svg.setAttribute("d", this.attributes.get("data").value);
+    }
+}

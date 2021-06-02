@@ -28,9 +28,29 @@ function addEventListeners() {
         inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
     });
     document.getElementById("add-polygon-button").addEventListener("click", () => {
-        inputDialog.open("Polyline data", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
+        inputDialog.open("Polygon data", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
     });
-    document.getElementById("add-path-button").addEventListener("click", () => { inputDialog.open("Path data", text => { icon.addText(text) }); });
+    document.getElementById("add-path-button").addEventListener("click", () => {
+
+        const space = /[\s,]+/;
+        const initialpos = /[Mm]\s+\d+\s+\d+/;
+        const oneparam = /[HhVv]\s+\d+/;
+        const twoparam = /[MmLlTt]\s+\d+\s+\d+/;
+        const closepath = /[Zz]/;
+        const twoparamcurve = /[Cc]\s+\d+\s+\d+[\s,]+\d+\s+\d+/;
+        const threeparamcurve = /[Cc]\s+\d+\s+\d+([\s,]+\d+\s+\d+){2}/;
+        const arc = /[Aa](\s+\d+){7}/
+
+        const or = (...regexs) => {
+            return "((" + regexs.map(r => r.source).join(")|(") + "))";
+        }
+
+        const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
+        //        const all = "^" + initialpos.source +space.source+ oneparam.source + "$";
+        console.log(all)
+
+        inputDialog.open("Path data", data => { icon.addPath(data) }, new RegExp(all));
+    });
 
     //Text
     document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", text => { icon.addText(text) }); });
