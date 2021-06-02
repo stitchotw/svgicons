@@ -82,46 +82,46 @@ function addEventListeners() {
     // () => is necessary since otherwise the listener method would be called when addEventListeners runs
     // Lines
 
-    addLineButton("horizontal-add-line-buttons", "H-Short", 50, 0);
-    addLineButton("horizontal-add-line-buttons", "H-Long", 100, 0);
+    addLineButton("horizontal-add-line-buttons", "Short", 50, 0);
+    addLineButton("horizontal-add-line-buttons", "Long", 100, 0);
 
-    addLineButton("vertical-add-line-buttons", "V-Short", 0, 50);
-    addLineButton("vertical-add-line-buttons", "V-Long", 0, 100);
+    addLineButton("vertical-add-line-buttons", "Short", 0, 50);
+    addLineButton("vertical-add-line-buttons", "Long", 0, 100);
 
-    addLineButton("diagonal-left-to-right-add-line-buttons", "LR-Short", 50, 50);
-    addLineButton("diagonal-left-to-right-add-line-buttons", "LR-Long", 100, 100);
+    addLineButton("diagonal-left-to-right-add-line-buttons", "Short", 50, 50);
+    addLineButton("diagonal-left-to-right-add-line-buttons", "Long", 100, 100);
 
-    addLineButton("diagonal-right-to-left-add-line-buttons", "RL-Short", -50, 50);
-    addLineButton("diagonal-right-to-left-add-line-buttons", "RL-Long", -100, 100);
+    addLineButton("diagonal-right-to-left-add-line-buttons", "Short", -50, 50);
+    addLineButton("diagonal-right-to-left-add-line-buttons", "Long", -100, 100);
 
     // Circles
-    addCircleButton("add-filled-circle-buttons", "FC-Small", 5, true);
-    addCircleButton("add-filled-circle-buttons", "FC-Medium", 50, true);
-    addCircleButton("add-filled-circle-buttons", "FC-Large", 100, true);
+    addCircleButton("add-filled-circle-buttons", "Small", 5, true);
+    addCircleButton("add-filled-circle-buttons", "Medium", 50, true);
+    addCircleButton("add-filled-circle-buttons", "Large", 100, true);
 
-    addCircleButton("add-not-filled-circle-buttons", "NFC-Small", 5, false);
-    addCircleButton("add-not-filled-circle-buttons", "NFC-Medium", 50, false);
-    addCircleButton("add-not-filled-circle-buttons", "NFC-Large", 100, false);
+    addCircleButton("add-not-filled-circle-buttons", "Small", 5, false);
+    addCircleButton("add-not-filled-circle-buttons", "Medium", 50, false);
+    addCircleButton("add-not-filled-circle-buttons", "Large", 100, false);
 
     // Ellipses
-    addEllipseButton("add-filled-ellipse-buttons", "FHE-Medium", 50, 25, true);
-    addEllipseButton("add-filled-ellipse-buttons", "FHE-Large", 100, 50, true);
-    addEllipseButton("add-filled-ellipse-buttons", "FVE-Medium", 25, 50, true);
-    addEllipseButton("add-filled-ellipse-buttons", "FVE-Large", 50, 100, true);
+    addEllipseButton("add-filled-ellipse-buttons", "Medium", 50, 25, true);
+    addEllipseButton("add-filled-ellipse-buttons", "Large", 100, 50, true);
+    addEllipseButton("add-filled-ellipse-buttons", "Medium", 25, 50, true);
+    addEllipseButton("add-filled-ellipse-buttons", "Large", 50, 100, true);
 
-    addEllipseButton("add-not-filled-ellipse-buttons", "NFHE-Medium", 50, 25, false);
-    addEllipseButton("add-not-filled-ellipse-buttons", "NFHE-Large", 100, 50, false);
-    addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Medium", 25, 50, false);
-    addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Large", 50, 100, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "Medium", 50, 25, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "Large", 100, 50, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "Medium", 25, 50, false);
+    addEllipseButton("add-not-filled-ellipse-buttons", "Large", 50, 100, false);
 
     // Rectangels
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Small", 25, 25, true);
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Medium", 50, 50, true);
-    addRectangleButton("add-filled-rectangle-buttons", "FR-Large", 100, 100, true);
+    addRectangleButton("add-filled-rectangle-buttons", "Small", 25, 25, true);
+    addRectangleButton("add-filled-rectangle-buttons", "Medium", 50, 50, true);
+    addRectangleButton("add-filled-rectangle-buttons", "Large", 100, 100, true);
 
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Small", 25, 25, false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Medium", 50, 50, false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Large", 100, 100, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "Small", 25, 25, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "Medium", 50, 50, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "Large", 100, 100, false);
 
     // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {
