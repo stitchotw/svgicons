@@ -62,6 +62,17 @@ function addEllipseButton(parentId, caption, px, py, filled) {
     addButton(parentId, caption, imageSrc, () => icon.addEllipse(16, 16, rx, ry, filled));
 }
 
+function addRectangleButton(parentId, caption, pw, ph, filled) {
+    const imageSrc = `./img/add-ellipse-${pw}-${ph}.svg`;
+
+    const x = start(0);
+    const y = start(0);
+    const w = length(pw);
+    const h = length(ph);
+
+    addButton(parentId, caption, imageSrc, () => icon.addRectangle(x, y, w, h, filled));
+}
+
 
 function addEventListeners() {
     // () => is necessary since otherwise the listener method would be called when addEventListeners runs
@@ -99,12 +110,16 @@ function addEventListeners() {
     addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Medium", 25, 50, false);
     addEllipseButton("add-not-filled-ellipse-buttons", "NFVE-Large", 50, 100, false);
 
-    
     // Rectangels
-    document.getElementById("add-filled-rectangle-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, true));
-    document.getElementById("add-rectangle-no-fill-button").addEventListener("click", () => icon.addRectangle(5, 5, 5, 3, false));
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Small", 25, 25,true);
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Medium", 50, 50,true);
+    addRectangleButton("add-filled-rectangle-buttons", "FR-Large", 100, 100,true);
 
-    // 
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Small", 25, 25,false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Medium", 50, 50,false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "NFR-Large", 100, 100,false);
+
+    // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {
         inputDialog.open("Polyline data", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
     });
