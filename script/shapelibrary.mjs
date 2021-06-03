@@ -136,10 +136,10 @@ function addEventListeners() {
     });
     document.getElementById("add-path-button").addEventListener("click", () => {
 
-        const space = /[\s,]+/;
-        const initialpos = /[Mm]\s+\d+\s+\d+/;
+        const space = /[\s]+/;
+        const initialpos = /[Mm]\s+\d+[\s,]+\d+/;
         const oneparam = /[HhVv]\s+\d+/;
-        const twoparam = /[MmLlTt]\s+\d+\s+\d+/;
+        const twoparam = /[MmLlTt]\s+\d+[\s,]+\d+/;
         const closepath = /[Zz]/;
         const twoparamcurve = /[Cc]\s+\d+\s+\d+[\s,]+\d+\s+\d+/;
         const threeparamcurve = /[Cc]\s+\d+\s+\d+([\s,]+\d+\s+\d+){2}/;
@@ -152,7 +152,7 @@ function addEventListeners() {
         const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
 
         inputDialog.open("Path data", 
-        "<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>", 
+        "It is easier to read if you put one command per line. Don't put any commas between commands. <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>", 
         data => { icon.addPath(data) }, new RegExp(all));
     });
 
