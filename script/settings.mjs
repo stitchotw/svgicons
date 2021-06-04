@@ -15,9 +15,9 @@ class SettingsManager {
 }
 
 export class Style {
-    constructor(fill){
+    constructor(fill) {
         this.stroke = new Stroke();
-        this.fill = fill? fill: "none";
+        this.fill = fill ? fill : "none";
     }
 }
 

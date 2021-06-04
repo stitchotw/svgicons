@@ -34,7 +34,7 @@ export class StandardDialog extends Dialog {
         // Arrow function necessary to give this correct scope
         this.addListener(openButtonId, evt => this.open());
         this.addListener(closeButtonId, evt => this.close());
-        if (actionButtonId){
+        if (actionButtonId) {
             this.addListener(actionButtonId, actionButtonListener);
         }
     }

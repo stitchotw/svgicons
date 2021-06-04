@@ -52,14 +52,14 @@ function addLineButton(parentId, caption, px, py) {
 }
 
 function addCircleButton(parentId, caption, p, filled) {
-    const imageSrc = `./img/add-circle-${p}${filled?"-filled":""}.svg`;
+    const imageSrc = `./img/add-circle-${p}${filled ? "-filled" : ""}.svg`;
     const r = size(p / 2);
 
     addButton(parentId, caption, imageSrc, () => icon.addCircle(16, 16, r, filled));
 }
 
 function addEllipseButton(parentId, caption, px, py, filled) {
-    const imageSrc = `./img/add-ellipse-${px}-${py}${filled?"-filled":""}.svg`;
+    const imageSrc = `./img/add-ellipse-${px}-${py}${filled ? "-filled" : ""}.svg`;
     const rx = length(px / 2);
     const ry = length(py / 2);
 
@@ -67,7 +67,7 @@ function addEllipseButton(parentId, caption, px, py, filled) {
 }
 
 function addRectangleButton(parentId, caption, pw, ph, filled) {
-    const imageSrc = `./img/add-rectangle-${pw}-${ph}${filled?"-filled":""}.svg`;
+    const imageSrc = `./img/add-rectangle-${pw}-${ph}${filled ? "-filled" : ""}.svg`;
 
     const x = start(0);
     const y = start(0);
@@ -129,7 +129,7 @@ function addEventListeners() {
 
     // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {
-        inputDialog.open("Polyline data","At least two points separated space or newline, e.g.: 1,1 2,2", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
+        inputDialog.open("Polyline data", "At least two points separated space or newline, e.g.: 1,1 2,2", data => { icon.addPolyline(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/);
     });
     document.getElementById("add-polygon-button").addEventListener("click", () => {
         inputDialog.open("Polygon data", "At least three points separated space or newline, e.g.: 1,1 2,2 3,3", data => { icon.addPolygon(data) }, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/);
@@ -151,13 +151,13 @@ function addEventListeners() {
 
         const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
 
-        inputDialog.open("Path data", 
-        "It is easier to read if you put one command per line. Don't put any commas between commands. <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>", 
-        data => { icon.addPath(data) }, new RegExp(all));
+        inputDialog.open("Path data",
+            "It is easier to read if you put one command per line. Don't put any commas between commands. <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>",
+            data => { icon.addPath(data) }, new RegExp(all));
     });
 
     //Text
-    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.",  text => { icon.addText(text) }); });
+    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.", text => { icon.addText(text) }); });
     new AddSymbolDialog();
 }
 

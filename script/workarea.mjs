@@ -19,7 +19,7 @@ export function setUpWorkArea() {
 function addBackgroundToWorkarea() {
 }
 
-export function updateSvgStyle(){
+export function updateSvgStyle() {
     workarea.setAttribute("style", icon.svgStyle.asText());
 }
 
@@ -140,7 +140,7 @@ function unselectCurrentlySelectedShape() {
     }
 }
 
-export function currentlySelectedShapeId(){
+export function currentlySelectedShapeId() {
     return selectedShape?.id;
 }
 
