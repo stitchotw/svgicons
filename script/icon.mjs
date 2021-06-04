@@ -67,6 +67,15 @@ class Icon {
         return this.shapes.get(id);
     }
 
+    copyShapeById(id) {
+        const original = this.shapeFromId(id);
+        const copy = original.copy();
+        this.addShape(copy);
+        // Attempt to move the shape slightly down to the right to make it stand out
+        // Won't work for complex shapes since they have a fixed position
+        copy.move(1, 1);
+    }
+
     addShape(shape) {
         if (this.shapes.has(shape.id)) {
             throw "Duplicate id when adding shape: " + shape.id;
@@ -81,42 +90,42 @@ class Icon {
     }
 
     addLine(x1, y1, x2, y2) {
-        const shape = new Line( x1, y1, x2, y2);
+        const shape = new Line(x1, y1, x2, y2);
         this.addShape(shape);
     }
 
     addCircle(cx, cy, r, filled) {
-        const shape = new Circle( cx, cy, r, filled);
+        const shape = new Circle(cx, cy, r, filled);
         this.addShape(shape);
     }
 
     addEllipse(cx, cy, rx, ry, filled) {
-        const shape = new Ellipse( cx, cy, rx, ry, filled);
+        const shape = new Ellipse(cx, cy, rx, ry, filled);
         this.addShape(shape);
     }
 
     addRectangle(x, y, width, height, filled) {
-        const shape = new Rectangle( x, y, width, height, filled);
+        const shape = new Rectangle(x, y, width, height, filled);
         this.addShape(shape);
     }
 
     addText(text) {
-        const shape = new Text( text, 16, 16);
+        const shape = new Text(text, 16, 16);
         this.addShape(shape);
     }
 
     addPolyline(data) {
-        const shape = new Polyline( data);
+        const shape = new Polyline(data);
         this.addShape(shape);
     }
 
     addPolygon(data) {
-        const shape = new Polygon( data);
+        const shape = new Polygon(data);
         this.addShape(shape);
     }
 
     addPath(data) {
-        const shape = new Path( data);
+        const shape = new Path(data);
         this.addShape(shape);
     }
 

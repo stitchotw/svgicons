@@ -28,6 +28,11 @@ export class Shape {
         return this.style;
     }
 
+    copyAttributesAndStyle(copy) {
+        copy.attributes.addAll(this.attributes);
+        copy.style.addAll(this.style);
+    }
+
     get attributeClass() {
         return this.type + "-attribute";
     }
@@ -108,6 +113,12 @@ export class Line extends Shape {
         this.attributes.addNumeric(this, "dy", y2 - y1, -32);
     }
 
+    copy() {
+        const copy = new Line(1, 1, 1, 1);
+        this.copyAttributesAndStyle(copy);
+        return copy;
+    }
+
     move(dx, dy) {
         this.attributes.get("x").add(dx);
         this.attributes.get("y").add(dy);
@@ -131,6 +142,11 @@ export class Circle extends FilledShape {
         this.attributes.addNumeric(this, "size", r, 1);
     }
 
+    copy() {
+        const copy = new Circle(1, 1, 1, false);
+        this.copyAttributesAndStyle(copy);
+        return copy;
+    }
 
     move(dx, dy) {
         this.attributes.get("x").add(dx);
@@ -156,6 +172,11 @@ export class Ellipse extends FilledShape {
         this.attributes.addNumeric(this, "dy", ry, 1);
     }
 
+    copy() {
+        const copy = new Ellipse(1, 1, 1, 1, false);
+        this.copyAttributesAndStyle(copy);
+        return copy;
+    }
 
     move(dx, dy) {
         this.attributes.get("x").add(dx);
@@ -183,6 +204,12 @@ export class Rectangle extends FilledShape {
         this.attributes.addNumeric(this, "dy", height, 1);
     }
 
+    copy() {
+        const copy = new Rectangle(1, 1, 1, 1, false);
+        this.copyAttributesAndStyle(copy);
+        return copy;
+    }
+
     move(dx, dy) {
         this.attributes.get("x").add(dx);
         this.attributes.get("y").add(dy);
@@ -207,6 +234,12 @@ export class Text extends FilledShape {
         this.attributes.addNumeric(this, "y", y, 0);
         this.attributes.addNumeric(this, "size", 20, 1);
         this.style.get("stroke-width").set(1);
+    }
+
+    copy() {
+        const copy = new Text(this.text, 1, 1);
+        this.copyAttributesAndStyle(copy);
+        return copy;
     }
 
     move(dx, dy) {
@@ -238,6 +271,12 @@ export class Polyline extends FilledShape {
         this.attributes.addText(this, "data", points);
     }
 
+    copy() {
+        const copy = new Polyline("");
+        this.copyAttributesAndStyle(copy);
+        return copy;
+    }
+
     move(dx, dy) {
         this.updateUI();
     }
@@ -253,6 +292,12 @@ export class Polygon extends FilledShape {
     constructor(points) {
         super("polygon", true);
         this.attributes.addText(this, "data", points);
+    }
+
+    copy() {
+        const copy = new Polygon("");
+        this.copyAttributesAndStyle(copy);
+        return copy;
     }
 
     move(dx, dy) {
@@ -271,6 +316,12 @@ export class Path extends FilledShape {
     constructor(points) {
         super("path", false);
         this.attributes.addText(this, "data", points);
+    }
+
+    copy() {
+        const copy = new Path("");
+        this.copyAttributesAndStyle(copy);
+        return copy;
     }
 
     move(dx, dy) {

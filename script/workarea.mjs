@@ -120,6 +120,12 @@ export function deleteCurrentlySelectedShape() {
     }
 }
 
+export function copyCurrentlySelectedShape() {
+    if (selectedShape) {
+        icon.copyShapeById(selectedShape.id);
+    }
+}
+
 function selectShape(shape) {
     if (shape != selectedShape) {
         unselectCurrentlySelectedShape();

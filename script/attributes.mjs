@@ -5,6 +5,7 @@
 import { currentlySelectedShapeId, deleteCurrentlySelectedShape } from './workarea.mjs';
 import { icon } from "./icon.mjs";
 import { addClass, removeClass } from './dom.mjs';
+import { copyCurrentlySelectedShape } from './workarea.mjs';
 
 export function setUpAttributes() {
     addEventListeners();
@@ -15,6 +16,7 @@ export function setUpAttributes() {
 
 function addEventListeners() {
     document.getElementById("delete-selected-shape-button").addEventListener("click", deleteCurrentlySelectedShape);
+    document.getElementById("copy-selected-shape-button").addEventListener("click", copyCurrentlySelectedShape);
 
     addEventListenersToButtons("shape-attribute-button", changeShapeAttribute);
     addEventListenersToButtons("shape-style-attribute-button", changeShapeStyleAttribute);
@@ -144,6 +146,16 @@ export class SVGData {
         this.data.set(name, new TextAttribute(item, name, this.uiPrefix, value));
     }
 
+    addAll(source) {
+        for (const [name, fromData] of source.data) {
+            if (!name)
+                throw `${name} does not exist`;
+
+            const toData = this.data.get(name);
+            toData.copy(fromData);
+        }
+    }
+
 }
 
 class Attribute {
@@ -229,6 +241,12 @@ class NumericAttribute extends Attribute {
         this.value += addend;
         this.updateUI();
     }
+
+    copy(source) {
+        this.value = source.value;
+        this.min = source.min;
+        this.max = source.max;
+    }
 }
 
 class TextAttribute extends Attribute {
@@ -238,4 +256,7 @@ class TextAttribute extends Attribute {
         this.value = value ? value : undefined;
     }
 
+    copy(source) {
+        this.value = source.value;
+    }
 }
