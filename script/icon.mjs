@@ -28,9 +28,19 @@ class Icon {
         return this.shapes.size === 0;
     }
 
+    clear() {
+        console.log(this.shapes)
+        for (const [id, shape] of this.shapes) {
+            this.deleteShapeById(id);
+            // TODO: should probably be a method in workarea
+            var element = document.getElementById(id);
+            element.parentNode.removeChild(element);
+        }
+    }
+
     /* Style attributes */
 
-    updateSvgUI(){
+    updateSvgUI() {
         updateSvgStyle();
     }
 
@@ -96,17 +106,17 @@ class Icon {
         this.addShape(shape);
     }
 
-    addPolyline(data){
+    addPolyline(data) {
         const shape = new Polyline(this, data);
         this.addShape(shape);
     }
 
-    addPolygon(data){
+    addPolygon(data) {
         const shape = new Polygon(this, data);
         this.addShape(shape);
     }
 
-    addPath(data){
+    addPath(data) {
         const shape = new Path(this, data);
         this.addShape(shape);
     }

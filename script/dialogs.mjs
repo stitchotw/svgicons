@@ -29,11 +29,14 @@ export class Dialog {
 
 export class StandardDialog extends Dialog {
 
-    constructor(id, openButtonId, closeButtonId) {
+    constructor(id, openButtonId, closeButtonId, actionButtonId, actionButtonListener) {
         super(id);
         // Arrow function necessary to give this correct scope
         this.addListener(openButtonId, evt => this.open());
         this.addListener(closeButtonId, evt => this.close());
+        if (actionButtonId){
+            this.addListener(actionButtonId, actionButtonListener);
+        }
     }
 
 }
@@ -132,9 +135,9 @@ class InputTextDialog extends Dialog {
     open(header, instructions, listener, regex = /^\S([\S ]*\S)?$/) {
         this.header = header;
         this.text = "";
-        if(!instructions || instructions.charAt(0)==='/')
-        throw "asd"
-        this.instructions =""+ instructions + "<pre>" + regex.source + "</pre>";
+        if (!instructions || instructions.charAt(0) === '/')
+            throw "No instructions"
+        this.instructions = "" + instructions + "<pre>" + regex.source + "</pre>";
         this.listener = listener;
         this.regex = regex;
         super.open();
@@ -148,7 +151,7 @@ export function setUpDialogs() {
     // The listeners are enough
 
     new SaveIconDialog();
-    new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button");
+    new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button", "clear-icon-button", () => { icon.clear(); });
     new StandardDialog("settings-dialog", "settings-button", "close-settings-dialog-button");
     new StandardDialog("help-dialog", "help-button", "close-help-dialog-button");
 
