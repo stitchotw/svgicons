@@ -174,7 +174,10 @@ p.no-shape-selected-text {
 }
 
 .functions {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
 }
 
 .function-button {
