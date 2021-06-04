@@ -9,10 +9,9 @@ let shapeIdCounter = 0;
 
 export class Shape {
 
-    constructor(parent, type) {
-        if (!parent || !type)
-            throw "Both parent and type is necessary"
-        this.parent = parent;
+    constructor(type) {
+        if (!type)
+            throw "type is necessary"
         this.type = type;
         this.id = "shape" + (++shapeIdCounter);
         this._svg = null;
@@ -90,8 +89,8 @@ export class Shape {
 }
 
 export class FilledShape extends Shape {
-    constructor(parent, type, filled) {
-        super(parent, type);
+    constructor(type, filled) {
+        super(type);
         this.style.addText(this, "fill", filled ? "black" : "none");
         if (filled)
             this.style.get("stroke-width").value = 1;
@@ -100,8 +99,8 @@ export class FilledShape extends Shape {
 
 export class Line extends Shape {
 
-    constructor(parent, x1, y1, x2, y2) {
-        super(parent, "line");
+    constructor(x1, y1, x2, y2) {
+        super("line");
 
         this.attributes.addNumeric(this, "x", x1, 0);
         this.attributes.addNumeric(this, "y", y1, 0);
@@ -125,8 +124,8 @@ export class Line extends Shape {
 }
 
 export class Circle extends FilledShape {
-    constructor(parent, cx, cy, r, filled) {
-        super(parent, "circle", filled);
+    constructor(cx, cy, r, filled) {
+        super("circle", filled);
         this.attributes.addNumeric(this, "x", cx, 0);
         this.attributes.addNumeric(this, "y", cy, 0);
         this.attributes.addNumeric(this, "size", r, 1);
@@ -149,8 +148,8 @@ export class Circle extends FilledShape {
 }
 
 export class Ellipse extends FilledShape {
-    constructor(parent, cx, cy, rx, ry, filled) {
-        super(parent, "ellipse", filled);
+    constructor(cx, cy, rx, ry, filled) {
+        super("ellipse", filled);
         this.attributes.addNumeric(this, "x", cx, 0);
         this.attributes.addNumeric(this, "y", cy, 0);
         this.attributes.addNumeric(this, "dx", rx, 1);
@@ -175,8 +174,8 @@ export class Ellipse extends FilledShape {
 }
 
 export class Rectangle extends FilledShape {
-    constructor(parent, x, y, width, height, filled) {
-        super(parent, "rect", filled);
+    constructor(x, y, width, height, filled) {
+        super("rect", filled);
 
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
@@ -201,8 +200,8 @@ export class Rectangle extends FilledShape {
 }
 
 export class Text extends FilledShape {
-    constructor(parent, text, x, y) {
-        super(parent, "text", true);
+    constructor(text, x, y) {
+        super("text", true);
         this.text = text;
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
@@ -234,8 +233,8 @@ export class Text extends FilledShape {
 
 export class Polyline extends FilledShape {
 
-    constructor(parent, points) {
-        super(parent, "polyline", false);
+    constructor(points) {
+        super("polyline", false);
         this.attributes.addText(this, "data", points);
     }
 
@@ -251,8 +250,8 @@ export class Polyline extends FilledShape {
 
 export class Polygon extends FilledShape {
 
-    constructor(parent, points) {
-        super(parent, "polygon", true);
+    constructor(points) {
+        super("polygon", true);
         this.attributes.addText(this, "data", points);
     }
 
@@ -269,8 +268,8 @@ export class Polygon extends FilledShape {
 
 export class Path extends FilledShape {
 
-    constructor(parent, points) {
-        super(parent, "path", false);
+    constructor(points) {
+        super("path", false);
         this.attributes.addText(this, "data", points);
     }
 

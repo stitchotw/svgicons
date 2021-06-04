@@ -29,7 +29,6 @@ class Icon {
     }
 
     clear() {
-        console.log(this.shapes)
         for (const [id, shape] of this.shapes) {
             this.deleteShapeById(id);
             // TODO: should probably be a method in workarea
@@ -82,42 +81,42 @@ class Icon {
     }
 
     addLine(x1, y1, x2, y2) {
-        const shape = new Line(this, x1, y1, x2, y2);
+        const shape = new Line( x1, y1, x2, y2);
         this.addShape(shape);
     }
 
     addCircle(cx, cy, r, filled) {
-        const shape = new Circle(this, cx, cy, r, filled);
+        const shape = new Circle( cx, cy, r, filled);
         this.addShape(shape);
     }
 
     addEllipse(cx, cy, rx, ry, filled) {
-        const shape = new Ellipse(this, cx, cy, rx, ry, filled);
+        const shape = new Ellipse( cx, cy, rx, ry, filled);
         this.addShape(shape);
     }
 
     addRectangle(x, y, width, height, filled) {
-        const shape = new Rectangle(this, x, y, width, height, filled);
+        const shape = new Rectangle( x, y, width, height, filled);
         this.addShape(shape);
     }
 
     addText(text) {
-        const shape = new Text(this, text, 16, 16);
+        const shape = new Text( text, 16, 16);
         this.addShape(shape);
     }
 
     addPolyline(data) {
-        const shape = new Polyline(this, data);
+        const shape = new Polyline( data);
         this.addShape(shape);
     }
 
     addPolygon(data) {
-        const shape = new Polygon(this, data);
+        const shape = new Polygon( data);
         this.addShape(shape);
     }
 
     addPath(data) {
-        const shape = new Path(this, data);
+        const shape = new Path( data);
         this.addShape(shape);
     }
 
