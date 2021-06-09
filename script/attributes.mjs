@@ -146,6 +146,10 @@ export class SVGData {
         this.data.set(name, new TextAttribute(item, name, this.uiPrefix, value));
     }
 
+    addData(item, name, value) {
+        this.data.set(name, new DataAttribute(item, name, this.uiPrefix, value));
+    }
+
     addAll(source) {
         for (const [name, fromData] of source.data) {
             if (!name)
@@ -187,6 +191,9 @@ class Attribute {
                 break;
             case "clear":
                 this.set(undefined);
+                break;
+            case "edit":
+                this.editData();
                 break;
             default:
                 throw "Unexpected operation: " + operation;
@@ -259,4 +266,26 @@ class TextAttribute extends Attribute {
     copy(source) {
         this.value = source.value;
     }
+}
+
+class DataAttribute extends Attribute {
+
+    constructor(item, name, uiPrefix, value) {
+        super(item, name, uiPrefix);
+        this.value = value ? value : undefined;
+    }
+
+    copy(source) {
+        this.value = source.value;
+    }
+
+    updateUI() {
+        this.item.updateSvgUI();
+    }
+
+    editData() {
+        this.item.editFunction(this.value, (data) => { this.value = data; });
+        this.updateUI();
+    }
+
 }

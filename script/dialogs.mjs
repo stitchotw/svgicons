@@ -132,19 +132,56 @@ class InputTextDialog extends Dialog {
         document.getElementById("input-text-instructions").innerHTML = i;
     }
 
-    open(header, instructions, listener, regex = /^\S([\S ]*\S)?$/) {
+    open(header, instructions, text, regex, listener) {
         this.header = header;
-        this.text = "";
+        this.text = text;
         if (!instructions || instructions.charAt(0) === '/')
             throw "No instructions"
         this.instructions = "" + instructions + "<pre>" + regex.source + "</pre>";
-        this.listener = listener;
         this.regex = regex;
+        if (!listener)
+            throw "No listener"
+        this.listener = listener;
         super.open();
     }
 }
 
-export const inputDialog = new InputTextDialog();
+// TODO: Are all exported things in this module necessary any longer?
+
+export function openPolylineDataDialog(data, listener) {
+    const inputDialog = new InputTextDialog();
+    inputDialog.open("Polyline data", "At least two points separated by space or newline, e.g.: 1,1 2,2", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/, listener);
+    return inputDialog.text;
+}
+
+export function openPolygonDataDialog(data, listener) {
+    const inputDialog = new InputTextDialog();
+    inputDialog.open("Polygon data", "At least three points separated by space or newline, e.g.: 1,1 2,2 3,3", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/, listener);
+    return inputDialog.text;
+}
+
+export function openPathDataDialog(data, listener) {
+    const space = /[\s]+/;
+    const initialpos = /[Mm]\s+\d+[\s,]+\d+/;
+    const oneparam = /[HhVv]\s+\d+/;
+    const twoparam = /[MmLlTt]\s+\d+[\s,]+\d+/;
+    const closepath = /[Zz]/;
+    const twoparamcurve = /[Cc]\s+\d+\s+\d+[\s,]+\d+\s+\d+/;
+    const threeparamcurve = /[Cc]\s+\d+\s+\d+([\s,]+\d+\s+\d+){2}/;
+    const arc = /[Aa](\s+\d+){7}/
+
+    const or = (...regexs) => {
+        return "((" + regexs.map(r => r.source).join(")|(") + "))";
+    }
+
+    const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
+
+    const inputDialog = new InputTextDialog();
+    inputDialog.open("Path data",
+        "It is easier to read the data if you put one command per line. Don't put any commas between commands. <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>",
+        data, new RegExp(all), listener);
+    return inputDialog.text;
+}
 
 export function setUpDialogs() {
     // No need to save these in variables,

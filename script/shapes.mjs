@@ -1,4 +1,7 @@
 import { SVGData } from "./attributes.mjs";
+import { openPathDataDialog } from "./dialogs.mjs";
+import { openPolygonDataDialog } from "./dialogs.mjs";
+import { openPolylineDataDialog } from "./dialogs.mjs";
 import { icon } from "./icon.mjs";
 
 
@@ -274,7 +277,7 @@ export class Polyline extends FilledShape {
 
     constructor(points) {
         super("polyline", false);
-        this.attributes.addText(this, "data", points);
+        this.attributes.addData(this, "data", points);
     }
 
     copy() {
@@ -291,13 +294,17 @@ export class Polyline extends FilledShape {
         super.updateSvg(svg, all);
         svg.setAttribute("points", this.attributes.get("data").value);
     }
+
+    get editFunction() {
+        return openPolylineDataDialog;
+    }
 }
 
 export class Polygon extends FilledShape {
 
     constructor(points) {
         super("polygon", true);
-        this.attributes.addText(this, "data", points);
+        this.attributes.addData(this, "data", points);
     }
 
     copy() {
@@ -314,14 +321,18 @@ export class Polygon extends FilledShape {
         super.updateSvg(svg, all);
         svg.setAttribute("points", this.attributes.get("data").value);
     }
-}
 
+    get editFunction() {
+        return openPolygonDataDialog;
+    }
+
+}
 
 export class Path extends FilledShape {
 
     constructor(points) {
         super("path", false);
-        this.attributes.addText(this, "data", points);
+        this.attributes.addData(this, "data", points);
     }
 
     copy() {
@@ -337,5 +348,9 @@ export class Path extends FilledShape {
     updateSvg(svg, all) {
         super.updateSvg(svg, all);
         svg.setAttribute("d", this.attributes.get("data").value);
+    }
+
+    get editFunction() {
+        return openPathDataDialog;
     }
 }
