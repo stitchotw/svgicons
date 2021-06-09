@@ -18,6 +18,7 @@ export class Shape {
         this.attributes = new SVGData("shape-attribute-");
         this.style = new SVGData("shape-style-attribute-");
         this.style.addNumeric(this, "stroke-width", undefined, 1);
+        this.style.addText(this, "color", undefined);
     }
 
     get svgAttributes() {
@@ -111,6 +112,8 @@ export class Line extends Shape {
         this.attributes.addNumeric(this, "y", y1, 0);
         this.attributes.addNumeric(this, "dx", x2 - x1, -32);
         this.attributes.addNumeric(this, "dy", y2 - y1, -32);
+
+        this.style.addText(this, "linecap", undefined);
     }
 
     copy() {
@@ -233,7 +236,10 @@ export class Text extends FilledShape {
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
         this.attributes.addNumeric(this, "size", 20, 1);
+
         this.style.get("stroke-width").set(1);
+
+        this.style.addText(this, "font", "N/A");
     }
 
     copy() {

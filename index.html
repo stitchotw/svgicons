@@ -57,8 +57,8 @@
                     data-operation="inc">+</button>
 
                 <div class="shape-attribute-name shape-attribute-data">Data:</div>
-                <div id="shape-attribute-data" class="shape-attribute shape-attribute-data text">---
-                </div>
+                <button class="shape-attribute-button shape-attribute-data" data-attribute-name="data"
+                    data-operation="edit">E</button>
 
                 <!-- SIZE -->
                 <div class="shape-attribute-name shape-attribute-size">Size:</div>
@@ -95,20 +95,40 @@
                     data-attribute-name="stroke-width" data-operation="clear">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-fill">Fill:</div>
-                <div id="shape-style-attribute-fill" class="shape-style-attribute shape-style-attribute-fill text">---
-                </div>
+                <select id="shape-style-attribute-fill" class="shape-style-attribute shape-style-attribute-fill">
+                    <option value="filled">Filled</option>
+                    <option value="not-filled">Not filled</option>
+                </select>
+
+                <div class="shape-attribute-name shape-style-attribute-linecap">Linecap:</div>
+                <select id="shape-style-attribute-linecap"
+                    class="shape-style-attribute shape-style-attribute-linecap">
+                    <option value="">U/A</option>
+                    <option value="round">Rounded</option>
+                    <option value="square">Straight (margin)</option>
+                    <option value="butt">Straight (no margin)</option>
+                </select>
+                <button class="shape-style-attribute-button shape-style-attribute-linecap"
+                    data-attribute-name="line-end" data-operation="clear">C</button>
+
+                <div class="shape-attribute-name shape-style-attribute-color">Color:</div>
+                <input type="text" id="shape-style-attribute-color" list="colorNames"
+                    class="shape-style-attribute shape-style-attribute-color" />
+                <button class="shape-style-attribute-button shape-style-attribute-color" data-attribute-name="color"
+                    data-operation="clear">C</button>
+
+                <div class="shape-attribute-name shape-style-attribute-font">Font:</div>
+                <input type="text" id="shape-style-attribute-font" list="fontNames"
+                    class="shape-style-attribute shape-style-attribute-font" />
+                <button class="shape-style-attribute-button shape-style-attribute-font" data-attribute-name="font"
+                    data-operation="clear">C</button>
+
 
                 <!--
-            <div class="shape-attribute-name line-attribute hidden">Style:</div>
-            <div class="shape-attribute line-attribute hidden">Rounded</div>
-            <div class="shape-attribute-name line-attribute circle-attribute rect-attribute hidden">Color:</div>
-            <div class="shape-attribute line-attribute circle-attribute rect-attribute hidden">Default</div>
             <div class="shape-attribute-name circle-attribute rect-attribute hidden">Fill:</div>
             <div class="shape-attribute circle-attribute rect-attribute hidden">
                 <div id="shape-attribute-fill">---</div>
             </div>
-            <div class="shape-attribute-name hidden">Path:</div>
-            <div class="shape-attribute hidden">None</div>
 
             <div class="shape-attribute-name text-attribute hidden">Text:</div>
             <div class="shape-attribute text-attribute hidden">None</div>
@@ -128,7 +148,8 @@
                 <div class="icon-attribute text">32x32</div>
 
                 <div class="icon-attribute-name">Color:</div>
-                <div class="icon-attribute text">Black</div>
+                <input type="text" id="icon-style-attribute-color" list="colorNames"
+                    class="icon-style-attribute" />
 
                 <div class="icon-attribute-name">Width:</div>
                 <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
@@ -138,7 +159,16 @@
                     data-operation="inc">+</button>
 
                 <div class="icon-attribute-name">Linecap:</div>
-                <div class="icon-attribute text">Rounded</div>
+                <select id="icon-style-attribute-linecap"
+                    class="icon-style-attribute">
+                    <option value="round">Rounded</option>
+                    <option value="square">Straight (margin)</option>
+                    <option value="butt">Straight (no margin)</option>
+                </select>
+
+                <div class="icon-attribute-name">Font:</div>
+                <input type="text" id="icon-style-attribute-font" list="fontNames"
+                    class="icon-style-attribute" />
             </div>
         </div>
         <div class="functions">
@@ -200,7 +230,8 @@
                 </button>
             </div>
             <p><a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank" class="help-link"
-                    title="Opens in new tab/window">The coordinate space of the shape corresponds to the viewbox of the whole
+                    title="Opens in new tab/window">The coordinate space of the shape corresponds to the viewbox of the
+                    whole
                     icon.</a>
                 <!-- a href="https://www.youtube.com/watch?v=bXIZs6RjnxE" target="_blank" class="help-link"
                     title="Opens in new tab/window">This will automatically scale if you change the size of the
@@ -348,6 +379,41 @@
             </div>
         </div>
     </div>
+    <datalist id="colorNames">
+        <option value="Aqua"> Aqua </option>
+        <option value="Black"> Black </option>
+        <option value="Blue"> Blue </option>
+        <option value="Fuchsia"> Fuchsia </option>
+        <option value="Gray"> Gray </option>
+        <option value="Green"> Green </option>
+        <option value="Lime"> Lime </option>
+        <option value="Maroon"> Maroon </option>
+        <option value="Navy"> Navy </option>
+        <option value="Olive"> Olive </option>
+        <option value="Purple"> Purple </option>
+        <option value="Red"> Red </option>
+        <option value="Silver"> Silver </option>
+        <option value="Teal"> Teal </option>
+        <option value="White"> White </option>
+        <option value="Yellow"> Yellow </option>
+    </datalist>
+    <datalist id="fontNames">
+        <option value='"Courier New", monospace'>"Courier New", monospace</option>
+        <option value="Arial, sans-serif">Arial, sans-serif</option>
+        <option value='"Times New Roman", serif'>"Times New Roman", serif</option>
+        <option value="Verdana, sans-serif">Verdana, sans-serif</option>
+        <option value="Helvetica, sans-serif">Helvetica, sans-serif</option>
+        <option value="Georgia, serif">Georgia, serif</option>
+        <option value='"Brush Script MT", cursive'>"Brush Script MT", cursive</option>
+        <option value='Times, "Times New Roman", Georgia, serif'>Times, "Times New Roman", Georgia, serif</option>
+        <option value="Verdana, Arial, Helvetica, sans-serif">Verdana, Arial, Helvetica, sans-serif</option>
+        <option value='"Lucida Console", Courier, monospace'>"Lucida Console", Courier, monospace</option>
+        <option value="serif">serif</option>
+        <option value="sans-serif">sans-serif</option>
+        <option value="monospace">monospace</option>
+        <option value="cursive">cursive</option>
+        <option value="system-ui">system-ui</option>
+    </datalist>
 </body>
 
 </html>
