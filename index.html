@@ -41,6 +41,15 @@
                 <h2 class="attribute-header">Selected</h2>
                 <p class="no-shape-selected-text">Click on a shape above to show its attributes.</p>
 
+                <!-- DATA -->
+                <div class="shape-attribute-name shape-attribute-data">Data:</div>
+                <button class="shape-attribute-button shape-attribute-data" data-attribute-name="data"
+                    data-operation="edit">Edit</button>
+
+                <div class="shape-attribute-name shape-attribute-text">Text:</div>
+                <button class="shape-attribute-button shape-attribute-text" data-attribute-name="text"
+                    data-operation="edit">Edit</button>
+
                 <!-- POSITION-->
                 <div class="shape-attribute-name shape-attribute-x">X:</div>
                 <button class="shape-attribute-button shape-attribute-x" data-attribute-name="x"
@@ -55,10 +64,6 @@
                 <div id="shape-attribute-y" class="shape-attribute shape-attribute-y centered">---</div>
                 <button class="shape-attribute-button shape-attribute-y" data-attribute-name="y"
                     data-operation="inc">+</button>
-
-                <div class="shape-attribute-name shape-attribute-data">Data:</div>
-                <button class="shape-attribute-button shape-attribute-data" data-attribute-name="data"
-                    data-operation="edit">Edit</button>
 
                 <!-- SIZE -->
                 <div class="shape-attribute-name shape-attribute-size">Size:</div>
@@ -117,9 +122,8 @@
                     <option value="White"> White </option>
                     <option value="Yellow"> Yellow </option>
                 </select>
-                <button class="shape-style-attribute-button shape-style-attribute-fill"
-                    data-attribute-name="fill" data-operation="clear"
-                    title="Clear and use no fill on this shape">C</button>
+                <button class="shape-style-attribute-button shape-style-attribute-fill" data-attribute-name="fill"
+                    data-operation="clear" title="Clear and use no fill on this shape">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-stroke-linecap">Linecap:</div>
                 <select id="shape-style-attribute-stroke-linecap"
@@ -164,19 +168,6 @@
                     class="shape-style-attribute shape-style-attribute-font" />
                 <button class="shape-style-attribute-button shape-style-attribute-font" data-attribute-name="font"
                     data-operation="clear" title="Clear and use default value from icon">C</button>
-
-
-                <!--
-            <div class="shape-attribute-name circle-attribute rect-attribute hidden">Fill:</div>
-            <div class="shape-attribute circle-attribute rect-attribute hidden">
-                <div id="shape-attribute-fill">---</div>
-            </div>
-
-            <div class="shape-attribute-name text-attribute hidden">Text:</div>
-            <div class="shape-attribute text-attribute hidden">None</div>
-            <div class="shape-attribute-name text-attribute hidden">Family:</div>
-            <div class="shape-attribute text-attribute hidden">Courier</div>
-            -->
 
                 <div class="shape-functions">
                     <button id="delete-selected-shape-button">Delete</button>

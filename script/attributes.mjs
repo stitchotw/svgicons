@@ -129,7 +129,7 @@ export class SVGData {
         this.data.forEach((attribute) => {
             const elements = document.getElementsByClassName(attribute.uiName);
             if (elements.length === 0)
-                console.trace("Could not find any UI elements for " + attribute.uiName);
+                console.trace("Could not find any UI elements for " + attribute.uiName, attribute);
             removeClass(elements, "hidden");
         });
 
@@ -283,6 +283,17 @@ class TextAttribute extends Attribute {
 
     copy(source) {
         this.value = source.value;
+    }
+
+    updateUI() {
+        this.item.updateSvgUI();
+    }
+
+    editData() {
+        this.item.editFunction(this.value, (data) => {
+            this.value = data;
+            this.updateUI();
+        });
     }
 }
 

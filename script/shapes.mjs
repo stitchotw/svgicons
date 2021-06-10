@@ -1,5 +1,6 @@
 import { SVGData } from "./attributes.mjs";
 import { openPathDataDialog } from "./dialogs.mjs";
+import { openAddTextDialog } from "./dialogs.mjs";
 import { openPolygonDataDialog } from "./dialogs.mjs";
 import { openPolylineDataDialog } from "./dialogs.mjs";
 import { icon } from "./icon.mjs";
@@ -235,7 +236,7 @@ export class Rectangle extends FilledShape {
 export class Text extends FilledShape {
     constructor(text, x, y) {
         super("text", true);
-        this.text = text;
+        this.attributes.addText(this, "text", text);
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
         this.attributes.addNumeric(this, "size", 20, 1);
@@ -269,7 +270,11 @@ export class Text extends FilledShape {
         svg.setAttribute("text-anchor", "middle");
         svg.setAttribute("dominant-baseline", "middle");
 
-        svg.replaceChildren(this.text)
+        svg.replaceChildren(this.attributes.get("text").value);
+    }
+
+    get editFunction() {
+        return openAddTextDialog;
     }
 }
 

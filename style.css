@@ -135,7 +135,7 @@ p.no-shape-selected-text {
     grid-column: 2/-1;
 }
 
-.shape-attribute-button.shape-attribute-data, select.shape-style-attribute, input[type="text"].shape-style-attribute,  input[type="color"].shape-style-attribute{
+.shape-attribute-button.shape-attribute-data, .shape-attribute-button.shape-attribute-text, select.shape-style-attribute, input[type="text"].shape-style-attribute,  input[type="color"].shape-style-attribute{
     grid-column: 2/5;
     width: 100%;
 }
