@@ -236,7 +236,7 @@ export class Rectangle extends FilledShape {
 export class Text extends Shape {
     constructor(text, x, y) {
         super("text", true);
-        this.attributes.addText(this, "text", text);
+        this.attributes.addTextData(this, "text", text);
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
         this.attributes.addNumeric(this, "size", 20, 1);
@@ -290,7 +290,7 @@ export class Polyline extends FilledShape {
 
     constructor(points) {
         super("polyline", false);
-        this.attributes.addData(this, "data", points);
+        this.attributes.addTextData(this, "data", points);
     }
 
     copy() {
@@ -317,7 +317,7 @@ export class Polygon extends FilledShape {
 
     constructor(points) {
         super("polygon", true);
-        this.attributes.addData(this, "data", points);
+        this.attributes.addTextData(this, "data", points);
     }
 
     copy() {
@@ -345,7 +345,7 @@ export class Path extends FilledShape {
 
     constructor(points) {
         super("path", false);
-        this.attributes.addData(this, "data", points);
+        this.attributes.addTextData(this, "data", points);
     }
 
     copy() {

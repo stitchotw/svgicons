@@ -137,6 +137,7 @@ export class SVGData {
     }
 
     updateUI() {
+        console.log("SVGData.updateUI", this.uiPrefix, this.data)
         this.data.forEach((attribute) => {
             attribute.updateUI();
         });
@@ -160,8 +161,8 @@ export class SVGData {
         this.data.set(name, new TextAttribute(item, name, this.uiPrefix, value));
     }
 
-    addData(item, name, value) {
-        this.data.set(name, new DataAttribute(item, name, this.uiPrefix, value));
+    addTextData(item, name, value) {
+        this.data.set(name, new TextDataAttribute(item, name, this.uiPrefix, value));
     }
 
     addAll(source) {
@@ -222,10 +223,13 @@ class Attribute {
         if (!label)
             throw "Could not find id " + this.uiPrefix + this.name;
 
+        console.log(label)
         if (!label.type) {
+            console.log("true")
             label.innerHTML = this.value === undefined ? "<div title='Icon default'>Id</div>" : this.value;
         } else {
-            label.value = this.value;
+            console.log("false")
+            label.value = this.value === undefined ? "" : this.value;
         }
     }
 
@@ -285,19 +289,9 @@ class TextAttribute extends Attribute {
         this.value = source.value;
     }
 
-    updateUI() {
-        this.item.updateSvgUI();
-    }
-
-    editData() {
-        this.item.editFunction(this.value, (data) => {
-            this.value = data;
-            this.updateUI();
-        });
-    }
 }
 
-class DataAttribute extends Attribute {
+class TextDataAttribute extends Attribute {
 
     constructor(item, name, uiPrefix, value) {
         super(item, name, uiPrefix);
