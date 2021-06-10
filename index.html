@@ -99,7 +99,7 @@
                 <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
                     data-attribute-name="stroke-width" data-operation="clear"
                     title="Clear and use default value from icon">C</button>
-                    
+
                 <div class="shape-attribute-name shape-style-attribute-font-family">Font:</div>
                 <select id="shape-style-attribute-font-family"
                     class="shape-style-attribute shape-style-attribute-select shape-style-attribute-font-family"
@@ -200,6 +200,13 @@
                 <div class="icon-attribute-name">Viewbox:</div>
                 <div class="icon-attribute text">32x32</div>
 
+                <div class="icon-attribute-name">Width:</div>
+                <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
+                    data-operation="dec">-</button>
+                <div id="icon-style-attribute-stroke-width" class="centered">---</div>
+                <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
+                    data-operation="inc">+</button>
+
                 <div class="icon-attribute-name">Stroke:</div>
                 <select id="icon-style-attribute-stroke" class="icon-style-attribute icon-style-attribute-select"
                     data-attribute-name="stroke" data-operation="set">
@@ -220,13 +227,6 @@
                     <option value="White"> White </option>
                     <option value="Yellow"> Yellow </option>
                 </select>
-
-                <div class="icon-attribute-name">Width:</div>
-                <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
-                    data-operation="dec">-</button>
-                <div id="icon-style-attribute-stroke-width" class="centered">---</div>
-                <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
-                    data-operation="inc">+</button>
 
                 <div class="icon-attribute-name">Linecap:</div>
                 <select id="icon-style-attribute-stroke-linecap"
