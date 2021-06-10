@@ -101,8 +101,7 @@
                 </select>
 
                 <div class="shape-attribute-name shape-style-attribute-linecap">Linecap:</div>
-                <select id="shape-style-attribute-linecap"
-                    class="shape-style-attribute shape-style-attribute-linecap">
+                <select id="shape-style-attribute-linecap" class="shape-style-attribute shape-style-attribute-linecap">
                     <option value="">U/A</option>
                     <option value="round">Rounded</option>
                     <option value="square">Straight (margin)</option>
@@ -111,10 +110,28 @@
                 <button class="shape-style-attribute-button shape-style-attribute-linecap"
                     data-attribute-name="line-end" data-operation="clear">C</button>
 
-                <div class="shape-attribute-name shape-style-attribute-color">Color:</div>
-                <input type="text" id="shape-style-attribute-color" list="colorNames"
-                    class="shape-style-attribute shape-style-attribute-color" />
-                <button class="shape-style-attribute-button shape-style-attribute-color" data-attribute-name="color"
+                <div class="shape-attribute-name shape-style-attribute-stroke">Color:</div>
+                <select id="shape-style-attribute-stroke" class="shape-style-attribute shape-style-attribute-select shape-style-attribute-stroke"
+                    data-attribute-name="stroke" data-operation="set">
+                    <option value=""></option>
+                    <option value="Aqua"> Aqua </option>
+                    <option value="Black"> Black </option>
+                    <option value="Blue"> Blue </option>
+                    <option value="Fuchsia"> Fuchsia </option>
+                    <option value="Gray"> Gray </option>
+                    <option value="Green"> Green </option>
+                    <option value="Lime"> Lime </option>
+                    <option value="Maroon"> Maroon </option>
+                    <option value="Navy"> Navy </option>
+                    <option value="Olive"> Olive </option>
+                    <option value="Purple"> Purple </option>
+                    <option value="Red"> Red </option>
+                    <option value="Silver"> Silver </option>
+                    <option value="Teal"> Teal </option>
+                    <option value="White"> White </option>
+                    <option value="Yellow"> Yellow </option>
+                </select>
+                <button class="shape-style-attribute-button shape-style-attribute-stroke" data-attribute-name="stroke"
                     data-operation="clear">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-font">Font:</div>
@@ -148,8 +165,24 @@
                 <div class="icon-attribute text">32x32</div>
 
                 <div class="icon-attribute-name">Color:</div>
-                <input type="text" id="icon-style-attribute-color" list="colorNames"
-                    class="icon-style-attribute" />
+                <select id="icon-style-attribute-stroke" class="icon-style-attribute">
+                    <option value="Aqua"> Aqua </option>
+                    <option value="Black"> Black </option>
+                    <option value="Blue"> Blue </option>
+                    <option value="Fuchsia"> Fuchsia </option>
+                    <option value="Gray"> Gray </option>
+                    <option value="Green"> Green </option>
+                    <option value="Lime"> Lime </option>
+                    <option value="Maroon"> Maroon </option>
+                    <option value="Navy"> Navy </option>
+                    <option value="Olive"> Olive </option>
+                    <option value="Purple"> Purple </option>
+                    <option value="Red"> Red </option>
+                    <option value="Silver"> Silver </option>
+                    <option value="Teal"> Teal </option>
+                    <option value="White"> White </option>
+                    <option value="Yellow"> Yellow </option>
+                </select>
 
                 <div class="icon-attribute-name">Width:</div>
                 <button class="icon-style-attribute-button" data-attribute-name="stroke-width"
@@ -159,16 +192,14 @@
                     data-operation="inc">+</button>
 
                 <div class="icon-attribute-name">Linecap:</div>
-                <select id="icon-style-attribute-linecap"
-                    class="icon-style-attribute">
+                <select id="icon-style-attribute-linecap" class="icon-style-attribute">
                     <option value="round">Rounded</option>
                     <option value="square">Straight (margin)</option>
                     <option value="butt">Straight (no margin)</option>
                 </select>
 
                 <div class="icon-attribute-name">Font:</div>
-                <input type="text" id="icon-style-attribute-font" list="fontNames"
-                    class="icon-style-attribute" />
+                <input type="text" id="icon-style-attribute-font" list="fontNames" class="icon-style-attribute" />
             </div>
         </div>
         <div class="functions">
@@ -379,24 +410,6 @@
             </div>
         </div>
     </div>
-    <datalist id="colorNames">
-        <option value="Aqua"> Aqua </option>
-        <option value="Black"> Black </option>
-        <option value="Blue"> Blue </option>
-        <option value="Fuchsia"> Fuchsia </option>
-        <option value="Gray"> Gray </option>
-        <option value="Green"> Green </option>
-        <option value="Lime"> Lime </option>
-        <option value="Maroon"> Maroon </option>
-        <option value="Navy"> Navy </option>
-        <option value="Olive"> Olive </option>
-        <option value="Purple"> Purple </option>
-        <option value="Red"> Red </option>
-        <option value="Silver"> Silver </option>
-        <option value="Teal"> Teal </option>
-        <option value="White"> White </option>
-        <option value="Yellow"> Yellow </option>
-    </datalist>
     <datalist id="fontNames">
         <option value='"Courier New", monospace'>"Courier New", monospace</option>
         <option value="Arial, sans-serif">Arial, sans-serif</option>

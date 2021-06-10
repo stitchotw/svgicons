@@ -21,17 +21,28 @@ function addEventListeners() {
     addEventListenersToButtons("shape-attribute-button", changeShapeAttribute);
     addEventListenersToButtons("shape-style-attribute-button", changeShapeStyleAttribute);
     addEventListenersToButtons("icon-style-attribute-button", changeIconStyleAttribute);
+
+    addEventListenersToSelects("shape-style-attribute-select", changeShapeStyleAttribute);
 }
 
 function addEventListenersToButtons(className, listener) {
-    let buttons = document.getElementsByClassName(className);
+    addEventListenersToItems(className, "click", listener);
+}
 
-    for (const button of buttons) {
-        button.addEventListener("click", (evt) => {
-            listener(evt.target.dataset.attributeName, evt.target.dataset.operation);
+function addEventListenersToSelects(className, listener) {
+    addEventListenersToItems(className, "change", listener);
+}
+
+function addEventListenersToItems(className, eventName, listener) {
+    const items = document.getElementsByClassName(className);
+
+    for (const item of items) {
+        item.addEventListener(eventName, (evt) => {
+            listener(evt.target.dataset.attributeName, evt.target.dataset.operation, evt.target.value);
         });
     }
 }
+
 
 // Shape attributes
 
@@ -81,13 +92,15 @@ export function updateShapeAttributeValues() {
 
 
 function changeShapeAttribute(name, operation, value) {
+    console.log(name, operation, value)
     const shape = icon.shapeFromId(currentlySelectedShapeId());
     shape.svgAttributes.get(name).update(operation, value);
 }
 
 function changeShapeStyleAttribute(name, operation, value) {
+    console.log(name, operation, value)
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    shape.svgStyle.get(name).update(operation, value);
+    shape.svgStyle.get(name).update(operation   , value);
 }
 
 // Global style attributes
@@ -175,7 +188,7 @@ class Attribute {
     }
 
     set(value) {
-        this.value = value;
+        this.value = value? value: undefined;
     }
 
     update(operation, value) {
@@ -208,7 +221,11 @@ class Attribute {
         if (!label)
             throw "Could not find id " + this.uiPrefix + this.name;
 
-        label.innerHTML = this.value === undefined ? "U/A" : this.value;
+        if (!label.type) {
+            label.innerHTML = this.value === undefined ? "U/A" : this.value;
+        } else {
+            label.value = this.value;
+        }
     }
 
 }
@@ -284,8 +301,8 @@ class DataAttribute extends Attribute {
     }
 
     editData() {
-        this.item.editFunction(this.value, (data) => { 
-            this.value = data; 
+        this.item.editFunction(this.value, (data) => {
+            this.value = data;
             this.updateUI();
         });
     }

@@ -20,8 +20,8 @@ export class Shape {
         this._svg = null;
         this.attributes = new SVGData("shape-attribute-");
         this.style = new SVGData("shape-style-attribute-");
+        this.style.addText(this, "stroke", undefined);
         this.style.addNumeric(this, "stroke-width", undefined, 1);
-        this.style.addText(this, "color", undefined);
     }
 
     get svgAttributes() {
