@@ -65,7 +65,7 @@ class SaveIconDialog extends StandardDialog {
         }
 
         const container = document.getElementById("icon-to-save");
-        container.textContent = previews[0].innerHTML;
+        container.textContent = previews[0].innerHTML.replace(/></g, ">\n<");
 
         super.open();
     }
