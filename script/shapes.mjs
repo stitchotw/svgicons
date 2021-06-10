@@ -233,7 +233,7 @@ export class Rectangle extends FilledShape {
 
 }
 
-export class Text extends FilledShape {
+export class Text extends Shape {
     constructor(text, x, y) {
         super("text", true);
         this.attributes.addText(this, "text", text);
