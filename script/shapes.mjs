@@ -100,7 +100,7 @@ export class Shape {
 export class FilledShape extends Shape {
     constructor(type, filled) {
         super(type);
-        this.style.addText(this, "fill", filled ? "black" : "none");
+        this.style.addText(this, "fill", filled ? "Black" : "none");
         if (filled)
             this.style.get("stroke-width").value = 1;
     }
