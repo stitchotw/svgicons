@@ -185,8 +185,9 @@
                     <option value="cursive">cursive</option>
                     <option value="system-ui">system-ui</option>
                 </select>
-                <button class="shape-style-attribute-button shape-style-attribute-font-family" data-attribute-name="font-family"
-                    data-operation="clear" title="Clear and use default value from icon">C</button>
+                <button class="shape-style-attribute-button shape-style-attribute-font-family"
+                    data-attribute-name="font-family" data-operation="clear"
+                    title="Clear and use default value from icon">C</button>
 
                 <div class="shape-functions">
                     <button id="delete-selected-shape-button">Delete</button>
@@ -200,7 +201,8 @@
                 <div class="icon-attribute text">32x32</div>
 
                 <div class="icon-attribute-name">Color:</div>
-                <select id="icon-style-attribute-stroke" class="icon-style-attribute">
+                <select id="icon-style-attribute-stroke" class="icon-style-attribute icon-style-attribute-select"
+                    data-attribute-name="stroke" data-operation="set">
                     <option value="Aqua"> Aqua </option>
                     <option value="Black"> Black </option>
                     <option value="Blue"> Blue </option>
@@ -227,7 +229,9 @@
                     data-operation="inc">+</button>
 
                 <div class="icon-attribute-name">Linecap:</div>
-                <select id="icon-style-attribute-linecap" class="icon-style-attribute">
+                <select id="icon-style-attribute-stroke-linecap"
+                    class="icon-style-attribute icon-style-attribute-select" data-attribute-name="stroke-linecap"
+                    data-operation="set">
                     <option value="round">Rounded</option>
                     <option value="square">Straight (margin)</option>
                     <option value="butt">Straight (no margin)</option>

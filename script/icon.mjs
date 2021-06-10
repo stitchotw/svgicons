@@ -18,7 +18,7 @@ class Icon {
         this.shapes = new Map();
         this.style = new SVGData("icon-style-attribute-");
 
-        this.style.addText(this, "stroke", "black");
+        this.style.addText(this, "stroke", "Black");
         this.style.addNumeric(this, "stroke-width", DEFAULT_STROKE_WIDTH, 1);
         this.style.addText(this, "stroke-linecap", "round");
         this.style.addText(this, "fill", "none");
@@ -38,6 +38,10 @@ class Icon {
     }
 
     /* Style attributes */
+
+    updateUI(){
+        this.style.updateUI();
+    }
 
     updateSvgUI() {
         updateSvgStyle();

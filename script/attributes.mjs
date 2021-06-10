@@ -12,6 +12,8 @@ export function setUpAttributes() {
     initializeIconAttributesUI();
     // Trigger hiding of shape attributes
     selectedShapeChanged();
+    // Trigger setting of icon default attributes
+    icon.updateUI();
 }
 
 function addEventListeners() {
@@ -19,10 +21,12 @@ function addEventListeners() {
     document.getElementById("copy-selected-shape-button").addEventListener("click", copyCurrentlySelectedShape);
 
     addEventListenersToButtons("shape-attribute-button", changeShapeAttribute);
-    addEventListenersToButtons("shape-style-attribute-button", changeShapeStyleAttribute);
-    addEventListenersToButtons("icon-style-attribute-button", changeIconStyleAttribute);
 
+    addEventListenersToButtons("shape-style-attribute-button", changeShapeStyleAttribute);
     addEventListenersToSelects("shape-style-attribute-select", changeShapeStyleAttribute);
+
+    addEventListenersToButtons("icon-style-attribute-button", changeIconStyleAttribute);
+    addEventListenersToSelects("icon-style-attribute-select", changeIconStyleAttribute);
 }
 
 function addEventListenersToButtons(className, listener) {
@@ -90,18 +94,27 @@ export function updateShapeAttributeValues() {
     shape.updateUI();
 }
 
+function changeAttribute(data, name, operation, value) {
+    if (!data || !name || !operation) {
+        console.trace("data:", data, "name:", name, "operation:", operation, "value:", value)
+        return;
+    }
+    const attribute = data.get(name);
+    if (!attribute) {
+        console.trace("Attribute '" + name + "' not defiened");
+        return;
+    }
+    attribute.update(operation, value);
+}
 
 function changeShapeAttribute(name, operation, value) {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    shape.svgAttributes.get(name).update(operation, value);
+    changeAttribute(shape.svgAttributes, name, operation, value);
 }
 
 function changeShapeStyleAttribute(name, operation, value) {
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    const attribute = shape.svgStyle.get(name);
-    if (!attribute)
-        console.trace("Attribute '" + name + "' not defiened");
-    attribute.update(operation, value);
+    changeAttribute(shape.svgStyle, name, operation, value);
 }
 
 // Global style attributes
@@ -111,7 +124,7 @@ function initializeIconAttributesUI() {
 }
 
 function changeIconStyleAttribute(name, operation, value) {
-    icon.svgStyle.get(name).update(operation, value);
+    changeAttribute(icon.svgStyle, name, operation, value);
 }
 
 export class SVGData {
@@ -137,7 +150,6 @@ export class SVGData {
     }
 
     updateUI() {
-        console.log("SVGData.updateUI", this.uiPrefix, this.data)
         this.data.forEach((attribute) => {
             attribute.updateUI();
         });
@@ -220,15 +232,14 @@ class Attribute {
         this.item.updateSvgUI();
 
         const label = document.getElementById(this.uiPrefix + this.name);
-        if (!label)
-            throw "Could not find id " + this.uiPrefix + this.name;
+        if (!label) {
+            console.trace("Could not find id " + this.uiPrefix + this.name);
+            return;
+        }
 
-        console.log(label)
         if (!label.type) {
-            console.log("true")
             label.innerHTML = this.value === undefined ? "<div title='Icon default'>Id</div>" : this.value;
         } else {
-            console.log("false")
             label.value = this.value === undefined ? "" : this.value;
         }
     }
