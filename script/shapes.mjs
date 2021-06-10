@@ -243,7 +243,7 @@ export class Text extends Shape {
 
         this.style.get("stroke-width").set(1);
 
-        this.style.addText(this, "font", "N/A");
+        this.style.addText(this, "font-family", '"Courier New", monospace');
     }
 
     copy() {
@@ -260,6 +260,7 @@ export class Text extends Shape {
 
     updateSvg(svg, all) {
         super.updateSvg(svg, all);
+        svg.setAttribute("style", `${svg.attributes["style"].value}fill:${this.fillColor};`);
         svg.setAttribute("x", this.attributes.get("x").value);
         svg.setAttribute("y", this.attributes.get("y").value);
 
@@ -271,6 +272,13 @@ export class Text extends Shape {
         svg.setAttribute("dominant-baseline", "middle");
 
         svg.replaceChildren(this.attributes.get("text").value);
+    }
+
+    get fillColor(){
+        let color = this.style.get("stroke").value;
+        if(!color) 
+            color = icon.style.get("stroke").value;
+        return color;
     }
 
     get editFunction() {
