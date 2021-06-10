@@ -92,28 +92,35 @@
                 <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
                     data-attribute-name="stroke-width" data-operation="inc">+</button>
                 <button class="shape-style-attribute-button shape-style-attribute-stroke-width"
-                    data-attribute-name="stroke-width" data-operation="clear">C</button>
+                    data-attribute-name="stroke-width" data-operation="clear"
+                    title="Clear and use default value from icon">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-fill">Fill:</div>
-                <select id="shape-style-attribute-fill" class="shape-style-attribute shape-style-attribute-fill">
+                <select id="shape-style-attribute-fill"
+                    class="shape-style-attribute shape-style-attribute-select shape-style-attribute-fill"
+                    data-attribute-name="fill" data-operation="set">
                     <option value="filled">Filled</option>
                     <option value="not-filled">Not filled</option>
                 </select>
 
-                <div class="shape-attribute-name shape-style-attribute-linecap">Linecap:</div>
-                <select id="shape-style-attribute-linecap" class="shape-style-attribute shape-style-attribute-linecap">
-                    <option value="">U/A</option>
+                <div class="shape-attribute-name shape-style-attribute-stroke-linecap">Linecap:</div>
+                <select id="shape-style-attribute-stroke-linecap"
+                    class="shape-style-attribute shape-style-attribute-select shape-style-attribute-stroke-linecap"
+                    data-attribute-name="stroke-linecap" data-operation="set">
+                    <option value="">(Clear)</option>
                     <option value="round">Rounded</option>
                     <option value="square">Straight (margin)</option>
                     <option value="butt">Straight (no margin)</option>
                 </select>
-                <button class="shape-style-attribute-button shape-style-attribute-linecap"
-                    data-attribute-name="line-end" data-operation="clear">C</button>
+                <button class="shape-style-attribute-button shape-style-attribute-stroke-linecap"
+                    data-attribute-name="stroke-linecap" data-operation="clear"
+                    title="Clear and use default value from icon">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-stroke">Color:</div>
-                <select id="shape-style-attribute-stroke" class="shape-style-attribute shape-style-attribute-select shape-style-attribute-stroke"
+                <select id="shape-style-attribute-stroke"
+                    class="shape-style-attribute shape-style-attribute-select shape-style-attribute-stroke"
                     data-attribute-name="stroke" data-operation="set">
-                    <option value=""></option>
+                    <option value="">(Clear)</option>
                     <option value="Aqua"> Aqua </option>
                     <option value="Black"> Black </option>
                     <option value="Blue"> Blue </option>
@@ -132,13 +139,13 @@
                     <option value="Yellow"> Yellow </option>
                 </select>
                 <button class="shape-style-attribute-button shape-style-attribute-stroke" data-attribute-name="stroke"
-                    data-operation="clear">C</button>
+                    data-operation="clear" title="Clear and use default value from icon">C</button>
 
                 <div class="shape-attribute-name shape-style-attribute-font">Font:</div>
                 <input type="text" id="shape-style-attribute-font" list="fontNames"
                     class="shape-style-attribute shape-style-attribute-font" />
                 <button class="shape-style-attribute-button shape-style-attribute-font" data-attribute-name="font"
-                    data-operation="clear">C</button>
+                    data-operation="clear" title="Clear and use default value from icon">C</button>
 
 
                 <!--

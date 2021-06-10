@@ -116,7 +116,7 @@ export class Line extends Shape {
         this.attributes.addNumeric(this, "dx", x2 - x1, -32);
         this.attributes.addNumeric(this, "dy", y2 - y1, -32);
 
-        this.style.addText(this, "linecap", undefined);
+        this.style.addText(this, "stroke-linecap", undefined);
     }
 
     copy() {

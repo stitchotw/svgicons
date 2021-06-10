@@ -100,7 +100,10 @@ function changeShapeAttribute(name, operation, value) {
 function changeShapeStyleAttribute(name, operation, value) {
     console.log(name, operation, value)
     const shape = icon.shapeFromId(currentlySelectedShapeId());
-    shape.svgStyle.get(name).update(operation   , value);
+    const attribute = shape.svgStyle.get(name);
+    if (!attribute)
+        console.trace("Attribute '" + name + "' not defiened");
+    attribute.update(operation, value);
 }
 
 // Global style attributes
@@ -188,7 +191,7 @@ class Attribute {
     }
 
     set(value) {
-        this.value = value? value: undefined;
+        this.value = value ? value : undefined;
     }
 
     update(operation, value) {
@@ -222,7 +225,7 @@ class Attribute {
             throw "Could not find id " + this.uiPrefix + this.name;
 
         if (!label.type) {
-            label.innerHTML = this.value === undefined ? "U/A" : this.value;
+            label.innerHTML = this.value === undefined ? "" : this.value;
         } else {
             label.value = this.value;
         }
