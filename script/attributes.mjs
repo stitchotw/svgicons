@@ -92,13 +92,11 @@ export function updateShapeAttributeValues() {
 
 
 function changeShapeAttribute(name, operation, value) {
-    console.log(name, operation, value)
     const shape = icon.shapeFromId(currentlySelectedShapeId());
     shape.svgAttributes.get(name).update(operation, value);
 }
 
 function changeShapeStyleAttribute(name, operation, value) {
-    console.log(name, operation, value)
     const shape = icon.shapeFromId(currentlySelectedShapeId());
     const attribute = shape.svgStyle.get(name);
     if (!attribute)
@@ -131,7 +129,7 @@ export class SVGData {
         this.data.forEach((attribute) => {
             const elements = document.getElementsByClassName(attribute.uiName);
             if (elements.length === 0)
-                console.warn("Could not find any UI elements for " + attribute.uiName);
+                console.trace("Could not find any UI elements for " + attribute.uiName);
             removeClass(elements, "hidden");
         });
 
