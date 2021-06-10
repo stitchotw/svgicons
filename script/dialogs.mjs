@@ -188,6 +188,11 @@ export function openPathDataDialog(data, listener) {
     return inputDialog.text;
 }
 
+export function openAddTextDialog(data, listener){
+     inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.", data, /.*\S+.*/, listener);
+     return inputDialog.text;
+}
+
 export function setUpDialogs() {
     // No need to save these in variables,
     // The listeners are enough

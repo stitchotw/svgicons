@@ -1,4 +1,5 @@
 import { openPolylineDataDialog, openPolygonDataDialog, openPathDataDialog } from './dialogs.mjs';
+import { openAddTextDialog } from './dialogs.mjs';
 import { StandardDialog } from './dialogs.mjs';
 import { icon } from './icon.mjs';
 
@@ -145,7 +146,11 @@ function addEventListeners() {
     });
 
     //Text
-    document.getElementById("add-text-button").addEventListener("click", () => { inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.", text => { icon.addText(text) }); });
+    document.getElementById("add-text-button").addEventListener("click", () => {
+        openAddTextDialog("", (data) => {
+            icon.addText(data);
+        });
+    });
     new AddSymbolDialog();
 }
 
