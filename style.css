@@ -288,6 +288,13 @@ select.icon-style-attribute, input[type="text"].icon-style-attribute,  input[typ
     overflow: auto;
 }
 
+.settings-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: var(--margin);
+    column-gap: var(--margin);
+}
+
 #add-symbol-dialog > .dialog-content {
     display: grid;
     grid-template-columns: minmax(100px, 50vw) auto;

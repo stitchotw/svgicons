@@ -11,6 +11,11 @@ class SettingsManager {
     constructor() {
         this.newIconSize = 32;
         this.defaultStyle = new Style(DEFAULT_COLOR);
+        this.helpTexts = true;
+    }
+
+    toggleHelpTexts(){
+
     }
 }
 
