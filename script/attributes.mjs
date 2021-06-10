@@ -223,7 +223,7 @@ class Attribute {
             throw "Could not find id " + this.uiPrefix + this.name;
 
         if (!label.type) {
-            label.innerHTML = this.value === undefined ? "" : this.value;
+            label.innerHTML = this.value === undefined ? "<div title='Icon default'>Id</div>" : this.value;
         } else {
             label.value = this.value;
         }
