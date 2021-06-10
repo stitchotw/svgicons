@@ -291,8 +291,8 @@ export class Polyline extends FilledShape {
     }
 
     updateSvg(svg, all) {
-        super.updateSvg(svg, all);
         svg.setAttribute("points", this.attributes.get("data").value);
+        super.updateSvg(svg, all);
     }
 
     get editFunction() {

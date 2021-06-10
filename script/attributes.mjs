@@ -284,8 +284,10 @@ class DataAttribute extends Attribute {
     }
 
     editData() {
-        this.item.editFunction(this.value, (data) => { this.value = data; });
-        this.updateUI();
+        this.item.editFunction(this.value, (data) => { 
+            this.value = data; 
+            this.updateUI();
+        });
     }
 
 }

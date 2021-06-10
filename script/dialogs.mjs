@@ -16,6 +16,10 @@ export class Dialog {
         document.getElementById(buttonId).addEventListener("click", listener);
     }
 
+    removeListener(buttonId, listener) {
+        document.getElementById(buttonId).removeEventListener("click", listener);
+    }
+
     open() {
         const dialog = document.getElementById(this.id);
         dialog.style.display = "grid";
@@ -105,14 +109,16 @@ class SaveIconDialog extends StandardDialog {
 class InputTextDialog extends Dialog {
     constructor() {
         super("input-text-dialog");
-        this.addListener("input-text-to-icon-button", evt => {
+        const listener = (evt) => {
             if (this.regex.test(this.text)) {
                 this.listener(this.text);
                 this.close();
             } else {
+                // TODO: Not displayed
                 this.error = "Must match " + this.regex;
             }
-        });
+        }
+        this.addListener("input-text-done-button", listener);
         this.addListener("cancel-input-text-dialog-button", evt => this.close());
     }
 
@@ -146,16 +152,16 @@ class InputTextDialog extends Dialog {
     }
 }
 
+const inputDialog = new InputTextDialog();
+
 // TODO: Are all exported things in this module necessary any longer?
 
 export function openPolylineDataDialog(data, listener) {
-    const inputDialog = new InputTextDialog();
     inputDialog.open("Polyline data", "At least two points separated by space or newline, e.g.: 1,1 2,2", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/, listener);
     return inputDialog.text;
 }
 
 export function openPolygonDataDialog(data, listener) {
-    const inputDialog = new InputTextDialog();
     inputDialog.open("Polygon data", "At least three points separated by space or newline, e.g.: 1,1 2,2 3,3", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/, listener);
     return inputDialog.text;
 }
@@ -176,7 +182,6 @@ export function openPathDataDialog(data, listener) {
 
     const all = "^" + initialpos.source + "(" + space.source + or(oneparam, twoparam, closepath, twoparamcurve, threeparamcurve, arc) + ")+$";
 
-    const inputDialog = new InputTextDialog();
     inputDialog.open("Path data",
         "It is easier to read the data if you put one command per line. Don't put any commas between commands. <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank' class='help-link' title='Opens in new tab/window'>developer.mozilla.org have a good introduction to path data.</a>",
         data, new RegExp(all), listener);
