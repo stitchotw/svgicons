@@ -31,6 +31,10 @@ input:hover, select:hover, button:hover {
     background-color: rgb(240, 240, 240);
 }
 
+ul {
+    text-align: initial;
+}
+
 .app{
     width: 100%;
     height: 100%;
