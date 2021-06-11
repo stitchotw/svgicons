@@ -13,11 +13,19 @@ export class Dialog {
     }
 
     addListener(buttonId, listener) {
-        document.getElementById(buttonId).addEventListener("click", listener);
+        const button = document.getElementById(buttonId);
+        if (button)
+            button.addEventListener("click", listener);
+        else
+            console.trace("No button with id: ", buttonId);
     }
 
     removeListener(buttonId, listener) {
-        document.getElementById(buttonId).removeEventListener("click", listener);
+        const button = document.getElementById(buttonId);
+        if (button)
+            button.removeEventListener("click", listener);
+        else
+            console.trace("No button with id: ", buttonId);
     }
 
     open() {
@@ -188,9 +196,9 @@ export function openPathDataDialog(data, listener) {
     return inputDialog.text;
 }
 
-export function openAddTextDialog(data, listener){
-     inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.", data, /.*\S+.*/, listener);
-     return inputDialog.text;
+export function openAddTextDialog(data, listener) {
+    inputDialog.open("Text to add", "Two or three characters is the most that is readable on an icon sized image.", data, /.*\S+.*/, listener);
+    return inputDialog.text;
 }
 
 export function setUpDialogs() {
@@ -200,6 +208,6 @@ export function setUpDialogs() {
     new SaveIconDialog();
     new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button", "clear-icon-button", () => { icon.clear(); });
     new StandardDialog("settings-dialog", "settings-button", "close-settings-dialog-button");
-    new StandardDialog("help-dialog", "help-button", "close-help-dialog-button");
+    new StandardDialog("about-dialog", "about-button", "close-about-dialog-button");
 
 }
