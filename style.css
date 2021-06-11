@@ -22,9 +22,13 @@ body {
 }
 
 input, select, button {
-    background-color: rgb(237, 237, 237);
+    background-color: rgb(225, 225, 225);
     border: 1px solid rgb(143, 143, 157);
     border-radius: 3px;
+}
+
+input:hover, select:hover, button:hover {
+    background-color: rgb(240, 240, 240);
 }
 
 .app{
