@@ -343,21 +343,29 @@ export class Text extends Shape {
     }
 }
 
-export class Polyline extends FilledShape {
+class ComplexShape extends FilledShape {
+
+    constructor(type, filled, data) {
+        super(type, filled);
+        this.attributes.addTextData(this, "data", data);
+    }
+
+    applyMove(dx, dy) {
+        return false;
+    }
+
+}
+
+export class Polyline extends ComplexShape {
 
     constructor(points) {
-        super("polyline", false);
-        this.attributes.addTextData(this, "data", points);
+        super("polyline", false, points);
     }
 
     copy() {
         const copy = new Polyline("");
         this.copyAttributesAndStyle(copy);
         return copy;
-    }
-
-    applyMove(dx, dy) {
-        return false;
     }
 
     updateSvg(svg, all) {
@@ -370,21 +378,16 @@ export class Polyline extends FilledShape {
     }
 }
 
-export class Polygon extends FilledShape {
+export class Polygon extends ComplexShape {
 
     constructor(points) {
-        super("polygon", true);
-        this.attributes.addTextData(this, "data", points);
+        super("polygon", true, points);
     }
 
     copy() {
         const copy = new Polygon("");
         this.copyAttributesAndStyle(copy);
         return copy;
-    }
-
-    applyMove(dx, dy) {
-        return false;
     }
 
     updateSvg(svg, all) {
@@ -398,21 +401,16 @@ export class Polygon extends FilledShape {
 
 }
 
-export class Path extends FilledShape {
+export class Path extends ComplexShape {
 
-    constructor(points) {
-        super("path", false);
-        this.attributes.addTextData(this, "data", points);
+    constructor(instructions) {
+        super("path", false, instructions);
     }
 
     copy() {
         const copy = new Path("");
         this.copyAttributesAndStyle(copy);
         return copy;
-    }
-
-    applyMove(dx, dy) {
-        return false;
     }
 
     updateSvg(svg, all) {
