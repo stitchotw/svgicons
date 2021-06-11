@@ -81,6 +81,22 @@ export class Shape {
     }
 
 
+    move(dx, dy) {
+        if (!this.applyMove(dx, dy)) {
+            alert("Could not move shape there")
+        }
+        this.updateUI();
+    }
+
+    // Might miss e.g. a large circle that just barely touches one corner
+    isInside(x1, y1, x2, y2) {
+        const left = x1 < 0 && x2 < 0;
+        const right = x1 >= 32 && x2 >= 32;
+        const above = y1 < 0 && y2 < 0;
+        const below = y1 >= 32 && y2 >= 32;
+        return !(left || right || above || below);
+    }
+
     /**
      * Only applies movement
      */
@@ -126,10 +142,18 @@ export class Line extends Shape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.attributes.get("x").add(dx);
-        this.attributes.get("y").add(dy);
-        this.updateUI();
+    applyMove(dx, dy) {
+        const x1 = this.attributes.get("x").value + dx;
+        const y1 = this.attributes.get("y").value + dy;
+        const x2 = this.attributes.get("x").value + this.attributes.get("dx").value + dx;
+        const y2 = this.attributes.get("y").value + this.attributes.get("dy").value + dy;
+        if (this.isInside(x1, y1, x2, y2)) {
+            this.attributes.get("x").value = x1;
+            this.attributes.get("y").value = y1;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     updateSvg(svg, all) {
@@ -155,10 +179,19 @@ export class Circle extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.attributes.get("x").add(dx);
-        this.attributes.get("y").add(dy);
-        this.updateUI();
+    applyMove(dx, dy) {
+        const r = this.attributes.get("size").value;
+        const x1 = this.attributes.get("x").value + dx - r;
+        const y1 = this.attributes.get("y").value + dy - r;
+        const x2 = x1 + r * 2;
+        const y2 = y1 + r * 2;
+        if (this.isInside(x1, y1, x2, y2)) {
+            this.attributes.get("x").add(dx);
+            this.attributes.get("y").add(dy);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     updateSvg(svg, all) {
@@ -185,10 +218,20 @@ export class Ellipse extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.attributes.get("x").add(dx);
-        this.attributes.get("y").add(dy);
-        this.updateUI();
+    applyMove(dx, dy) {
+        const rx = this.attributes.get("dx").value;
+        const ry = this.attributes.get("dy").value;
+        const x1 = this.attributes.get("x").value - rx + dx;
+        const y1 = this.attributes.get("y").value - ry + dy;
+        const x2 = x1 + rx * 2;
+        const y2 = y1 + ry * 2;
+        if (this.isInside(x1, y1, x2, y2)) {
+            this.attributes.get("x").add(dx);
+            this.attributes.get("y").add(dy);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     updateSvg(svg, all) {
@@ -217,10 +260,18 @@ export class Rectangle extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.attributes.get("x").add(dx);
-        this.attributes.get("y").add(dy);
-        this.updateUI();
+    applyMove(dx, dy) {
+        const x1 = this.attributes.get("x").value + dx;
+        const y1 = this.attributes.get("y").value + dy;
+        const x2 = this.attributes.get("x").value + this.attributes.get("dx").value + dx;
+        const y2 = this.attributes.get("y").value + this.attributes.get("dy").value + dy;
+        if (this.isInside(x1, y1, x2, y2)) {
+            this.attributes.get("x").value = x1;
+            this.attributes.get("y").value = y1;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     updateSvg(svg, all) {
@@ -252,10 +303,16 @@ export class Text extends Shape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.attributes.get("x").add(dx);
-        this.attributes.get("y").add(dy);
-        this.updateUI();
+    applyMove(dx, dy) {
+        const x = this.attributes.get("x").value + dx;
+        const y = this.attributes.get("y").value + dy;
+        if (this.isInside(x, y, x, y)) {
+            this.attributes.get("x").value = x;
+            this.attributes.get("y").value = y;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     updateSvg(svg, all) {
@@ -274,9 +331,9 @@ export class Text extends Shape {
         svg.replaceChildren(this.attributes.get("text").value);
     }
 
-    get fillColor(){
+    get fillColor() {
         let color = this.style.get("stroke").value;
-        if(!color) 
+        if (!color)
             color = icon.style.get("stroke").value;
         return color;
     }
@@ -299,8 +356,8 @@ export class Polyline extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.updateUI();
+    applyMove(dx, dy) {
+        return false;
     }
 
     updateSvg(svg, all) {
@@ -326,8 +383,8 @@ export class Polygon extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.updateUI();
+    applyMove(dx, dy) {
+        return false;
     }
 
     updateSvg(svg, all) {
@@ -354,8 +411,8 @@ export class Path extends FilledShape {
         return copy;
     }
 
-    move(dx, dy) {
-        this.updateUI();
+    applyMove(dx, dy) {
+        return false;
     }
 
     updateSvg(svg, all) {
