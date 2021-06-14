@@ -290,7 +290,7 @@ export class Text extends Shape {
         this.attributes.addTextData(this, "text", text);
         this.attributes.addNumeric(this, "x", x, 0);
         this.attributes.addNumeric(this, "y", y, 0);
-        this.attributes.addNumeric(this, "size", 20, 1);
+        this.attributes.addNumeric(this, "size", 20, 1, 50);
 
         this.style.get("stroke-width").set(1);
 
