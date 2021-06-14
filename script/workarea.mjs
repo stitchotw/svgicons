@@ -20,7 +20,7 @@ function addBackgroundToWorkarea() {
 }
 
 export function updateSvgStyle() {
-    workarea.setAttribute("style", icon.svgStyle.asText());
+    workarea.setAttribute("style", icon.svgStyle.asSvgStyle);
 }
 
 /*

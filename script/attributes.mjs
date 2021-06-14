@@ -155,7 +155,7 @@ export class SVGData {
         });
     }
 
-    asText() {
+    get asSvgStyle() {
         let data = "";
         this.data.forEach((attribute, name) => {
             if (attribute.value !== undefined) {
@@ -163,6 +163,18 @@ export class SVGData {
             }
         });
         return data;
+    }
+
+    get asObject(){
+        const obj = new Object();
+
+        this.data.forEach((attribute, name) => {
+            if (attribute.value !== undefined) {
+               obj[name]=attribute.value;
+            }
+        });
+
+        return obj;
     }
 
     addNumeric(item, name, value, min = 0, max = 32) {

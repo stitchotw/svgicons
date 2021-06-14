@@ -23,5 +23,11 @@ function setUpApp() {
 
     loadIconFromLocalStorage(CURRENT_ICON_ID);
 
-    window.onunload = (evt) => { saveIconToLocalStorage(CURRENT_ICON_ID); }
+    window.onunload = (evt) => { 
+        try {
+            saveIconToLocalStorage(CURRENT_ICON_ID); 
+        } catch (error) {
+            console.trace(error);
+        }
+    }
 }

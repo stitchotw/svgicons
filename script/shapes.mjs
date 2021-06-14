@@ -33,6 +33,14 @@ export class Shape {
         return this.style;
     }
 
+    get asObject(){
+        const obj = new Object();
+        obj.type = this.type;
+        obj.attributes = this.attributes.asObject;
+        obj.style = this.style.asObject;
+        return obj;
+    }
+
     copyAttributesAndStyle(copy) {
         copy.attributes.addAll(this.attributes);
         copy.style.addAll(this.style);
@@ -73,7 +81,7 @@ export class Shape {
     }
 
     updateSvg(svg) {
-        const style = this.svgStyle.asText();
+        const style = this.svgStyle.asSvgStyle;
         if (style)
             svg.setAttribute('style', style);
         else

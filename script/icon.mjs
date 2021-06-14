@@ -24,6 +24,19 @@ class Icon {
         this.style.addText(this, "fill", "none");
     }
 
+    get asObject() {
+        const obj = new Object();
+
+        obj.style = this.style.asObject;
+        obj.shapes = [];
+
+        this.shapes.forEach((shape, id) => {
+            obj.shapes.push(shape.asObject);
+        });
+
+        return obj;
+    }
+
     isEmpty() {
         return this.shapes.size === 0;
     }
@@ -39,7 +52,7 @@ class Icon {
 
     /* Style attributes */
 
-    updateUI(){
+    updateUI() {
         this.style.updateUI();
     }
 
@@ -61,7 +74,7 @@ class Icon {
 
     getNewSVGElement(width, height) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('style', this.style.asText());
+        svg.setAttribute('style', this.style.asSvgStyle);
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
         return svg;
