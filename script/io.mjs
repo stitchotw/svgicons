@@ -1,10 +1,14 @@
 // Load and save to local storage
 
+import { icon } from "./icon.mjs";
+
 export const CURRENT_ICON_ID = "_CURRENT_ICON_";
 
 export function saveIconToLocalStorage(id){
     const s = window.localStorage;
-    s.setItem(id, JSON.stringify(null));
+    s.setItem(id, JSON.stringify(Object.fromEntries(icon.shapes)));
+    console.log(icon.shapes);
+    console.log(s);
 }
 
 export function loadIconFromLocalStorage(id){
