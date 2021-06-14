@@ -106,44 +106,53 @@ class Icon {
         this.shapes.delete(id);
     }
 
-    addLine(x1, y1, x2, y2) {
+    // Default attributes simplify loading since there is always valid values for the attributes
+    addLine(x1 = 0, y1 = 0, x2 = 1, y2 = 1) {
         const shape = new Line(x1, y1, x2, y2);
         this.addShape(shape);
+        return shape;
     }
 
-    addCircle(cx, cy, r, filled) {
+    addCircle(cx = 0, cy = 0, r = 1, filled = false) {
         const shape = new Circle(cx, cy, r, filled);
         this.addShape(shape);
+        return shape;
     }
 
-    addEllipse(cx, cy, rx, ry, filled) {
+    addEllipse(cx = 1, cy = 1, rx = 1, ry = 1, filled = false) {
         const shape = new Ellipse(cx, cy, rx, ry, filled);
         this.addShape(shape);
+        return shape;
     }
 
-    addRectangle(x, y, width, height, filled) {
+    addRectangle(x = 0, y = 0, width = 1, height = 1, filled = false) {
         const shape = new Rectangle(x, y, width, height, filled);
         this.addShape(shape);
+        return shape;
     }
 
-    addText(text) {
+    addText(text = "NOT SET") {
         const shape = new Text(text, 16, 16);
         this.addShape(shape);
+        return shape;
     }
 
-    addPolyline(data) {
+    addPolyline(data = "1,1 2,2") {
         const shape = new Polyline(data);
         this.addShape(shape);
+        return shape;
     }
 
-    addPolygon(data) {
+    addPolygon(data = "1,1 1,2 2,2") {
         const shape = new Polygon(data);
         this.addShape(shape);
+        return shape;
     }
 
-    addPath(data) {
+    addPath(data = "M 0 0 L 1 1") {
         const shape = new Path(data);
         this.addShape(shape);
+        return shape;
     }
 
 }
