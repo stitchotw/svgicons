@@ -1,6 +1,7 @@
 // TODO: Are all exported things in this module necessary any longer?
 
 import { icon } from './icon.mjs';
+import { clearIconsInLocalStorage } from './io.mjs';
 import { loadIconFromLocalStorage } from './io.mjs';
 import { saveIconToLocalStorage } from './io.mjs';
 
@@ -128,11 +129,22 @@ class NewIconDialog extends StandardDialog {
     }
 
     loadIconFromLocalStorage(id) {
-        if(!loadIconFromLocalStorage(id)){ /* from io.mjs */
+        if (!loadIconFromLocalStorage(id)) { /* from io.mjs */
             alert("No template saved in this slot");
         }
     }
 
+}
+
+class SettingsDialog extends StandardDialog {
+    constructor() {
+        super("settings-dialog", "settings-button", "close-settings-dialog-button");
+        this.addListener("help-text-setting-button", evt => { });
+        this.addListener("clear-local-storage-setting-button", evt => { 
+            clearIconsInLocalStorage(); 
+            alert("All icons in local storage have been removed");
+        });
+    }
 }
 
 class InputTextDialog extends Dialog {
@@ -276,7 +288,7 @@ export function setUpDialogs() {
 
     new SaveIconDialog();
     new NewIconDialog();
-    new StandardDialog("settings-dialog", "settings-button", "close-settings-dialog-button");
+    new SettingsDialog();
     new StandardDialog("about-dialog", "about-button", "close-about-dialog-button");
 
 }

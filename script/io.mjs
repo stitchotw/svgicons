@@ -61,7 +61,7 @@ export function loadIconFromLocalStorage(id) {
 }
 
 export function clearIconsInLocalStorage() {
-    for (const id in ICON_IDS) {
+    for (const id of ICON_IDS) {
         clearIconInLocalStorage(id);
     }
 }
