@@ -139,7 +139,12 @@ class NewIconDialog extends StandardDialog {
 class SettingsDialog extends StandardDialog {
     constructor() {
         super("settings-dialog", "settings-button", "close-settings-dialog-button");
-        this.addListener("help-text-setting-button", evt => { });
+        this.addListener("help-text-setting-button", evt => { 
+            const texts = document.getElementsByClassName("help-text");
+            for(const text of texts){
+                text.classList.toggle("hidden");
+            }
+        });
         this.addListener("clear-local-storage-setting-button", evt => { 
             clearIconsInLocalStorage(); 
             alert("All icons in local storage have been removed");
