@@ -53,14 +53,14 @@ function addLineButton(parentId, caption, px, py) {
 }
 
 function addCircleButton(parentId, caption, p, filled) {
-    const imageSrc = `./img/add-circle-${p}${filled ? "-filled" : ""}.svg`;
+    const imageSrc = `./img/add-circle-${p}${filled !== "none" ? "-filled" : ""}.svg`;
     const r = size(p / 2);
 
     addButton(parentId, caption, imageSrc, () => icon.addCircle(16, 16, r, filled));
 }
 
 function addEllipseButton(parentId, caption, px, py, filled) {
-    const imageSrc = `./img/add-ellipse-${px}-${py}${filled ? "-filled" : ""}.svg`;
+    const imageSrc = `./img/add-ellipse-${px}-${py}${filled !== "none" ? "-filled" : ""}.svg`;
     const rx = length(px / 2);
     const ry = length(py / 2);
 
@@ -68,7 +68,7 @@ function addEllipseButton(parentId, caption, px, py, filled) {
 }
 
 function addRectangleButton(parentId, caption, pw, ph, filled) {
-    const imageSrc = `./img/add-rectangle-${pw}-${ph}${filled ? "-filled" : ""}.svg`;
+    const imageSrc = `./img/add-rectangle-${pw}-${ph}${filled !== "none" ? "-filled" : ""}.svg`;
 
     const x = start(0);
     const y = start(0);
@@ -96,37 +96,37 @@ function addEventListeners() {
     addLineButton("diagonal-right-to-left-add-line-buttons", "Long", -100, 100);
 
     // Circles
-    addCircleButton("add-filled-circle-buttons", "Small", 5, true);
-    addCircleButton("add-filled-circle-buttons", "Medium", 50, true);
-    addCircleButton("add-filled-circle-buttons", "Large", 100, true);
+    addCircleButton("add-filled-circle-buttons", "Small", 5, "Black");
+    addCircleButton("add-filled-circle-buttons", "Medium", 50, "Black");
+    addCircleButton("add-filled-circle-buttons", "Large", 100, "Black");
 
-    addCircleButton("add-not-filled-circle-buttons", "Small", 5, false);
-    addCircleButton("add-not-filled-circle-buttons", "Medium", 50, false);
-    addCircleButton("add-not-filled-circle-buttons", "Large", 100, false);
+    addCircleButton("add-not-filled-circle-buttons", "Small", 5, "none");
+    addCircleButton("add-not-filled-circle-buttons", "Medium", 50, "none");
+    addCircleButton("add-not-filled-circle-buttons", "Large", 100, "none");
 
     // Ellipses
-    addEllipseButton("add-filled-horizontal-ellipse-buttons", "Medium", 50, 25, true);
-    addEllipseButton("add-filled-horizontal-ellipse-buttons", "Large", 100, 50, true);
-    addEllipseButton("add-filled-vertical-ellipse-buttons", "Medium", 25, 50, true);
-    addEllipseButton("add-filled-vertical-ellipse-buttons", "Large", 50, 100, true);
+    addEllipseButton("add-filled-horizontal-ellipse-buttons", "Medium", 50, 25, "Black");
+    addEllipseButton("add-filled-horizontal-ellipse-buttons", "Large", 100, 50, "Black");
+    addEllipseButton("add-filled-vertical-ellipse-buttons", "Medium", 25, 50, "Black");
+    addEllipseButton("add-filled-vertical-ellipse-buttons", "Large", 50, 100, "Black");
 
-    addEllipseButton("add-not-filled-horizontal-ellipse-buttons", "Medium", 50, 25, false);
-    addEllipseButton("add-not-filled-horizontal-ellipse-buttons", "Large", 100, 50, false);
-    addEllipseButton("add-not-filled-vertical-ellipse-buttons", "Medium", 25, 50, false);
-    addEllipseButton("add-not-filled-vertical-ellipse-buttons", "Large", 50, 100, false);
+    addEllipseButton("add-not-filled-horizontal-ellipse-buttons", "Medium", 50, 25, "none");
+    addEllipseButton("add-not-filled-horizontal-ellipse-buttons", "Large", 100, 50, "none");
+    addEllipseButton("add-not-filled-vertical-ellipse-buttons", "Medium", 25, 50, "none");
+    addEllipseButton("add-not-filled-vertical-ellipse-buttons", "Large", 50, 100, "none");
 
     // Rectangels
-    addRectangleButton("add-filled-rectangle-buttons", "Small", 25, 25, true);
-    addRectangleButton("add-filled-rectangle-buttons", "Medium", 50, 50, true);
-    addRectangleButton("add-filled-rectangle-buttons", "Large", 100, 100, true);
-    addRectangleButton("add-filled-half-rectangle-buttons", "Half", 100, 50, true);
-    addRectangleButton("add-filled-half-rectangle-buttons", "Half", 50, 100, true);
+    addRectangleButton("add-filled-rectangle-buttons", "Small", 25, 25, "Black");
+    addRectangleButton("add-filled-rectangle-buttons", "Medium", 50, 50, "Black");
+    addRectangleButton("add-filled-rectangle-buttons", "Large", 100, 100, "Black");
+    addRectangleButton("add-filled-half-rectangle-buttons", "Half", 100, 50, "Black");
+    addRectangleButton("add-filled-half-rectangle-buttons", "Half", 50, 100, "Black");
 
-    addRectangleButton("add-not-filled-rectangle-buttons", "Small", 25, 25, false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "Medium", 50, 50, false);
-    addRectangleButton("add-not-filled-rectangle-buttons", "Large", 100, 100, false);
-    addRectangleButton("add-not-filled-half-rectangle-buttons", "Half", 100, 50, false);
-    addRectangleButton("add-not-filled-half-rectangle-buttons", "Half", 50, 100, false);
+    addRectangleButton("add-not-filled-rectangle-buttons", "Small", 25, 25, "none");
+    addRectangleButton("add-not-filled-rectangle-buttons", "Medium", 50, 50, "none");
+    addRectangleButton("add-not-filled-rectangle-buttons", "Large", 100, 100, "none");
+    addRectangleButton("add-not-filled-half-rectangle-buttons", "Half", 100, 50, "none");
+    addRectangleButton("add-not-filled-half-rectangle-buttons", "Half", 50, 100, "none");
 
     // Complex shapes
     document.getElementById("add-polyline-button").addEventListener("click", () => {

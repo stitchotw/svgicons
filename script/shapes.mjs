@@ -33,7 +33,7 @@ export class Shape {
         return this.style;
     }
 
-    get asObject(){
+    get asObject() {
         const obj = new Object();
         obj.type = this.type;
         obj.attributes = this.attributes.asObject;
@@ -123,10 +123,14 @@ export class Shape {
 }
 
 export class FilledShape extends Shape {
-    constructor(type, filled) {
+    /**
+     * @param type name of the shape type
+     * @param fill a color name, "none", or undefined for icon default
+     */
+    constructor(type, fill) {
         super(type);
-        this.style.addText(this, "fill", filled ? "Black" : "none");
-        if (filled)
+        this.style.addText(this, "fill", fill);
+        if (fill === "Black")
             this.style.get("stroke-width").value = 1;
     }
 }

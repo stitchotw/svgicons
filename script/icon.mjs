@@ -113,19 +113,19 @@ class Icon {
         return shape;
     }
 
-    addCircle(cx = 0, cy = 0, r = 1, filled = false) {
+    addCircle(cx = 0, cy = 0, r = 1, filled = undefined) {
         const shape = new Circle(cx, cy, r, filled);
         this.addShape(shape);
         return shape;
     }
 
-    addEllipse(cx = 1, cy = 1, rx = 1, ry = 1, filled = false) {
+    addEllipse(cx = 1, cy = 1, rx = 1, ry = 1, filled = undefined) {
         const shape = new Ellipse(cx, cy, rx, ry, filled);
         this.addShape(shape);
         return shape;
     }
 
-    addRectangle(x = 0, y = 0, width = 1, height = 1, filled = false) {
+    addRectangle(x = 0, y = 0, width = 1, height = 1, filled = undefined) {
         const shape = new Rectangle(x, y, width, height, filled);
         this.addShape(shape);
         return shape;
