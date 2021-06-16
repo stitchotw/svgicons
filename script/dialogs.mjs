@@ -1,10 +1,8 @@
-/*
- * 
- */
+// TODO: Are all exported things in this module necessary any longer?
 
 import { icon } from './icon.mjs';
-
-// TODO: possibly switch on constant names instead, or maybe a map or object?
+import { loadIconFromLocalStorage } from './io.mjs';
+import { saveIconToLocalStorage } from './io.mjs';
 
 export class Dialog {
 
@@ -39,7 +37,7 @@ export class Dialog {
     }
 }
 
-export class StandardDialog extends Dialog {
+class StandardDialog extends Dialog {
 
     constructor(id, openButtonId, closeButtonId, actionButtonId, actionButtonListener) {
         super(id);
@@ -56,6 +54,9 @@ export class StandardDialog extends Dialog {
 class SaveIconDialog extends StandardDialog {
     constructor() {
         super("save-icon-dialog", "save-icon-button", "close-save-icon-dialog-button");
+        this.addListener("save-icon-1-to-local-button", evt => saveIconToLocalStorage(evt.target.dataset.id));
+        this.addListener("save-icon-2-to-local-button", evt => saveIconToLocalStorage(evt.target.dataset.id));
+        this.addListener("save-icon-3-to-local-button", evt => saveIconToLocalStorage(evt.target.dataset.id));
         this.addListener("save-icon-to-file-button", evt => this.saveIconToFile());
         this.addListener("copy-icon-to-clipboard-button", evt => this.copyIconToClipobard());
     }
@@ -114,6 +115,26 @@ class SaveIconDialog extends StandardDialog {
     }
 }
 
+class NewIconDialog extends StandardDialog {
+    // new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button", "clear-icon-button", () => { icon.clear(); });
+
+    constructor() {
+        super("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button");
+        this.addListener("clear-icon-button", () => { icon.clear(); });
+        this.addListener("load-icon-1-from-local-button", evt => this.loadIconFromLocalStorage(evt.target.dataset.id));
+        this.addListener("load-icon-2-from-local-button", evt => this.loadIconFromLocalStorage(evt.target.dataset.id));
+        this.addListener("load-icon-3-from-local-button", evt => this.loadIconFromLocalStorage(evt.target.dataset.id));
+
+    }
+
+    loadIconFromLocalStorage(id) {
+        if(!loadIconFromLocalStorage(id)){ /* from io.mjs */
+            alert("No template saved in this slot");
+        }
+    }
+
+}
+
 class InputTextDialog extends Dialog {
     constructor() {
         super("input-text-dialog");
@@ -160,9 +181,53 @@ class InputTextDialog extends Dialog {
     }
 }
 
-const inputDialog = new InputTextDialog();
 
-// TODO: Are all exported things in this module necessary any longer?
+class AddSymbolDialog extends StandardDialog {
+
+    constructor() {
+        super("add-symbol-dialog", "add-symbol-button", "cancel-add-symbol-dialog-button");
+
+        this.addSectionToDialog("Common", "!?%#+*");
+        this.addSectionToDialog("Random", "†‡%‰‱‽⁋⁜※⁂");
+    }
+
+    addSectionToDialog(name, symbols) {
+        const parent = document.getElementById("select-symbol-panel");
+
+        const header = document.createElement("h2");
+        header.textContent = name;
+        parent.appendChild(header);
+
+        const content = document.createElement("div");
+        parent.appendChild(content);
+
+        for (const c of symbols) {
+            const button = document.createElement("button");
+            button.classList.add("symbol-button");
+            button.innerText = c;
+            button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
+            button.addEventListener("mouseover", evt => this.updatePreview(evt.target));
+            content.appendChild(button);
+        }
+    }
+
+    addSymbolToIcon(button) {
+        icon.addText(button.innerText);
+        this.close();
+    }
+
+    updatePreview(button) {
+        const symbol = button.innerText;
+        if (symbol !== this.preview) {
+            this.preview = symbol;
+            const previews = document.getElementsByClassName("symbol-preview");
+            for (const p of previews) {
+                p.innerText = symbol;
+            }
+        }
+    }
+
+}
 
 export function openPolylineDataDialog(data, listener) {
     inputDialog.open("Polyline data", "At least two points separated by space or newline, e.g.: 1,1 2,2", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/, listener);
@@ -201,12 +266,16 @@ export function openAddTextDialog(data, listener) {
     return inputDialog.text;
 }
 
+const inputDialog = new InputTextDialog();
+
 export function setUpDialogs() {
     // No need to save these in variables,
     // The listeners are enough
 
+    new AddSymbolDialog();
+
     new SaveIconDialog();
-    new StandardDialog("new-icon-dialog", "new-icon-button", "close-new-icon-dialog-button", "clear-icon-button", () => { icon.clear(); });
+    new NewIconDialog();
     new StandardDialog("settings-dialog", "settings-button", "close-settings-dialog-button");
     new StandardDialog("about-dialog", "about-button", "close-about-dialog-button");
 

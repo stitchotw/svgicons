@@ -7,9 +7,9 @@ import { setUpDialogs } from './dialogs.mjs';
 import { setUpAttributes } from './attributes.mjs';
 import { setUpWorkArea } from './workarea.mjs';
 import { setUpShapeLibrary } from './shapelibrary.mjs';
-import { loadIconFromLocalStorage } from './io.mjs';
 import { CURRENT_ICON_ID } from './io.mjs';
 import { saveIconToLocalStorage } from './io.mjs';
+import { loadIconFromLocalStorage } from './io.mjs';
 
 setUpApp();
 

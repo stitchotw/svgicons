@@ -1,6 +1,5 @@
 import { openPolylineDataDialog, openPolygonDataDialog, openPathDataDialog } from './dialogs.mjs';
 import { openAddTextDialog } from './dialogs.mjs';
-import { StandardDialog } from './dialogs.mjs';
 import { icon } from './icon.mjs';
 
 export function setUpShapeLibrary() {
@@ -151,52 +150,6 @@ function addEventListeners() {
             icon.addText(data);
         });
     });
-    new AddSymbolDialog();
-}
 
-class AddSymbolDialog extends StandardDialog {
-
-    constructor() {
-        super("add-symbol-dialog", "add-symbol-button", "cancel-add-symbol-dialog-button");
-
-        this.addSectionToDialog("Common", "!?%#+*");
-        this.addSectionToDialog("Random", "†‡%‰‱‽⁋⁜※⁂");
-    }
-
-    addSectionToDialog(name, symbols) {
-        const parent = document.getElementById("select-symbol-panel");
-
-        const header = document.createElement("h2");
-        header.textContent = name;
-        parent.appendChild(header);
-
-        const content = document.createElement("div");
-        parent.appendChild(content);
-
-        for (const c of symbols) {
-            const button = document.createElement("button");
-            button.classList.add("symbol-button");
-            button.innerText = c;
-            button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
-            button.addEventListener("mouseover", evt => this.updatePreview(evt.target));
-            content.appendChild(button);
-        }
-    }
-
-    addSymbolToIcon(button) {
-        icon.addText(button.innerText);
-        this.close();
-    }
-
-    updatePreview(button) {
-        const symbol = button.innerText;
-        if (symbol !== this.preview) {
-            this.preview = symbol;
-            const previews = document.getElementsByClassName("symbol-preview");
-            for (const p of previews) {
-                p.innerText = symbol;
-            }
-        }
-    }
-
+    // Symbol dialog added in Dialogs
 }
