@@ -267,7 +267,7 @@ export function openPolylineDataDialog(data, listener) {
 }
 
 export function openPolygonDataDialog(data, listener) {
-    inputDialog.open("Polygon data", "At least three points separated by space or newline, e.g.: 1,1 2,2 3,3", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/, listener);
+    inputDialog.open("Polygon data", "At least three points separated by space or newline.<br>The latter makes it easier to read.<br>Example: 5,5 16,5 16,16 27,16 27,27", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+){2,}$/, listener);
     return inputDialog.text;
 }
 
