@@ -90,8 +90,10 @@ export class Shape {
 
 
     move(dx, dy) {
+        if (dx === 0 && dy === 0)
+            return;
         if (!this.applyMove(dx, dy)) {
-            alert("Could not move shape there")
+            alert("Could not move shape there");
         }
         this.updateUI();
     }
