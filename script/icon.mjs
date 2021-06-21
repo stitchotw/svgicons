@@ -10,7 +10,10 @@ import { Polygon } from './shapes.mjs';
 import { Path } from './shapes.mjs';
 import { Ellipse } from './shapes.mjs';
 
+const DEFAULT_STROKE="Black";
 const DEFAULT_STROKE_WIDTH = 3;
+const DEFAULT_STROKE_LINECAP="round";
+const DEFAULT_FILL = "none";
 
 class Icon {
 
@@ -18,10 +21,10 @@ class Icon {
         this.shapes = new Map();
         this.style = new SVGData("icon-style-attribute-");
 
-        this.style.addText(this, "stroke", "Black");
+        this.style.addText(this, "stroke", DEFAULT_STROKE);
         this.style.addNumeric(this, "stroke-width", DEFAULT_STROKE_WIDTH, 1);
-        this.style.addText(this, "stroke-linecap", "round");
-        this.style.addText(this, "fill", "none");
+        this.style.addText(this, "stroke-linecap", DEFAULT_STROKE_LINECAP);
+        this.style.addText(this, "fill", DEFAULT_FILL);
     }
 
     get asObject() {
@@ -48,6 +51,15 @@ class Icon {
             var element = document.getElementById(id);
             element.parentNode.removeChild(element);
         }
+    }
+
+    resetStyleToDefault(){
+        this.style.get("stroke").value=DEFAULT_STROKE;
+        this.style.get("stroke-width").value=DEFAULT_STROKE_WIDTH;
+        this.style.get("stroke-linecap").value=DEFAULT_STROKE_LINECAP;
+        this.style.get("fill").value=DEFAULT_FILL;
+
+        this.updateUI();
     }
 
     /* Style attributes */
