@@ -1,11 +1,17 @@
 // TODO: Are all exported things in this module necessary any longer?
 
 import { icon } from './icon.mjs';
+import { readBooleanSetting } from './io.mjs';
+import { saveBooleanSetting } from './io.mjs';
 import { clearIconsInLocalStorage } from './io.mjs';
 import { loadIconFromLocalStorage } from './io.mjs';
 import { saveIconToLocalStorage } from './io.mjs';
 
+const HIDE_HELP_TEXT = "hide help text";
+
 export class Dialog {
+
+
 
     constructor(id) {
         this.id = id;
@@ -140,10 +146,7 @@ class SettingsDialog extends StandardDialog {
     constructor() {
         super("settings-dialog", "settings-button", "close-settings-dialog-button");
         this.addListener("help-text-setting-button", evt => {
-            const texts = document.getElementsByClassName("help-text");
-            for (const text of texts) {
-                text.classList.toggle("hidden");
-            }
+            this.toggleHelpText();
         });
         this.addListener("clear-local-storage-setting-button", evt => {
             clearIconsInLocalStorage();
@@ -152,6 +155,15 @@ class SettingsDialog extends StandardDialog {
         this.addListener("reset-icon-default-values-button", evt => {
             icon.resetStyleToDefault();
         });
+    }
+
+    toggleHelpText() {
+        const texts = document.getElementsByClassName("help-text");
+        for (const text of texts) {
+            text.classList.toggle("hidden");
+        }
+        const hidden = texts[0].classList.contains("hidden");
+        saveBooleanSetting(HIDE_HELP_TEXT, hidden);
     }
 }
 
@@ -294,14 +306,17 @@ export function openAddSymbolCodeDialog(data, listener) {
 const inputDialog = new InputTextDialog();
 
 export function setUpDialogs() {
-    // No need to save these in variables,
-    // The listeners are enough
+    // No need to save most of these in variables.
+    // The listeners are usually enough
 
     new AddSymbolDialog();
 
     new SaveIconDialog();
     new NewIconDialog();
-    new SettingsDialog();
+    const settings = new SettingsDialog();
     new StandardDialog("about-dialog", "about-button", "close-about-dialog-button");
+
+    if (readBooleanSetting(HIDE_HELP_TEXT))
+        settings.toggleHelpText();
 
 }

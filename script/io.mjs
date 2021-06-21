@@ -70,3 +70,16 @@ export function clearIconInLocalStorage(id) {
     const s = window.localStorage;
     s.removeItem(id);
 }
+
+export function readBooleanSetting(name) {
+    const s = window.localStorage;
+    return s.getItem(name) === "true";
+}
+
+export function saveBooleanSetting(name, set) {
+    const s = window.localStorage;
+    if (set)
+        s.setItem(name, "true");
+    else
+        s.removeItem(name);
+}
