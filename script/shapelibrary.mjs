@@ -1,5 +1,5 @@
 import { openPolylineDataDialog, openPolygonDataDialog, openPathDataDialog } from './dialogs.mjs';
-import { openAddTextDialog } from './dialogs.mjs';
+import { openAddTextDialog, openAddSymbolCodeDialog } from './dialogs.mjs';
 import { icon } from './icon.mjs';
 
 export function setUpShapeLibrary() {
@@ -152,4 +152,13 @@ function addEventListeners() {
     });
 
     // Symbol dialog added in Dialogs
+
+    document.getElementById("add-symbol-code-button").addEventListener("click", () => {
+        openAddSymbolCodeDialog("", (data) => {
+            const decimalValue = parseInt(data, 16);
+            const char = String.fromCharCode(decimalValue);
+            icon.addText(char);
+        });
+    });
+
 }

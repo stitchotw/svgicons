@@ -283,6 +283,11 @@ export function openAddTextDialog(data, listener) {
     return inputDialog.text;
 }
 
+export function openAddSymbolCodeDialog(data, listener) {
+    inputDialog.open("Add symbol code", "A hex number representing the unicode code", data, /[0-9a-fA-F]+/, listener);
+    return inputDialog.text;
+}
+
 const inputDialog = new InputTextDialog();
 
 export function setUpDialogs() {
