@@ -357,8 +357,8 @@ export class Text extends Shape {
 
 class ComplexShape extends FilledShape {
 
-    constructor(type, filled, data) {
-        super(type, filled);
+    constructor(type, data) {
+        super(type, "none");
         this.attributes.addTextData(this, "data", data);
     }
 
@@ -371,7 +371,7 @@ class ComplexShape extends FilledShape {
 export class Polyline extends ComplexShape {
 
     constructor(points) {
-        super("polyline", false, points);
+        super("polyline", points);
     }
 
     copy() {
@@ -393,7 +393,7 @@ export class Polyline extends ComplexShape {
 export class Polygon extends ComplexShape {
 
     constructor(points) {
-        super("polygon", true, points);
+        super("polygon", points);
     }
 
     copy() {
@@ -416,7 +416,7 @@ export class Polygon extends ComplexShape {
 export class Path extends ComplexShape {
 
     constructor(instructions) {
-        super("path", false, instructions);
+        super("path", instructions);
     }
 
     copy() {
