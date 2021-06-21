@@ -262,7 +262,7 @@ class AddSymbolDialog extends StandardDialog {
 }
 
 export function openPolylineDataDialog(data, listener) {
-    inputDialog.open("Polyline data", "At least two points separated by space or newline, e.g.: 1,1 2,2", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/, listener);
+    inputDialog.open("Polyline data", "At least two points separated by space or newline.<br>The latter makes it easier to read.<br>Example: 5,5 16,5 16,16 27,16 27,27", data, /^\d+[\s]*[,][\s]*\d+([\s]+\d+[\s]*[,][\s]*\d+)+$/, listener);
     return inputDialog.text;
 }
 
