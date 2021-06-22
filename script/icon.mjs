@@ -70,6 +70,9 @@ class Icon {
 
     updateSvgUI() {
         updateSvgStyle();
+        for (const [id, shape] of this.shapes) {
+            shape.updateSvgUI();
+        }
     }
 
     get svgStyle() {
