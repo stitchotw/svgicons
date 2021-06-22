@@ -58,12 +58,12 @@ h1 {
     filter: drop-shadow(0 0 2px Chartreuse);
 }
 
-.workarea-container, .shape-library {
+#workarea-container, .shape-library {
     padding-left: var(--margin);
     padding-right: var(--margin);
 }
 
-.workarea-container {
+#workarea-container {
     width: min-content;
     height: min-content;
     padding: var(--margin);

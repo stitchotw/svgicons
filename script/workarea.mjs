@@ -112,6 +112,12 @@ export function addUIShape(shape) {
     selectShape(element);
 }
 
+export function moveCurrentlySelectedShape(dx, dy) {
+    if (selectedShape) {
+        icon.moveShapeById(selectedShape.id, dx, dy);
+    }
+}
+
 export function deleteCurrentlySelectedShape() {
     if (selectedShape) {
         icon.deleteShapeById(selectedShape.id);
