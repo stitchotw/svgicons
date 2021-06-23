@@ -321,6 +321,10 @@ select.icon-style-attribute, input[type="text"].icon-style-attribute,  input[typ
     grid-column: 1 / -1;
 }
 
+#select-symbol-panel div {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 #selectable-symbols {
     max-height: 30vh;

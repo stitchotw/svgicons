@@ -219,27 +219,54 @@ class AddSymbolDialog extends StandardDialog {
     constructor() {
         super("add-symbol-dialog", "add-symbol-button", "cancel-add-symbol-dialog-button");
 
-        this.addSectionToDialog("Common", "!?%#+*");
-        this.addSectionToDialog("Random", "†‡%‰‱‽⁋⁜※⁂");
+        this.addSectionToDialog("Functions", "↶↷", "☼⚙", "⎗⎘", "☐☑☒", "✓✔", "✗✘", "♲♺♻", "⛶", "✀✁✂✃✄", "✆", "✉");
+        this.addSectionToDialog("Common", "×»", "#%&", "@©®§¶❡", "℅℃℉™");
+        this.addSectionToDialog("Punctuation marks", "!❕¡❢❣‼", "?❓¿", "‽", ":;");
+        this.addSectionToDialog("Arrows", "←↑→↓", "⊲⊳", "⇤⇥", "⇠⇡⇢⇣", "↴↵", "↔↕", "↢↣", "↤↥↦↧", "☇↯", "↺↻", "↶↷", "↫↬", "↰↱↲↳", "↜↝", "⇄⇅⇆", "⇇⇈⇉⇊", "≪≫", "☚☛", "☜☝☞☟", "➔➘➙➚", "➛", "➜", "➝➞➟➠", "➡", "➢➣", "➤", "➥➦", "➧➨", "➳", "➴➵➶", "➷➸➹", "➺➻➼➽", "➾");
+        this.addSectionToDialog("Math/logic", "+-*/", "%", "<=≠>", "≤≥", "∼≃≈≉", "±∓", "×•∘∙", "÷", "∞", "%‰‱", "πΔΣΩ", "∀∃", "∧∨", "∩∪", "∆∇", "∈∉", "∏∑");
+        this.addSectionToDialog("Misc symbols", "∢⊾⊿⎌", "⋈⌀⌽⌾", "☼⎈☸", "⎊⎋", "☈↯⚿");
+        this.addSectionToDialog("Technical", "⌨🖥💻", "☎☏✆", "✇", "✈");
+        this.addSectionToDialog("Weather", "☀", "⛅☁", "☂☔⛈⛆", "☃⛄⛇", "☄");
+        this.addSectionToDialog("Food", "☕♨⛾");
+        this.addSectionToDialog("Plants", "☘☙❦❧⚘⚜");
+        this.addSectionToDialog("Symbols", "☠☢☣⚛", "☤⚕⚚", "♿", "✉", "⚐⚑⛿", "⚒⚓⚔⚖⛏⚱⛓⚡", "⛨⛪");
+        this.addSectionToDialog("Traffic", "⛟⛽⚠⛍⛐⛔⛕⛗⛛");
+        this.addSectionToDialog("Sport and recreation", "⚽⚾", "⛷⛸⛹", "⛺⛳", "⛱⛲", "⛴⛵");
+        this.addSectionToDialog("Pens", "✎✏✐", "✑✒", "✍");
+        this.addSectionToDialog("Religous and political", "†‡♰♱", "☦☧☨☩", "✙✚✛✜✝✞✟✠", "✡", "☪", "☫", "☬", "☥", "☭☮☯");
+        this.addSectionToDialog("Human", "☺☻", "☹", "⚆⚇", "⚈⚉", "♀♂", "⚢⚣", "⚤⚥", "⛑", "✊✋✌");
+        this.addSectionToDialog("Zodiak, etc.", "♁☿", "♃♄♅♆♇", "♈♉♊♋", "♌♍♎♏", "♐♑♒♓");
+        this.addSectionToDialog("Decorations", "⚹⁕⁑⁂", "⋅⋄⋆❖", "⊹⁜⋇⋈", "∞", "∻∼∾∿", "⅏", "☙❦❧", "⚜", "❤❥", "∴⛬∵⁖", "∷⁘⁙⁛", "∶⁚", "⋮⁝⁞", "⋯⋰⋱", "⌾☼⚙⎈");
+        this.addSectionToDialog("Stars/flowers/etc", "∗⋆★☆⍟", "✦✧✨", "✩⛤⛧⚝", "✪", "✫✬✭✮✯✰", "✱✲✳✴", "✢✣✤✥", "✵✶✷✸✹✺", "✻✼✽✾", "✿❀❁❂❃", "❄❅❆", "❈❉❊❋", "☽☾");
+        this.addSectionToDialog("Chess", "♔♕♖♗♘♙", "♚♛♜♝♞♟");
+        this.addSectionToDialog("Cards", "♠♡♢♣", "♤♥♦♧");
+        this.addSectionToDialog("Music", "♩♪", "♫♬", "♭♮♯");
+        this.addSectionToDialog("Dice", "⚀⚁⚂", "⚃⚄⚅");
+        this.addSectionToDialog("Currency", "$€£", "¢¤¥₠₡", "₢₣₤₥₦", "₧₨₩₪₫", "₭₮₯₰₱", "₲₳₴₵₶", "₷₸₹₺₻", "₼₽₾₿");
     }
 
-    addSectionToDialog(name, symbols) {
+    addSectionToDialog(name, ...symbolGroups) {
         const parent = document.getElementById("select-symbol-panel");
 
         const header = document.createElement("h2");
         header.textContent = name;
         parent.appendChild(header);
 
-        const content = document.createElement("div");
-        parent.appendChild(content);
+        const groupContent = document.createElement("div");
+        parent.appendChild(groupContent);
 
-        for (const c of symbols) {
-            const button = document.createElement("button");
-            button.classList.add("symbol-button");
-            button.innerText = c;
-            button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
-            button.addEventListener("mouseover", evt => this.updatePreview(evt.target));
-            content.appendChild(button);
+        for (const group of symbolGroups) {
+            const content = document.createElement("div");
+            groupContent.appendChild(content);
+
+            for (const symbol of group) {
+                const button = document.createElement("button");
+                button.classList.add("symbol-button");
+                button.innerText = symbol;
+                button.addEventListener("click", evt => this.addSymbolToIcon(evt.target));
+                button.addEventListener("mouseover", evt => this.updatePreview(evt.target));
+                content.appendChild(button);
+            }
         }
     }
 
