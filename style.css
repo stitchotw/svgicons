@@ -254,6 +254,11 @@ select.icon-style-attribute, input[type="text"].icon-style-attribute,  input[typ
     border: 1px solid lightgray;
 }
 
+.icon-preview-table th, .icon-preview-table td{
+    text-align: start;
+    padding: 5px;
+}
+
 .icon-16 {
     width: 16px;
     height: 16px;
