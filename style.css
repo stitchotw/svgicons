@@ -375,3 +375,118 @@ select.icon-style-attribute, input[type="text"].icon-style-attribute,  input[typ
 .font-ver{
     font-family: Verdana;
 }
+
+.color-black {
+    color: White;
+    background-color: Black;
+}
+
+.color-white {
+    color: Black;
+    background-color: White;
+}
+
+.color-lightgray {
+    color: Black;
+    background-color: LightGray;
+}
+
+.color-silver {
+    color: Black;
+    background-color: Silver;
+}
+
+.color-darkgray {
+    color: White;
+    background-color: DarkGray;
+}
+
+.color-grey {
+    color: White;
+    background-color: Grey;
+}
+
+.color-burlywood {
+    color: Black;
+    background-color: BurlyWood;
+}
+
+.color-brown {
+    color: White;
+    background-color: Brown;
+}
+
+.color-maroon {
+    color: White;
+    background-color: Maroon;
+}
+
+.color-yellowgreen {
+    color: Black;
+    background-color: YellowGreen;
+}
+
+.color-green {
+    color: White;
+    background-color: Green;
+}
+
+.color-turquoise {
+    color: Black;
+    background-color: Turquoise;
+}
+
+.color-aqua {
+    color: Black;
+    background-color: Aqua;
+}
+
+.color-blue {
+    color: White;
+    background-color: Blue;
+}
+
+.color-blueviolet {
+    color: White;
+    background-color: BlueViolet;
+}
+
+.color-violet {
+    color: Black;
+    background-color: Violet;
+}
+
+.color-orchid {
+    color: Black;
+    background-color: Orchid;
+}
+
+.color-red {
+    color: White;
+    background-color: Red;
+}
+
+.color-magenta {
+    color: Black;
+    background-color: Magenta;
+}
+
+.color-darkorange {
+    color: Black;
+    background-color: DarkOrange;
+}
+
+.color-orange {
+    color: Black;
+    background-color: Orange;
+}
+
+.color-gold {
+    color: Black;
+    background-color: Gold;
+}
+
+.color-yellow {
+    color: Black;
+    background-color: Yellow;
+}
